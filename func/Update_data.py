@@ -16,11 +16,11 @@ class Update_data(QThread):
     def run(self):
         res_flag = 0
         mib_loc = os.getcwd() + "\\" + "SNK-BMC-MIB.mib"
-        try:
-
-        except:
-            res_flag = 1
-            row_list = [["invaild csv"]]
+        # try:
+        #
+        # except:
+        #     res_flag = 1
+        #     row_list = [["invaild csv"]]
 
         if res_flag == 0:
             res_pass = ['All_Pass!!!!', '', '', '', '', '', '', '', '', total_time]

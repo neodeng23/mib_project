@@ -9,9 +9,9 @@ class MyTree(QTreeWidget):
         super(MyTree, self).__init__(parent)
         self.setWindowTitle('Tree')
         # 设置列数
-        self.setColumnCount(3)
+        self.setColumnCount(4)
         # 设置头的标题
-        self.setHeaderLabels(['OID', 'Value', 'attribute'])
+        self.setHeaderLabels(['Name', 'OID', 'Value', 'attribute'])
         root = QTreeWidgetItem(self)
         root.setText(0, 'root')
         root.setText(1, '0')

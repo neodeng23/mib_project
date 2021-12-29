@@ -8,7 +8,11 @@ from itertools import takewhile
 
 def Getdigit(string):
     # 提取字符串中的数字
-    num = ''.join(takewhile(str.isdigit, string))
+    l = []
+    for i in string:
+        if i.isdigit():
+            l.append(i)
+    num = "".join(l)
     return num
 
 
