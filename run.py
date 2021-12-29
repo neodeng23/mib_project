@@ -27,67 +27,31 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
         self.thread = Update_data()
         # 按键绑定信号
         self.Start_Button.clicked.connect(self.click_start)
-        # SN码输入绑定信号
-        self.serial_number_line.returnPressed.connect(self.click_start)
-        self.thread.sinOut.connect(self.test_Add)
+        self.Export_Button.clicked.connect(self.Tree.add_new_tree)
+
+        # IP输入绑定信号
+        self.IPmodel.returnPressed.connect(self.click_start)
+        self.thread.sinOut.connect(self.Tree.add_new_tree)
 
     def click_start(self):
         # 获取SN
-        serial_number = self.serial_number_line.text()
-
+        BMCip = self.IPmodel.text()
         # 初始化Log
         gl._init()
-        now_time = time.strftime('%Y%m%d-%H%M%S')
-        now_day = time.strftime('%Y%m%d')
-        path = "E:\station_log\\" + serial_number + "\\" + now_time + "\\"
-        summary_path = "E:\station_log\\summary_log\\"
-        LOG_path = path + "test.log"
-        log = Logger(LOG_path)
-        gl.set_value('SN', serial_number)
-        gl.set_value('path', path)
-        gl.set_value('log_func', log)
-        gl.set_value('now_day', now_day)
-        gl.set_value('summary_path', summary_path)  # 将生成Log实例化对象设为全局变量
-
+        gl.set_value('ip', BMCip)# 实例化对象设为全局变量
         # SN输入框无法编辑
-        self.serial_number_line.setReadOnly(True)
-        # 表格设置为空
-        self.Test_Item.setRowCount(0)
-        self.Test_Item.clearContents()
+        self.IPmodel.setReadOnly(True)
         # 开始按键变灰
         self.Start_Button.setEnabled(False)
-        # 改变测试标签状态
-        self.label_status.setText("Runing")
-        self.label_status.setPalette(pe_yel)
         # 测试线程开始
         self.thread.start()
 
-    def test_Add(self, test_item_res):
-        # print(test_item_res)
+    def write_log(self):
+        now = time.localtime()
+        nowt = time.strftime("%m-%d %H:%M:%S ", now)
+        input = str(nowt)
+        self.Logmodel.append(input)
 
-        # 此条件为测试正在进行中
-        if test_item_res[0] == "Running":
-            self.Test_Item.update_item_data(test_item_res)
-
-        # 此条件为测试结束
-        elif test_item_res[0] == "Test_Fail!!!!" or test_item_res[0] == "All_Pass!!!!":
-            self.Test_Item.update_item_data(test_item_res)
-            self.label_time.timestop()
-            self.Test_Item.handleSave()
-            self.serial_number_line.setReadOnly(False)
-        else:
-            self.Test_Item.update_item_data_without_add_new_line(test_item_res)
-        self.Test_Item.scrollToBottom()
-        if test_item_res[0] == 'All_Pass!!!!':
-            self.Start_Button.setEnabled(True)
-            self.label_status.setText("Pass")
-            self.label_status.setPalette(pe_green)
-        elif test_item_res[0] == 'Test_Fail!!!!':
-            self.Start_Button.setEnabled(True)
-            self.label_status.setText("Fail")
-            self.label_status.setPalette(pe_red)
-        else:
-            pass
 
 
 if __name__ == "__main__":

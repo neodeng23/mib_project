@@ -4,29 +4,15 @@ import sys
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QApplication
 
 
-class TreeWidgetDemo(QWidget):
+class MyTree(QTreeWidget):
     def __init__(self, parent=None):
-        super(TreeWidgetDemo, self).__init__(parent)
-        self.setWindowTitle('TreeWidget 例子')
-
-        operatorLayout = QHBoxLayout()
-        addBtn = QPushButton("添加节点")
-        updateBtn = QPushButton("修改节点")
-        delBtn = QPushButton("删除节点")
-        operatorLayout.addWidget(addBtn)
-        operatorLayout.addWidget(updateBtn)
-        operatorLayout.addWidget(delBtn)
-        # 按钮的信号槽连接
-        addBtn.clicked.connect(self.addTreeNodeBtn)
-        updateBtn.clicked.connect(self.updateTreeNodeBtn)
-        delBtn.clicked.connect(self.delTreeNodeBtn)
-
-        self.tree = QTreeWidget(self)
+        super(MyTree, self).__init__(parent)
+        self.setWindowTitle('Tree')
         # 设置列数
-        self.tree.setColumnCount(2)
+        self.setColumnCount(3)
         # 设置头的标题
-        self.tree.setHeaderLabels(['Key', 'Value'])
-        root = QTreeWidgetItem(self.tree)
+        self.setHeaderLabels(['OID', 'Value', 'attribute'])
+        root = QTreeWidgetItem(self)
         root.setText(0, 'root')
         root.setText(1, '0')
 
@@ -50,41 +36,28 @@ class TreeWidgetDemo(QWidget):
         child5.setText(0, 'child5')
         child5.setText(1, '5')
 
-        self.tree.addTopLevelItem(root)
-        self.tree.clicked.connect(self.onTreeClicked)
+    def add_new_tree(self):
+        root = QTreeWidgetItem(self)
+        root.setText(0, 'root1')
+        root.setText(1, '0')
 
-        mainLayout = QVBoxLayout(self)
-        mainLayout.addLayout(operatorLayout)
-        mainLayout.addWidget(self.tree)
-        self.setLayout(mainLayout)
+        child1 = QTreeWidgetItem(root)
+        child1.setText(0, 'child1')
+        child1.setText(1, '1')
 
-    def onTreeClicked(self, qmodelindex):
-        item = self.tree.currentItem()
-        print("key=%s ,value=%s" % (item.text(0), item.text(1)))
+        child2 = QTreeWidgetItem(root)
+        child2.setText(0, 'child2')
+        child2.setText(1, '2')
 
-    def addTreeNodeBtn(self):
-        print('--- addTreeNodeBtn ---')
-        item = self.tree.currentItem()
-        node = QTreeWidgetItem(item)
-        node.setText(0, 'newNode')
-        node.setText(1, '10')
+        child3 = QTreeWidgetItem(root)
+        child3.setText(0, 'child3')
+        child3.setText(1, '3')
 
-    def updateTreeNodeBtn(self):
-        print('--- updateTreeNodeBtn ---')
-        item = self.tree.currentItem()
-        item.setText(0, 'updateNode')
-        item.setText(1, '20')
+        child4 = QTreeWidgetItem(child3)
+        child4.setText(0, 'child4')
+        child4.setText(1, '4')
 
-    def delTreeNodeBtn(self):
-        print('--- delTreeNodeBtn ---')
-        item = self.tree.currentItem()
-        root = self.tree.invisibleRootItem()
-        for item in self.tree.selectedItems():
-            (item.parent() or root).removeChild(item)
+        child5 = QTreeWidgetItem(child3)
+        child5.setText(0, 'child5')
+        child5.setText(1, '5')
 
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    tree = TreeWidgetDemo()
-    tree.show()
-    sys.exit(app.exec_())

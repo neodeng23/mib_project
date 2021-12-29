@@ -12,7 +12,7 @@ class TreeWidgetDemo(QMainWindow):
         self.setWindowTitle('TreeWidget 例子')
         self.tree = QTreeWidget()
         # 设置列数
-        self.tree.setColumnCount(2)
+        self.tree.setColumnCount(3)
         # 设置头的标题
         self.tree.setHeaderLabels(['Key', 'Value'])
         root = QTreeWidgetItem(self.tree)
