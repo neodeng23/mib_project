@@ -27,7 +27,7 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
         self.thread = Update_data()
         # 按键绑定信号
         self.Start_Button.clicked.connect(self.click_start)
-        self.Export_Button.clicked.connect(self.Tree.add_new_tree)
+        # self.Export_Button.clicked.connect(self.Tree.add_new_tree)
 
         # IP输入绑定信号
         self.IPmodel.returnPressed.connect(self.click_start)

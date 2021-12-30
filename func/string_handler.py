@@ -38,7 +38,7 @@ def GetFloatdigit(string):
 def GetOidNum(string):
     string = string.strip()
     try:
-        info = (re.findall('::=[ ]+[{][ ]+[\S]+[ ]+[\d]+[ ]+[}]', string))
+        info = (re.findall('::=[ ]*[{][ ]*[\S]+[ ]+[\d]+[ ]*[}]', string))
         str = info[0]
         str = str.replace("::=", "").replace("}", "").replace("{", "")
         list = str.split(" ")

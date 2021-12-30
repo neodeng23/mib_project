@@ -12,7 +12,8 @@
     "systemPowerPolicy": "55380.1.1.1.1.1.10",
     "systemBiosFirstBootDevice": "55380.1.1.1.1.1.11",
     "systemIDIdentify": "55380.1.1.1.1.1.12",
-    "hostName": "55380.1.1.1.1.1.14",
+    "hostName": "55380.1.1.1.1.1.13",
+    "bmcReboot": "55380.1.1.1.1.1.14",
     "sysPowerButton": "55380.1.1.1.1.1.15",
     "systemRealTimePower": "55380.1.1.1.1.1.16",
     "syncNtpTime": "55380.1.1.1.1.1.17",
@@ -296,10 +297,496 @@
     "biosFwVersion": "55380.1.1.1.1.5.1",
     "meVersion": "55380.1.1.1.1.5.2"
   },
-  "fru": {},
+  "fru": {
+    "chassis": {
+      "chassisType": "55380.1.1.1.1.7.1.1",
+      "chassisPN": "55380.1.1.1.1.7.1.2",
+      "chassisSN": "55380.1.1.1.1.7.1.3"
+    },
+    "board": {
+      "boardManufacturer": "55380.1.1.1.1.7.2.1",
+      "boardProductName": "55380.1.1.1.1.7.2.2",
+      "boardSN": "55380.1.1.1.1.7.2.3",
+      "boardPN": "55380.1.1.1.1.7.2.4"
+    },
+    "product": {
+      "productManufacturer": "55380.1.1.1.1.7.3.1",
+      "productName": "55380.1.1.1.1.7.3.2",
+      "productPN": "55380.1.1.1.1.7.3.3",
+      "productVersion": "55380.1.1.1.1.7.3.4",
+      "productSN": "55380.1.1.1.1.7.3.5"
+    }
+  },
   "serverHealth": {
     "systemHealthStatus": "55380.1.1.1.1.11.1",
-    "mBHealthStatus": "55380.1.1.1.1.11.2"
+    "mBHealthStatus": "55380.1.1.1.1.11.2",
+    "cpuHealth": {
+      "cpuHealthAllStatus": "55380.1.1.1.1.11.3.1",
+      "cpuHealthTable": {
+        "cpuHealthEntry": {
+          "cpuHealthIndex": "55380.1.1.1.1.11.3.2.1.1",
+          "cpuHealthLocation": "55380.1.1.1.1.11.3.2.1.2",
+          "cpuHealthStateLevel": "55380.1.1.1.1.11.3.2.1.3",
+          "cpuHealthTemp": "55380.1.1.1.1.11.3.2.1.4",
+          "cpuHealthState": "55380.1.1.1.1.11.3.2.1.5"
+        }
+      }
+    },
+    "memHealth": {
+      "memHealthAllStatus": "55380.1.1.1.1.11.4.1",
+      "memHealthTable": {
+        "memHealthEntry": {
+          "memHealthIndex": "55380.1.1.1.1.11.4.2.1.1",
+          "memHealthLocation": "55380.1.1.1.1.11.4.2.1.2",
+          "memHealthStateLevel": "55380.1.1.1.1.11.4.2.1.3",
+          "memHealthTemp": "55380.1.1.1.1.11.4.2.1.4",
+          "memHealthWorkFrequency": "55380.1.1.1.1.11.4.2.1.5",
+          "memHealthState": "55380.1.1.1.1.11.4.2.1.6"
+        }
+      }
+    },
+    "hddHealth": {
+      "hddHealthAllStatus": "55380.1.1.1.1.11.5.1",
+      "hddHealthTable": {
+        "hddHealthEntry": {
+          "hddHealthIndex": "55380.1.1.1.1.11.5.2.1.1",
+          "hddHealthLocation": "55380.1.1.1.1.11.5.2.1.2",
+          "hddHealthStateLevel": "55380.1.1.1.1.11.5.2.1.3",
+          "hddHealthState": "55380.1.1.1.1.11.5.2.1.4"
+        }
+      }
+    },
+    "fanHealth": {
+      "fanHealthAllStatus": "55380.1.1.1.1.11.6.1",
+      "fanHealthTable": {
+        "fanHealthEntry": {
+          "fanHealthIndex": "55380.1.1.1.1.11.6.2.1.1",
+          "fanHealthLocation": "55380.1.1.1.1.11.6.2.1.2",
+          "fanHealthStateLevel": "55380.1.1.1.1.11.6.2.1.3",
+          "fanHealthDutyCycle": "55380.1.1.1.1.11.6.2.1.4",
+          "fanHealthSpeed": "55380.1.1.1.1.11.6.2.1.5",
+          "fanHealthState": "55380.1.1.1.1.11.6.2.1.6"
+        }
+      }
+    },
+    "psuHealth": {
+      "psuHealthAllStatus": "55380.1.1.1.1.11.7.1",
+      "psuHealthTable": {
+        "psuHealthEntry": {
+          "psuHealthIndex": "55380.1.1.1.1.11.7.2.1.1",
+          "psuHealthLocation": "55380.1.1.1.1.11.7.2.1.2",
+          "psuHealthStateLevel": "55380.1.1.1.1.11.7.2.1.3",
+          "psuHealthVIN": "55380.1.1.1.1.11.7.2.1.4",
+          "psuHealthIIN": "55380.1.1.1.1.11.7.2.1.5",
+          "psuHealthPIN": "55380.1.1.1.1.11.7.2.1.6",
+          "psuHealthVOUT": "55380.1.1.1.1.11.7.2.1.7",
+          "psuHealthIOUT": "55380.1.1.1.1.11.7.2.1.8",
+          "psuHealthPOUT": "55380.1.1.1.1.11.7.2.1.9",
+          "psuHealthHeatsinkTemp": "55380.1.1.1.1.11.7.2.1.10",
+          "psuHealthAmbientTemp": "55380.1.1.1.1.11.7.2.1.11",
+          "psuHealthFanSpeed": "55380.1.1.1.1.11.7.2.1.12",
+          "psuHealthState": "55380.1.1.1.1.11.7.2.1.13"
+        }
+      }
+    },
+    "pCIeHealth": {
+      "pCIeHealthAllStatus": "55380.1.1.1.1.11.8.1",
+      "pCIeHealthTable": {
+        "pCIeHealthEntry": {
+          "pCIeHealthIndex": "55380.1.1.1.1.11.8.2.1.1",
+          "pCIeHealthLocation": "55380.1.1.1.1.11.8.2.1.2",
+          "pCIeHealthStateLevel": "55380.1.1.1.1.11.8.2.1.3",
+          "pCIeHealthTemp": "55380.1.1.1.1.11.8.2.1.4",
+          "pCIeHealthState": "55380.1.1.1.1.11.8.2.1.5"
+        }
+      }
+    }
   },
-  "trapGroup": {}
+  "trapGroup": {
+    "trapVar": {
+      "trapSeq": "55380.1.1.1.1.500.1.1",
+      "trapSensorName": "55380.1.1.1.1.500.1.2",
+      "trapEvent": "55380.1.1.1.1.500.1.3",
+      "trapSeverity": "55380.1.1.1.1.500.1.4",
+      "trapEventCode": "55380.1.1.1.1.500.1.5",
+      "trapEventData2": "55380.1.1.1.1.500.1.6",
+      "trapEventData3": "55380.1.1.1.1.500.1.7",
+      "trapServerIdentity": "55380.1.1.1.1.500.1.8",
+      "trapLocation": "55380.1.1.1.1.500.1.9",
+      "trapTime": "55380.1.1.1.1.500.1.10"
+    },
+    "serverAlertTrapGroup": {
+      "ariTemperature": {
+        "alerttempLowerNonCriticalGoingLow": "55380.1.1.1.1.500.10.1.1",
+        "alerttempLowerNonCriticalGoingLowDeassert": "55380.1.1.1.1.500.10.1.2",
+        "alerttempLowerCriticalGoingLow": "55380.1.1.1.1.500.10.1.33",
+        "alerttempLowerCriticalGoingLowDeassert": "55380.1.1.1.1.500.10.1.34",
+        "alerttempLowerNonRecoverlGoingLow": "55380.1.1.1.1.500.10.1.65",
+        "alerttempLowerNonRecoverlGoingLowDeassert": "55380.1.1.1.1.500.10.1.66",
+        "alerttempUpperNonCriticalGoingHigh": "55380.1.1.1.1.500.10.1.113",
+        "alerttempUpperNonCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.1.114",
+        "alerttempUpperCriticalGoingHigh": "55380.1.1.1.1.500.10.1.145",
+        "alerttempUpperCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.1.146",
+        "alerttempUpperNonRecoverGoingHigh": "55380.1.1.1.1.500.10.1.177",
+        "alerttempUpperNonRecoverGoingHighDeassert": "55380.1.1.1.1.500.10.1.178"
+      },
+      "ariVoltage": {
+        "alertvoltageLowerNonCriticalGoingLow": "55380.1.1.1.1.500.10.2.1",
+        "alertvoltageLowerNonCriticalGoingLowDeassert": "55380.1.1.1.1.500.10.2.2",
+        "alertvoltageLowerNonCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.2.18",
+        "alertvoltageLowerCriticalGoingLow": "55380.1.1.1.1.500.10.2.33",
+        "alertvoltageLowerCriticalGoingLowDeassert": "55380.1.1.1.1.500.10.2.34",
+        "alertvoltageLowerNonRecoverGoingLow": "55380.1.1.1.1.500.10.2.65",
+        "alertvoltageLowerNonRecoverGoingLowDeassert": "55380.1.1.1.1.500.10.2.66",
+        "alertvoltageUpperNonCriticalGoingHigh": "55380.1.1.1.1.500.10.2.113",
+        "alertvoltageUpperNonCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.2.114",
+        "alertvoltageUpperCriticalGoingHigh": "55380.1.1.1.1.500.10.2.145",
+        "alertvoltageUpperCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.2.146",
+        "alertvoltageUpperNonRecoverGoingHigh": "55380.1.1.1.1.500.10.2.177",
+        "alertvoltageUpperNonRecoverGoingHighDeassert": "55380.1.1.1.1.500.10.2.178"
+      },
+      "ariCurrent": {
+        "currentLowerNonCriticalGoingLow": "55380.1.1.1.1.500.10.3.1",
+        "currentLowerNonCriticalGoingLowDeassert": "55380.1.1.1.1.500.10.3.2",
+        "currentLowerCriticalGoingLow": "55380.1.1.1.1.500.10.3.33",
+        "currentLowerCriticalGoingLowDeassert": "55380.1.1.1.1.500.10.3.34",
+        "currentLowerNonRecoverGoingLow": "55380.1.1.1.1.500.10.3.65",
+        "currentLowerNonRecoverGoingLowDeassert": "55380.1.1.1.1.500.10.3.66",
+        "currentUpperNonCriticalGoingHigh": "55380.1.1.1.1.500.10.3.113",
+        "currentUpperNonCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.3.114",
+        "currentUpperCriticalGoingHigh": "55380.1.1.1.1.500.10.3.145",
+        "currentUpperCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.3.146",
+        "currentUpperNonRecoverGoingHigh": "55380.1.1.1.1.500.10.3.177",
+        "currentUpperNonRecoverGoingHighDeassert": "55380.1.1.1.1.500.10.3.178"
+      },
+      "ariFan": {
+        "alertfanSpeedLowerNonCriticalGoingLow": "55380.1.1.1.1.500.10.4.1",
+        "alertfanSpeedLowerNonCriticalGoingLowDeassert": "55380.1.1.1.1.500.10.4.2",
+        "alertfanSpeedLowerCriticalGoingLow": "55380.1.1.1.1.500.10.4.33",
+        "alertfanSpeedLowerCriticalGoingLowDeassert": "55380.1.1.1.1.500.10.4.34",
+        "alertfanSpeedLowerNonRecoverGoingLow": "55380.1.1.1.1.500.10.4.65",
+        "alertfanSpeedLowerNonRecoverGoingLowDeassert": "55380.1.1.1.1.500.10.4.66",
+        "alertfanSpeedUpperNonCriticalGoingHigh": "55380.1.1.1.1.500.10.4.113",
+        "alertfanSpeedUpperNonCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.4.114",
+        "alertfanSpeedUpperCriticalGoingHigh": "55380.1.1.1.1.500.10.4.145",
+        "alertfanSpeedUpperCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.4.146",
+        "alertfanSpeedUpperNonRecoverGoingHigh": "55380.1.1.1.1.500.10.4.177",
+        "alertfanSpeedUpperNonRecoverGoingHighDeassert": "55380.1.1.1.1.500.10.4.178",
+        "alertfanNotPresentStatus": "55380.1.1.1.1.500.10.4.1793",
+        "alertfanPresentStatus": "55380.1.1.1.1.500.10.4.1809",
+        "alertfanSpeedStatus": "55380.1.1.1.1.500.10.4.1825",
+        "alertfanHotPlugStatus": "55380.1.1.1.1.500.10.4.2001",
+        "alertfanHotPlugStatusDeassert": "55380.1.1.1.1.500.10.4.2002"
+      },
+      "ariPhysicalSecurity": {
+        "alertChassisIntrusion": "55380.1.1.1.1.500.10.5.1",
+        "alertChassisIntrusionLANLeashLost": "55380.1.1.1.1.500.10.5.65",
+        "alertChassisIntrusionLANLeashLostDeassert": "55380.1.1.1.1.500.10.5.66"
+      },
+      "ariCPU": {
+        "alertCPUCATError": "55380.1.1.1.1.500.10.7.1",
+        "alertCPUCATErrorDeassert": "55380.1.1.1.1.500.10.7.2",
+        "alertCPUThermalTrip": "55380.1.1.1.1.500.10.7.17",
+        "alertCPUThermalTripDeassert": "55380.1.1.1.1.500.10.7.18",
+        "alertCPUSelfTestFail": "55380.1.1.1.1.500.10.7.33",
+        "alertCPUSelfTestFailDeassert": "55380.1.1.1.1.500.10.7.34",
+        "alertCPUCfgError": "55380.1.1.1.1.500.10.7.81",
+        "alertCPUCfgErrorDeassert": "55380.1.1.1.1.500.10.7.82",
+        "alertCPUPresence": "55380.1.1.1.1.500.10.7.113",
+        "alertCPUPresenceDeassert": "55380.1.1.1.1.500.10.7.114",
+        "alertCPUOffline": "55380.1.1.1.1.500.10.7.129",
+        "alertCPUOfflineDeassert": "55380.1.1.1.1.500.10.7.130",
+        "alertCPUAutoThrottled": "55380.1.1.1.1.500.10.7.161",
+        "alertCPUAutoThrottledDeassert": "55380.1.1.1.1.500.10.7.162",
+        "alertCPUMCE": "55380.1.1.1.1.500.10.7.177",
+        "alertCPUMCEDeassert": "55380.1.1.1.1.500.10.7.178",
+        "alertVMSELinkFail": "55380.1.1.1.1.500.10.7.193",
+        "alertVMSELinkFailDeassert": "55380.1.1.1.1.500.10.7.194"
+      },
+      "ariPowerSupply": {
+        "powerLowerNonCriticalGoingLow": "55380.1.1.1.1.500.10.8.1",
+        "powerLowerNonCriticalGoingLowDeassert": "55380.1.1.1.1.500.10.8.2",
+        "powerLowerCriticalGoingLow": "55380.1.1.1.1.500.10.8.33",
+        "powerLowerCriticalGoingLowDeassert": "55380.1.1.1.1.500.10.8.34",
+        "powerLowerNonRecoverGoingLow": "55380.1.1.1.1.500.10.8.65",
+        "powerLowerNonRecoverGoingLowDeassert": "55380.1.1.1.1.500.10.8.66",
+        "powerUpperNonCriticalGoingHigh": "55380.1.1.1.1.500.10.8.113",
+        "powerUpperNonCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.8.114",
+        "powerUpperCriticalGoingHigh": "55380.1.1.1.1.500.10.8.145",
+        "powerUpperCriticalGoingHighDeassert": "55380.1.1.1.1.500.10.8.146",
+        "powerUpperNonRecoverGoingHigh": "55380.1.1.1.1.500.10.8.177",
+        "powerUpperNonRecoverGoingHighDeassert": "55380.1.1.1.1.500.10.8.178",
+        "alertPsuPresence": "55380.1.1.1.1.500.10.8.28161",
+        "alertPsuPresenceDeassert": "55380.1.1.1.1.500.10.8.28162",
+        "alertPsuFault": "55380.1.1.1.1.500.10.8.28177",
+        "alertPsuFaultDeassert": "55380.1.1.1.1.500.10.8.28178",
+        "alertPsuPredictiveFailure": "55380.1.1.1.1.500.10.8.28193",
+        "alertPsuPredictiveFailureDeassert": "55380.1.1.1.1.500.10.8.28194",
+        "alertPsuInputLost": "55380.1.1.1.1.500.10.8.28209",
+        "alertPsuInputLostDeassert": "55380.1.1.1.1.500.10.8.28210",
+        "alertPsuOutOfRange": "55380.1.1.1.1.500.10.8.28225",
+        "alertPsuOutOfRangeDeassert": "55380.1.1.1.1.500.10.8.28226",
+        "alertPsuOutOfRangeButPresent": "55380.1.1.1.1.500.10.8.28241",
+        "alertPsuOutOfRangeButPresentDeassert": "55380.1.1.1.1.500.10.8.28242",
+        "alertPsuConfigError": "55380.1.1.1.1.500.10.8.28257",
+        "alertPsuConfigErrorDeassert": "55380.1.1.1.1.500.10.8.28258",
+        "alertPsuStandbyState": "55380.1.1.1.1.500.10.8.28273",
+        "alertPsuStandbyStateDeassert": "55380.1.1.1.1.500.10.8.28274",
+        "alertPsuHotPlug": "55380.1.1.1.1.500.10.8.28369",
+        "alertPsuHotPlugDeassert": "55380.1.1.1.1.500.10.8.28370",
+        "alertPsuOverTemp": "55380.1.1.1.1.500.10.8.28385",
+        "alertPsuOverTempDeassert": "55380.1.1.1.1.500.10.8.28386"
+      },
+      "ariMemory": {
+        "alertCorrectableECC": "55380.1.1.1.1.500.10.12.1",
+        "alertCorrectableECCDeassert": "55380.1.1.1.1.500.10.12.2",
+        "alertUncorrectableECC": "55380.1.1.1.1.500.10.12.17",
+        "alertUncorrectableECCDeassert": "55380.1.1.1.1.500.10.12.18",
+        "alertMemoryECCLimitation": "55380.1.1.1.1.500.10.12.81",
+        "alertMemoryECCLimitationDeassert": "55380.1.1.1.1.500.10.12.82",
+        "alertMemoryPresence": "55380.1.1.1.1.500.10.12.97",
+        "alertMemoryPresenceDeassert": "55380.1.1.1.1.500.10.12.98",
+        "alertMemoryCfgError": "55380.1.1.1.1.500.10.12.113",
+        "alertMemoryCfgErrorDeassert": "55380.1.1.1.1.500.10.12.114",
+        "alertMemorySpare": "55380.1.1.1.1.500.10.12.129",
+        "alertMemorySpareDeassert": "55380.1.1.1.1.500.10.12.130",
+        "alertMemoryOvertemp": "55380.1.1.1.1.500.10.12.161",
+        "alertMemoryOvertempDeassert": "55380.1.1.1.1.500.10.12.162",
+        "alertMemoryMRCTraining": "55380.1.1.1.1.500.10.12.177",
+        "alertMemoryMRC": "55380.1.1.1.1.500.10.12.193"
+      },
+      "ariHardDisk": {
+        "alertHardDiskPresence": "55380.1.1.1.1.500.10.13.1",
+        "alertHardDiskPresenceDeassert": "55380.1.1.1.1.500.10.13.2",
+        "alertHardDiskFault": "55380.1.1.1.1.500.10.13.17",
+        "alertHardDiskFaultDeassert": "55380.1.1.1.1.500.10.13.18",
+        "alertHardDiskPredictiveFailure": "55380.1.1.1.1.500.10.13.33",
+        "alertHardDiskPredictiveFailureDeassert": "55380.1.1.1.1.500.10.13.34",
+        "alertRAIDArrayFail": "55380.1.1.1.1.500.10.13.97",
+        "alertRAIDArrayFailDeassert": "55380.1.1.1.1.500.10.13.98",
+        "alertRAIDRebuild": "55380.1.1.1.1.500.10.13.113",
+        "alertRAIDRebuildDeassert": "55380.1.1.1.1.500.10.13.114",
+        "alertRAIDRebuildAborted": "55380.1.1.1.1.500.10.13.129",
+        "alertRAIDRebuildAbortedDeassert": "55380.1.1.1.1.500.10.13.130",
+        "alertHardDiskHotplug": "55380.1.1.1.1.500.10.13.209",
+        "alertHardDiskHotplugDeassert": "55380.1.1.1.1.500.10.13.210"
+      },
+      "ariSysFWProgress": {
+        "alertSystemFirmwareHang": "55380.1.1.1.1.500.10.15.17",
+        "alertSystemFirmwareHangDeassert": "55380.1.1.1.1.500.10.15.18",
+        "alertPS2USBFault": "55380.1.1.1.1.500.10.15.1793",
+        "alertPS2USBFaultDeassert": "55380.1.1.1.1.500.10.15.1794",
+        "alertVideoControllerFault": "55380.1.1.1.1.500.10.15.2305",
+        "alertVideoControllerFaultDeassert": "55380.1.1.1.1.500.10.15.2306",
+        "alertCPUVoltageMismatch": "55380.1.1.1.1.500.10.15.3073",
+        "alertCPUVoltageMismatchDeassert": "55380.1.1.1.1.500.10.15.3074"
+      },
+      "ariSELStatus": {
+        "alertSELClearedAssert": "55380.1.1.1.1.500.10.16.33",
+        "alertSELAlmostFullAssert": "55380.1.1.1.1.500.10.16.81",
+        "alertSELAlmostFullDeassert": "55380.1.1.1.1.500.10.16.82"
+      },
+      "ariSysEvent": {
+        "alertSysEventInstance": "55380.1.1.1.1.500.10.18.241",
+        "alertSystemError": "55380.1.1.1.1.500.10.18.33",
+        "alertSystemErrorDeassert": "55380.1.1.1.1.500.10.18.34",
+        "alertTimestampClockSync": "55380.1.1.1.1.500.10.18.81"
+      },
+      "ariPowerButton": {
+        "alertPowerButtonPressed": "55380.1.1.1.1.500.10.20.1"
+      },
+      "ariCable": {
+        "alertLANCableStatus": "55380.1.1.1.1.500.10.27.1",
+        "alertLANCableStatusDeassert": "55380.1.1.1.1.500.10.27.2",
+        "alertCableStatus": "55380.1.1.1.1.500.10.27.17",
+        "alertCableStatusDeassert": "55380.1.1.1.1.500.10.27.18"
+      },
+      "ariSysRestart": {
+        "alertSysRestartUnknown": "55380.1.1.1.1.500.10.29.113",
+        "alertSysRestartChassisCtrl": "55380.1.1.1.1.500.10.29.369",
+        "alertSysRestartChassisCtrlDeasserted": "55380.1.1.1.1.500.10.29.370",
+        "alertSysRestartButtonAsserted": "55380.1.1.1.1.500.10.29.625",
+        "alertSysRestartButtonDeasserted": "55380.1.1.1.1.500.10.29.626",
+        "alertSysRestartPowerButton": "55380.1.1.1.1.500.10.29.881",
+        "alertSysRestartWatchdogCtrl": "55380.1.1.1.1.500.10.29.1137",
+        "alertSysRestartAlwaysRestore": "55380.1.1.1.1.500.10.29.1649",
+        "alertSysRestartRestorePrevState": "55380.1.1.1.1.500.10.29.1905"
+      },
+      "ariBootError": {
+        "alertNoBootableMedia": "55380.1.1.1.1.500.10.30.1",
+        "alertNoBootableMediaDeassert": "55380.1.1.1.1.500.10.30.2",
+        "alertNoBootableDisk": "55380.1.1.1.1.500.10.30.17",
+        "alertNoBootableDiskDeassert": "55380.1.1.1.1.500.10.30.18",
+        "alertPXENotFound": "55380.1.1.1.1.500.10.30.33",
+        "alertPXENotFoundDeassert": "55380.1.1.1.1.500.10.30.34",
+        "alertInvalidBootSector": "55380.1.1.1.1.500.10.30.49",
+        "alertInvalidBootSectorDeassert": "55380.1.1.1.1.500.10.30.50"
+      },
+      "ariDeviceFault": {
+        "alertHardwareAddrFault": "55380.1.1.1.1.500.10.33.1",
+        "alertHardwareAddrFaultDeassert": "55380.1.1.1.1.500.10.33.2",
+        "alertDeviceInstall": "55380.1.1.1.1.500.10.33.33",
+        "alertDeviceInstallDeassert": "55380.1.1.1.1.500.10.33.34",
+        "alertEthLinkDown": "55380.1.1.1.1.500.10.33.129",
+        "alertEthLinkDownDeassert": "55380.1.1.1.1.500.10.33.130",
+        "alertMemBrdMigrate": "55380.1.1.1.1.500.10.33.145",
+        "alertMemBrdMigrateDeassert": "55380.1.1.1.1.500.10.33.146",
+        "alertPCIEStatus": "55380.1.1.1.1.500.10.33.257",
+        "alertPCIEStatusDeassert": "55380.1.1.1.1.500.10.33.258",
+        "alertFanFault": "55380.1.1.1.1.500.10.33.2049",
+        "alertFanFaultDeassert": "55380.1.1.1.1.500.10.33.2050",
+        "alertPCIeFault": "55380.1.1.1.1.500.10.33.2305",
+        "alertPCIeFaultDeassert": "55380.1.1.1.1.500.10.33.2306"
+      },
+      "ariACPIStatus": {
+        "alertACPIStatusS0": "55380.1.1.1.1.500.10.34.1",
+        "alertACPIStatusS4S5": "55380.1.1.1.1.500.10.34.97"
+      },
+      "ariWatchDog2": {
+        "alertWatchDog2Expired": "55380.1.1.1.1.500.10.35.1",
+        "alertWatchDogExpiredDeassert": "55380.1.1.1.1.500.10.35.2",
+        "alertWatchDogReset": "55380.1.1.1.1.500.10.35.17",
+        "alertWatchDogResetDeassert": "55380.1.1.1.1.500.10.35.18",
+        "alertWatchDogPowerDown": "55380.1.1.1.1.500.10.35.33",
+        "alertWatchDogPowerDownDeassert": "55380.1.1.1.1.500.10.35.34",
+        "alertWatchDogPowerCycle": "55380.1.1.1.1.500.10.35.49",
+        "alertWatchDogPowerCycleDeassert": "55380.1.1.1.1.500.10.35.50"
+      },
+      "ariLANHeartBeat": {
+        "alertLANHeartLost": "55380.1.1.1.1.500.10.39.1",
+        "alertLANHeartLostDeassert": "55380.1.1.1.1.500.10.39.2"
+      },
+      "ariMngmntHealth": {
+        "alertSensorAccessibleFail": "55380.1.1.1.1.500.10.40.1",
+        "alertSensorAccessibleFailDeassert": "55380.1.1.1.1.500.10.40.2",
+        "alertControllerAccessibleFail": "55380.1.1.1.1.500.10.40.17",
+        "alertControllerAccessibleFailDeassert": "55380.1.1.1.1.500.10.40.18",
+        "alertFruFail": "55380.1.1.1.1.500.10.40.81",
+        "alertFruFailDeassert": "55380.1.1.1.1.500.10.40.82"
+      },
+      "ariBattery": {
+        "alertRTCBatterylow": "55380.1.1.1.1.500.10.41.1",
+        "alertRTCBatterylowDeassert": "55380.1.1.1.1.500.10.41.2"
+      },
+      "ariVerChange": {
+        "alertHardwareChange": "55380.1.1.1.1.500.10.43.1",
+        "alertFirmwareChange": "55380.1.1.1.1.500.10.43.17"
+      },
+      "ariHotSwap": {
+        "alertHotSwaptoM0": "55380.1.1.1.1.500.10.240.1",
+        "alertHotSwaptoM1": "55380.1.1.1.1.500.10.240.17",
+        "alertHotSwaptoM2": "55380.1.1.1.1.500.10.240.33",
+        "alertHotSwaptoM3": "55380.1.1.1.1.500.10.240.49",
+        "alertHotSwaptoM4": "55380.1.1.1.1.500.10.240.65",
+        "alertHotSwaptoM5": "55380.1.1.1.1.500.10.240.81",
+        "alertHotSwaptoM6": "55380.1.1.1.1.500.10.240.97",
+        "alertHotSwaptoM7": "55380.1.1.1.1.500.10.240.113"
+      },
+      "ariIPMBLink": {
+        "alertIPMBLinkStateAll": "55380.1.1.1.1.500.10.241.1",
+        "alertIPMBLinkStateAllDeassert": "55380.1.1.1.1.500.10.241.2",
+        "alertIPMBLinkStateB": "55380.1.1.1.1.500.10.241.17",
+        "alertIPMBLinkStateBDeassert": "55380.1.1.1.1.500.10.241.18",
+        "alertIPMBLinkStateA": "55380.1.1.1.1.500.10.241.33",
+        "alertIPMBLinkStateADeassert": "55380.1.1.1.1.500.10.241.34",
+        "alertIPMBLinkStateNoFault": "55380.1.1.1.1.500.10.241.49"
+      },
+      "ariTrapTest": {
+        "alertTrapTestInstance": "55380.1.1.1.1.500.10.256.1"
+      },
+      "ariOvertemperature": {
+        "alertOvertempMinor": "55380.1.1.1.1.500.10.257.113",
+        "alertOvertempMinorDeassert": "55380.1.1.1.1.500.10.257.114",
+        "alertOvertempMajor": "55380.1.1.1.1.500.10.257.145",
+        "alertOvertempMajorDeassert": "55380.1.1.1.1.500.10.257.146",
+        "alertOvertempCritical": "55380.1.1.1.1.500.10.257.177",
+        "alertOvertempCriticalDeassert": "55380.1.1.1.1.500.10.257.178"
+      },
+      "ariCPUProchot": {
+        "alertCPUProchotState": "55380.1.1.1.1.500.10.775.17",
+        "alertCPUProchotStateDeassert": "55380.1.1.1.1.500.10.775.18"
+      },
+      "ariNoSDCard": {
+        "alertNoSDCardAssert": "55380.1.1.1.1.500.10.781.17",
+        "alertNoSDCardDeassert": "55380.1.1.1.1.500.10.781.18"
+      },
+      "ariAddInCard": {
+        "alertPCIeError": "55380.1.1.1.1.500.10.791.17",
+        "alertPCIeErrorDeassert": "55380.1.1.1.1.500.10.791.18"
+      },
+      "ariChipSet": {
+        "alertPCHError": "55380.1.1.1.1.500.10.793.17",
+        "alertPCHErrorDeassert": "55380.1.1.1.1.500.10.793.18"
+      },
+      "ariUIDButton": {
+        "alertUIDButtonPressed": "55380.1.1.1.1.500.10.788.17"
+      },
+      "ariPowerCapping": {
+        "alertPowerCapFail": "55380.1.1.1.1.500.10.1042.17",
+        "alertPowerCapFailDeassert": "55380.1.1.1.1.500.10.1042.18"
+      },
+      "ariCardFault": {
+        "alertCardStatusFault": "55380.1.1.1.1.500.10.1047.17",
+        "alertCardStatusFaultDeassert": "55380.1.1.1.1.500.10.1047.18"
+      },
+      "ariLCD": {
+        "alertLCDFault": "55380.1.1.1.1.500.10.1052.17",
+        "alertLCDFaultDeassert": "55380.1.1.1.1.500.10.1052.18"
+      },
+      "ariCPUUsage": {
+        "alertCPUUsageHigh": "55380.1.1.1.1.500.10.1287.17",
+        "alertCPUUsageHighDeassert": "55380.1.1.1.1.500.10.1287.18"
+      },
+      "ariMemoryUsage": {
+        "alertMemoryUsageHigh": "55380.1.1.1.1.500.10.1292.17",
+        "alertMemoryUsageHighDeassert": "55380.1.1.1.1.500.10.1292.18"
+      },
+      "ariDiskUsage": {
+        "alertDiskUsageHigh": "55380.1.1.1.1.500.10.1293.17",
+        "alertDiskUsageHighDeassert": "55380.1.1.1.1.500.10.1293.18"
+      },
+      "ariSysNotice": {
+        "alertSystemWarmReset": "55380.1.1.1.1.500.10.1810.129",
+        "alertSystemWarmResetDeassert": "55380.1.1.1.1.500.10.1810.130"
+      },
+      "ariModule": {
+        "alertModuleCritical": "55380.1.1.1.1.500.10.1813.33"
+      },
+      "ariPSPresenceStatus": {
+        "alertPSPresence": "55380.1.1.1.1.500.10.2057.17",
+        "alertPSPresenceDeassert": "55380.1.1.1.1.500.10.2057.18"
+      },
+      "ariFanPresenceStatus": {
+        "alertFanAbsent": "55380.1.1.1.1.500.10.2058.1",
+        "alertFanAbsentDeassert": "55380.1.1.1.1.500.10.2058.2"
+      },
+      "ariCardPresenceStatus": {
+        "alertCardPresence": "55380.1.1.1.1.500.10.2071.17",
+        "alertCardPresenceDeassert": "55380.1.1.1.1.500.10.2071.18"
+      },
+      "ariLCDPresenceStatus": {
+        "alertLCDAbsent": "55380.1.1.1.1.500.10.2076.1",
+        "alertLCDAbsentDeassert": "55380.1.1.1.1.500.10.2076.2"
+      },
+      "ariCPUCore": {
+        "alertCPUCoreIsolation": "55380.1.1.1.1.500.10.2311.1",
+        "alertCPUCoreIsolationDeassert": "55380.1.1.1.1.500.10.2311.2"
+      },
+      "ariBMCBootUp": {
+        "alertBMCBootUpAssert": "55380.1.1.1.1.500.10.2326.17"
+      },
+      "ariMemoryRiser": {
+        "alertMemoryRiserOnline": "55380.1.1.1.1.500.10.2583.49",
+        "alertMemoryRiserOnlineDeassert": "55380.1.1.1.1.500.10.2583.50",
+        "alertMemoryRiserOffline": "55380.1.1.1.1.500.10.2583.65",
+        "alertMemoryRiserOfflineDeassert": "55380.1.1.1.1.500.10.2583.66",
+        "alertMemoryRiserInstallError": "55380.1.1.1.1.500.10.2583.129",
+        "alertMemoryRiserInstallErrorDeassert": "55380.1.1.1.1.500.10.2583.130"
+      },
+      "ariPSRedundancy": {
+        "alertPSRedundancyLost": "55380.1.1.1.1.500.10.2824.17",
+        "alertPSRedundancyLostDeassert": "55380.1.1.1.1.500.10.2824.18"
+      }
+    }
+  }
 }
