@@ -41,7 +41,7 @@ class MibJson():
         if os.path.exists(jsonpath):
             print("1.json exist , now delate")
             os.remove(jsonpath)
-        with open('1.json', 'w') as f:
+        with open('../demo/1.json', 'w') as f:
             json.dump(self.Matrix, f, indent=2)
 
     def ShowJson(self):

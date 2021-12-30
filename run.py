@@ -27,7 +27,7 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
         self.thread = Update_data()
         # 按键绑定信号
         self.Start_Button.clicked.connect(self.click_start)
-        # self.Export_Button.clicked.connect(self.Tree.add_new_tree)
+        self.Refresh_Button.clicked.connect(self.Tree.add_new_tree)
 
         # IP输入绑定信号
         self.IPmodel.returnPressed.connect(self.click_start)
@@ -43,6 +43,7 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
         self.IPmodel.setReadOnly(True)
         # 开始按键变灰
         self.Start_Button.setEnabled(False)
+        self.Vchoice.setEnabled(False)
         # 测试线程开始
         self.thread.start()
 
