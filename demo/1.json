@@ -1,0 +1,305 @@
+{
+  "system": {
+    "fwVersion": "55380.1.1.1.1.1.1",
+    "systemProductType": "55380.1.1.1.1.1.2",
+    "systemProductName": "55380.1.1.1.1.1.3",
+    "deviceSN": "55380.1.1.1.1.1.4",
+    "systemPower": "55380.1.1.1.1.1.5",
+    "systemStatus": "55380.1.1.1.1.1.6",
+    "systemTime": "55380.1.1.1.1.1.7",
+    "systemTimeZone": "55380.1.1.1.1.1.8",
+    "systemGuid": "55380.1.1.1.1.1.9",
+    "systemPowerPolicy": "55380.1.1.1.1.1.10",
+    "systemBiosFirstBootDevice": "55380.1.1.1.1.1.11",
+    "systemIDIdentify": "55380.1.1.1.1.1.12",
+    "hostName": "55380.1.1.1.1.1.14",
+    "sysPowerButton": "55380.1.1.1.1.1.15",
+    "systemRealTimePower": "55380.1.1.1.1.1.16",
+    "syncNtpTime": "55380.1.1.1.1.1.17",
+    "primaryNtpServerIP": "55380.1.1.1.1.1.18",
+    "secondaryNtpServerIP": "55380.1.1.1.1.1.19"
+  },
+  "sensor": {
+    "sensorCount": "55380.1.1.1.1.2.1",
+    "sensorTable": {
+      "sensorEntry": {
+        "sensorIndex": "55380.1.1.1.1.2.2.1.1",
+        "sensorName": "55380.1.1.1.1.2.2.1.2",
+        "sensorNumber": "55380.1.1.1.1.2.2.1.3",
+        "sensorType": "55380.1.1.1.1.2.2.1.4",
+        "sensorValue": "55380.1.1.1.1.2.2.1.5",
+        "sensorStatus": "55380.1.1.1.1.2.2.1.6",
+        "thresholdUpperNonRecoverable": "55380.1.1.1.1.2.2.1.7",
+        "thresholdUpperCritical": "55380.1.1.1.1.2.2.1.8",
+        "thresholdUpperNonCritical": "55380.1.1.1.1.2.2.1.9",
+        "thresholdLowerNonCritical": "55380.1.1.1.1.2.2.1.10",
+        "thresholdLowerCritical": "55380.1.1.1.1.2.2.1.11",
+        "thresholdLowerNonRecoverable": "55380.1.1.1.1.2.2.1.12"
+      }
+    }
+  },
+  "componentInfo": {
+    "cpuTable": {
+      "cpuEntry": {
+        "cpuIndex": "55380.1.1.1.1.4.1.1.1",
+        "cpuLocation": "55380.1.1.1.1.4.1.1.2",
+        "cpuPresent": "55380.1.1.1.1.4.1.1.3",
+        "cpuBrandName": "55380.1.1.1.1.4.1.1.4",
+        "cpuFrequency": "55380.1.1.1.1.4.1.1.5",
+        "cpuTDP": "55380.1.1.1.1.4.1.1.6",
+        "cpuMaxCoresThreads": "55380.1.1.1.1.4.1.1.7",
+        "cpuSystemClockSpeed": "55380.1.1.1.1.4.1.1.8",
+        "cpuTurboFrequency": "55380.1.1.1.1.4.1.1.9",
+        "cpuCurrentCoresThreads": "55380.1.1.1.1.4.1.1.10",
+        "cpuL1L2L3CacheInfo": "55380.1.1.1.1.4.1.1.11",
+        "cpuS-Spec": "55380.1.1.1.1.4.1.1.12",
+        "cpuFamily": "55380.1.1.1.1.4.1.1.13",
+        "cpuModel": "55380.1.1.1.1.4.1.1.14",
+        "cpuStepping": "55380.1.1.1.1.4.1.1.15",
+        "cpuExtFamily": "55380.1.1.1.1.4.1.1.16",
+        "cpuExtModel": "55380.1.1.1.1.4.1.1.17",
+        "cpuUPIFrequency": "55380.1.1.1.1.4.1.1.18",
+        "cpuUPILinkNumber": "55380.1.1.1.1.4.1.1.19",
+        "cpuMaxUPILinkTransferRate": "55380.1.1.1.1.4.1.1.20",
+        "cpuMaxPCIeLinkTransferRate": "55380.1.1.1.1.4.1.1.21",
+        "cpuMaxSupportIntelDCPersistentMemorySize": "55380.1.1.1.1.4.1.1.22",
+        "cpuTcase": "55380.1.1.1.1.4.1.1.23",
+        "cpuFeatures": "55380.1.1.1.1.4.1.1.24"
+      }
+    },
+    "memoryTable": {
+      "memoryEntry": {
+        "memoryIndex": "55380.1.1.1.1.4.2.1.1",
+        "memoryLocation": "55380.1.1.1.1.4.2.1.2",
+        "memoryPresent": "55380.1.1.1.1.4.2.1.3",
+        "memoryVendor": "55380.1.1.1.1.4.2.1.4",
+        "memoryPN": "55380.1.1.1.1.4.2.1.5",
+        "memorySN": "55380.1.1.1.1.4.2.1.6",
+        "memoryDRAMType": "55380.1.1.1.1.4.2.1.7",
+        "memoryModule": "55380.1.1.1.1.4.2.1.8",
+        "memoryType": "55380.1.1.1.1.4.2.1.9",
+        "memoryFrequency": "55380.1.1.1.1.4.2.1.10",
+        "memoryCapacity": "55380.1.1.1.1.4.2.1.11",
+        "memoryRank": "55380.1.1.1.1.4.2.1.12"
+      }
+    },
+    "hddTable": {
+      "hddEntry": {
+        "hddIndex": "55380.1.1.1.1.4.3.1.1",
+        "hddPresent": "55380.1.1.1.1.4.3.1.2",
+        "hddModel": "55380.1.1.1.1.4.3.1.3",
+        "hddMode": "55380.1.1.1.1.4.3.1.4",
+        "hddSN": "55380.1.1.1.1.4.3.1.5",
+        "hddFWVersion": "55380.1.1.1.1.4.3.1.6",
+        "hddCapacity": "55380.1.1.1.1.4.3.1.7",
+        "hddNvmeBrandName": "55380.1.1.1.1.4.3.1.8",
+        "hddNvmeVendorID": "55380.1.1.1.1.4.3.1.9",
+        "hddNvmeMaxLinkSpeed": "55380.1.1.1.1.4.3.1.10",
+        "hddNvmeMaxLinkWidth": "55380.1.1.1.1.4.3.1.11",
+        "hddNvmeTemp": "55380.1.1.1.1.4.3.1.12",
+        "hddNvmeLeftLife": "55380.1.1.1.1.4.3.1.13",
+        "hddNvmeSMART": "55380.1.1.1.1.4.3.1.14"
+      }
+    },
+    "psuTable": {
+      "psuEntry": {
+        "psuIndex": "55380.1.1.1.1.4.4.1.1",
+        "psuLocation": "55380.1.1.1.1.4.4.1.2",
+        "psuPresent": "55380.1.1.1.1.4.4.1.3",
+        "psuVendor": "55380.1.1.1.1.4.4.1.4",
+        "psuModel": "55380.1.1.1.1.4.4.1.5",
+        "psuRevision": "55380.1.1.1.1.4.4.1.6",
+        "psuDate": "55380.1.1.1.1.4.4.1.7",
+        "psuSN": "55380.1.1.1.1.4.4.1.8",
+        "psuRatedPower": "55380.1.1.1.1.4.4.1.9"
+      }
+    },
+    "pCIeTable": {
+      "pCIeEntry": {
+        "pCIeIndex": "55380.1.1.1.1.4.5.1.1",
+        "pCIeLocation": "55380.1.1.1.1.4.5.1.2",
+        "pCIeVendor": "55380.1.1.1.1.4.5.1.3",
+        "pCIeClass": "55380.1.1.1.1.4.5.1.4",
+        "pCIeBrandName": "55380.1.1.1.1.4.5.1.5",
+        "pCIeLinkSpeed": "55380.1.1.1.1.4.5.1.6",
+        "pCIeLinkWidth": "55380.1.1.1.1.4.5.1.7"
+      }
+    },
+    "nicTable": {
+      "nicEntry": {
+        "nicIndex": "55380.1.1.1.1.4.6.1.1",
+        "nicLocation": "55380.1.1.1.1.4.6.1.2",
+        "nicPcieAddr": "55380.1.1.1.1.4.6.1.3",
+        "nicPort": "55380.1.1.1.1.4.6.1.4",
+        "nicVendor": "55380.1.1.1.1.4.6.1.5",
+        "nicCategory": "55380.1.1.1.1.4.6.1.6",
+        "nicClass": "55380.1.1.1.1.4.6.1.7",
+        "nicBrandName": "55380.1.1.1.1.4.6.1.8",
+        "nicLinkSpeed": "55380.1.1.1.1.4.6.1.9",
+        "nicMACGUID": "55380.1.1.1.1.4.6.1.10"
+      }
+    },
+    "raidCardTable": {
+      "raidCardEntry": {
+        "raidCardIndex": "55380.1.1.1.1.4.7.1.1",
+        "raidCardLocation": "55380.1.1.1.1.4.7.1.2",
+        "raidCardPresent": "55380.1.1.1.1.4.7.1.3",
+        "raidCardAdapterName": "55380.1.1.1.1.4.7.1.4",
+        "raidCardSerialNum": "55380.1.1.1.1.4.7.1.5",
+        "raidCardPkgVersion": "55380.1.1.1.1.4.7.1.6",
+        "raidCardBIOSVersion": "55380.1.1.1.1.4.7.1.7",
+        "raidCardHIVVersion": "55380.1.1.1.1.4.7.1.8",
+        "raidCardExpanderVersion": "55380.1.1.1.1.4.7.1.9",
+        "raidCardNVDATAVersion": "55380.1.1.1.1.4.7.1.10",
+        "raidCardCPLDVersion": "55380.1.1.1.1.4.7.1.11",
+        "raidCardPCIVendorID": "55380.1.1.1.1.4.7.1.12",
+        "raidCardPCIDeviceID": "55380.1.1.1.1.4.7.1.13",
+        "raidCardPCISubVendorID": "55380.1.1.1.1.4.7.1.14",
+        "raidCardPCISubSytemID": "55380.1.1.1.1.4.7.1.15",
+        "raidCardROCTemp": "55380.1.1.1.1.4.7.1.17",
+        "raidCardExpanderTemp": "55380.1.1.1.1.4.7.1.18",
+        "raidCardFirmwareBuildTime": "55380.1.1.1.1.4.7.1.20",
+        "raidCardHostInterface": "55380.1.1.1.1.4.7.1.21",
+        "raidCardDeviceInterface": "55380.1.1.1.1.4.7.1.22",
+        "raidCardNvramSize": "55380.1.1.1.1.4.7.1.23",
+        "raidCardMemorySize": "55380.1.1.1.1.4.7.1.24",
+        "raidCardFlashSize": "55380.1.1.1.1.4.7.1.25",
+        "raidCardAutoRebuild": "55380.1.1.1.1.4.7.1.26",
+        "raidCardSasAddress": "55380.1.1.1.1.4.7.1.27",
+        "raidCardPortCount": "55380.1.1.1.1.4.7.1.28",
+        "raidCardPyhsicalDriveCount": "55380.1.1.1.1.4.7.1.29",
+        "raidCardVitualDriveCount": "55380.1.1.1.1.4.7.1.30",
+        "raidCardFirmwareVersion": "55380.1.1.1.1.4.7.1.31",
+        "raidCardMinStripSize": "55380.1.1.1.1.4.7.1.32",
+        "raidCardSpinDownTime": "55380.1.1.1.1.4.7.1.33",
+        "raidCardSpinUpDelay": "55380.1.1.1.1.4.7.1.34",
+        "raidCardCacheFlushInterval": "55380.1.1.1.1.4.7.1.35",
+        "raidCardRebuildRate": "55380.1.1.1.1.4.7.1.36",
+        "raidCardResconstructionRate": "55380.1.1.1.1.4.7.1.37",
+        "raidCardCoercionMode": "55380.1.1.1.1.4.7.1.38",
+        "raidCardBatteryWaring": "55380.1.1.1.1.4.7.1.39",
+        "raidCardAlarmControl": "55380.1.1.1.1.4.7.1.40",
+        "raidCardClusterMode": "55380.1.1.1.1.4.7.1.41",
+        "raidCardControlR": "55380.1.1.1.1.4.7.1.42",
+        "raidCardMaxStripSize": "55380.1.1.1.1.4.7.1.43",
+        "raidCardSpinUpDriveCount": "55380.1.1.1.1.4.7.1.44",
+        "raidCardSmartPolling": "55380.1.1.1.1.4.7.1.45",
+        "raidCardBackGroundInitRate": "55380.1.1.1.1.4.7.1.46",
+        "raidCardConsistencyCheckRate": "55380.1.1.1.1.4.7.1.47",
+        "raidCardMaintainFDFailHistory": "55380.1.1.1.1.4.7.1.48",
+        "raidCardSmartCopyBackEnable": "55380.1.1.1.1.4.7.1.49",
+        "raidCardNCQ": "55380.1.1.1.1.4.7.1.50",
+        "raidCardShieldStateSupported": "55380.1.1.1.1.4.7.1.51"
+      }
+    },
+    "hddUnderRaidCardTable": {
+      "hddUnderRaidCardTableEntry": {
+        "hddIndex": "55380.1.1.1.1.4.8.1.1",
+        "hddPresent": "55380.1.1.1.1.4.8.1.2",
+        "hddCtrlID": "55380.1.1.1.1.4.8.1.3",
+        "hddDevID": "55380.1.1.1.1.4.8.1.4",
+        "hddType": "55380.1.1.1.1.4.8.1.5",
+        "hddState": "55380.1.1.1.1.4.8.1.6",
+        "hddVendorID": "55380.1.1.1.1.4.8.1.7",
+        "hddProductID": "55380.1.1.1.1.4.8.1.8",
+        "hddSerialNum": "55380.1.1.1.1.4.8.1.9",
+        "hddRevisionLevel": "55380.1.1.1.1.4.8.1.10",
+        "hddSlot": "55380.1.1.1.1.4.8.1.11",
+        "hddPresent2": "55380.1.1.1.1.4.8.1.12",
+        "hddLEDStatus": "55380.1.1.1.1.4.8.1.13",
+        "hddInterfaceType": "55380.1.1.1.1.4.8.1.14",
+        "hddCache": "55380.1.1.1.1.4.8.1.15",
+        "hddSpeed": "55380.1.1.1.1.4.8.1.16",
+        "hddSize64": "55380.1.1.1.1.4.8.1.17",
+        "hddBlockSize": "55380.1.1.1.1.4.8.1.18",
+        "hddLinkSpeed": "55380.1.1.1.1.4.8.1.19",
+        "hddPowerState": "55380.1.1.1.1.4.8.1.20",
+        "hddTemperature": "55380.1.1.1.1.4.8.1.21",
+        "hddSmart": "55380.1.1.1.1.4.8.1.22",
+        "hddRemovableStatus": "55380.1.1.1.1.4.8.1.23",
+        "hddPredFailCount": "55380.1.1.1.1.4.8.1.24"
+      }
+    },
+    "logicDevUnderRaidCardTable": {
+      "logicDevUnderRaidCardTableEntry": {
+        "logicDevIndex": "55380.1.1.1.1.4.9.1.1",
+        "logicDevCtrlID": "55380.1.1.1.1.4.9.1.2",
+        "logicDevID": "55380.1.1.1.1.4.9.1.3",
+        "logicDevLDName": "55380.1.1.1.1.4.9.1.4",
+        "logicDevType": "55380.1.1.1.1.4.9.1.5",
+        "logicDevState": "55380.1.1.1.1.4.9.1.6",
+        "logicDevStripeSize": "55380.1.1.1.1.4.9.1.7",
+        "logicDevAccessPolicy": "55380.1.1.1.1.4.9.1.8",
+        "logicDevReadPolicy": "55380.1.1.1.1.4.9.1.9",
+        "logicDevWritePolicy": "55380.1.1.1.1.4.9.1.10",
+        "logicDevCachePolicy": "55380.1.1.1.1.4.9.1.11",
+        "logicDevBGI": "55380.1.1.1.1.4.9.1.12",
+        "logicDevSSDCaching": "55380.1.1.1.1.4.9.1.13",
+        "logicDevProgress": "55380.1.1.1.1.4.9.1.14",
+        "logicDevBadBlocks": "55380.1.1.1.1.4.9.1.15",
+        "logicDevSize": "55380.1.1.1.1.4.9.1.16",
+        "logicDevElementsNum": "55380.1.1.1.1.4.9.1.17",
+        "logicDevElementList": "55380.1.1.1.1.4.9.1.18"
+      }
+    },
+    "sASITCardTable": {
+      "sASITCardEntry": {
+        "sASITCardIndex": "55380.1.1.1.1.4.10.1.1",
+        "sASITCardLocation": "55380.1.1.1.1.4.10.1.2",
+        "sASITCardPresent": "55380.1.1.1.1.4.10.1.3",
+        "sASITCardBoardName": "55380.1.1.1.1.4.10.1.4",
+        "sASITCardSASAddress": "55380.1.1.1.1.4.10.1.5",
+        "sASITCardFWVersion": "55380.1.1.1.1.4.10.1.6",
+        "sASITCardNVDATAVersion": "55380.1.1.1.1.4.10.1.7",
+        "sASITCardPCIVensorID": "55380.1.1.1.1.4.10.1.8",
+        "sASITCardPCIDeviceID": "55380.1.1.1.1.4.10.1.9",
+        "sASITCardPCISubvendorID": "55380.1.1.1.1.4.10.1.10",
+        "sASITCardPCISubsystemID": "55380.1.1.1.1.4.10.1.11",
+        "sASITCardSpeed": "55380.1.1.1.1.4.10.1.12",
+        "sASITCardIOCTemp": "55380.1.1.1.1.4.10.1.13"
+      }
+    },
+    "hddUnderSASITCardTable": {
+      "hddUnderSASITCardTableEntry": {
+        "hddUnderSASITCardIndex": "55380.1.1.1.1.4.11.1.1",
+        "hddUnderSASITCardPresent": "55380.1.1.1.1.4.11.1.2",
+        "hddUnderSASITCardCtrlID": "55380.1.1.1.1.4.11.1.3",
+        "hddUnderSASITCardDevID": "55380.1.1.1.1.4.11.1.4",
+        "hddUnderSASITCardType": "55380.1.1.1.1.4.11.1.5",
+        "hddUnderSASITCardState": "55380.1.1.1.1.4.11.1.6",
+        "hddUnderSASITCardVendorID": "55380.1.1.1.1.4.11.1.7",
+        "hddUnderSASITCardProductID": "55380.1.1.1.1.4.11.1.8",
+        "hddUnderSASITCardSerialNum": "55380.1.1.1.1.4.11.1.9",
+        "hddUnderSASITCardRevisionLevel": "55380.1.1.1.1.4.11.1.10",
+        "hddUnderSASITCardSlot": "55380.1.1.1.1.4.11.1.11",
+        "hddUnderSASITCardLEDStatus": "55380.1.1.1.1.4.11.1.12",
+        "hddUnderSASITCardInterfaceType": "55380.1.1.1.1.4.11.1.13",
+        "hddUnderSASITCardsize64": "55380.1.1.1.1.4.11.1.14",
+        "hddUnderSASITCardSpeed": "55380.1.1.1.1.4.11.1.15",
+        "hddUnderSASITCardPowerState": "55380.1.1.1.1.4.11.1.16",
+        "hddUnderSASITCardTemperature": "55380.1.1.1.1.4.11.1.17",
+        "hddUnderSASITCardSmart": "55380.1.1.1.1.4.11.1.18"
+      }
+    },
+    "fanTable": {
+      "fanEntry": {
+        "fanIndex": "55380.1.1.1.1.4.12.1.1",
+        "fanLocation": "55380.1.1.1.1.4.12.1.2",
+        "fanCoolingPolicy": "55380.1.1.1.1.4.12.1.3",
+        "fanCurrentTachSpeed": "55380.1.1.1.1.4.12.1.4",
+        "fanMaxTachSpeed": "55380.1.1.1.1.4.12.1.5",
+        "fanSpeedPercent": "55380.1.1.1.1.4.12.1.6"
+      }
+    }
+  },
+  "biosInfo": {
+    "biosFwVersion": "55380.1.1.1.1.5.1",
+    "meVersion": "55380.1.1.1.1.5.2"
+  },
+  "fru": {},
+  "serverHealth": {
+    "systemHealthStatus": "55380.1.1.1.1.11.1",
+    "mBHealthStatus": "55380.1.1.1.1.11.2"
+  },
+  "trapGroup": {}
+}
