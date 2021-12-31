@@ -3,6 +3,7 @@
 import json
 import sys
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QApplication
+from func.string_handler import get_desktop
 
 
 class MyTree(QTreeWidget):
@@ -15,7 +16,8 @@ class MyTree(QTreeWidget):
         self.setHeaderLabels(['Name', 'OID', 'Value', 'attribute'])
 
     def add_new_tree(self, dict):
-        f = open("E:\\Python_Repositories\\mib_project\\demo\\1.json", encoding='utf-8')
+        jsonpath = get_desktop() + '\\OID.json'
+        f = open(jsonpath, encoding='utf-8')
         res = f.read()  # 读文件
         dict = json.loads(res)
         root = QTreeWidgetItem(self)

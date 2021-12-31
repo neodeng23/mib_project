@@ -1,16 +1,9 @@
-import os
-import json
-from itertools import takewhile
-from func.string_handler import Getdigit, GetOidNum, remove_blank, GetDescription
+from func.string_handler import Getdigit, GetOidNum, remove_blank, get_desktop
 from func.mibjson import MibJson
-
-'''
-    27500.1.1.1.1 
-'''
 
 
 def Makejson(MibJson = MibJson()):
-    mibdata = open("../demo/SNK-BMC-MIB.mib")
+    mibdata = open(get_desktop() + '\\BMC-MIB.mib', encoding='utf-8')
     pre = ""
     l = []
     pre_num = 0

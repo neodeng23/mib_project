@@ -54,7 +54,6 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
         self.Logmodel.append(input)
 
 
-
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     mainWindow = MyMainForm()

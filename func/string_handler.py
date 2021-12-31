@@ -4,6 +4,12 @@ import os
 import binascii
 import itertools
 from itertools import takewhile
+import winreg
+
+
+def get_desktop():
+  key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders')
+  return winreg.QueryValueEx(key, "Desktop")[0]
 
 
 def remove_blank(list):
@@ -48,41 +54,8 @@ def GetOidNum(string):
         pass
 
 
-def GetDescription(string):
-    string = string.strip()
-    try:
-        info = (re.findall('["].*["]', string))
-        str = info[0]
-        return str
-    except:
-        pass
-
-
-def FileWriteLines(data, fileName, writeAppend=False):
-    mode = 'w'
-    if writeAppend:
-        mode = 'a'
-    try:
-        with open(fileName, mode) as f:
-            for line in data:
-                line = line.strip()
-                if len(line) == 0:
-                    continue
-                f.write('%s%s' % (line, os.linesep))
-    except:
-        return False
-    return True
-
-
-def IsFolderExists(pathName):
-    return os.path.exists(pathName) and not os.path.isfile(pathName)
-
-
-def CreateFolder(pathName):
-    if IsFolderExists(pathName):
-        return True
-    try:
-        os.makedirs(pathName)
-    except:
-        return False
-    return IsFolderExists(pathName)
+def splitByeq(string):
+    l = str(string).split(" = ")
+    res = l[1].strip()
+    # res = str(string).replace('SNMPv2-SMI::enterprises.', '')
+    return res

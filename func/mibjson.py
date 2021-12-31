@@ -1,5 +1,6 @@
 import json
 import os
+from func.string_handler import get_desktop
 
 
 class MibJson():
@@ -37,11 +38,11 @@ class MibJson():
             self.Matrix[key1][key2][key3][key4][key5] = {}
 
     def CreateJson(self):
-        jsonpath = 'E:\\Python_Repositories\\mib_project\\demo\\1.json'
+        jsonpath = get_desktop() + '\\OID.json'
         if os.path.exists(jsonpath):
             print("1.json exist , now delate")
             os.remove(jsonpath)
-        with open('../demo/1.json', 'w') as f:
+        with open(jsonpath, 'w') as f:
             json.dump(self.Matrix, f, indent=2)
 
     def ShowJson(self):

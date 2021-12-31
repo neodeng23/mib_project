@@ -1,0 +1,4650 @@
+﻿--  $Id: SUMA-OBMC-MIB.mib$
+--	Version: V031
+--
+--  DESCRIPTION
+--      This MIB file defines objects that can be managed on
+--      Suma server BMCs.
+--
+-- Define MIB Name
+     SUMASERVERMGMT-MIB     DEFINITIONS         ::= BEGIN
+
+
+-- IMPORTS Statement
+IMPORTS
+    enterprises, IpAddress, Gauge, TimeTicks, NetworkAddress
+        FROM RFC1155-SMI
+
+    MODULE-IDENTITY,OBJECT-IDENTITY,NOTIFICATION-TYPE,
+    OBJECT-TYPE,Unsigned32,Integer32,Counter32
+        FROM SNMPv2-SMI
+
+    DisplayString, TruthValue
+        FROM SNMPv2-TC;
+
+-- MODULE-IDENTITY Statement
+
+
+-- NODE DEfinitions Statement
+
+    suma OBJECT IDENTIFIER             ::=  { enterprises 54357 }
+    equipment OBJECT IDENTIFIER         ::=  { suma 1 }
+    server OBJECT IDENTIFIER            ::=  { equipment 1 }
+    management OBJECT IDENTIFIER        ::=  { server 1 }
+    bmc OBJECT IDENTIFIER               ::=  { management 1 }
+
+
+--  ************************system**********************
+
+    system OBJECT IDENTIFIER            ::=  { bmc 1 }
+
+	  fwVersion OBJECT-TYPE
+        SYNTAX  DisplayString
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "BMC firmware version"
+        ::= { system 1 }
+
+    sysBmcTime OBJECT-TYPE
+        SYNTAX      DisplayString
+        MAX-ACCESS  read-only
+        STATUS      current
+        DESCRIPTION
+        "Get BMC System Time"
+        ::= { system 7 }
+
+    sysBmcHostName OBJECT-TYPE
+        SYNTAX      DisplayString
+        MAX-ACCESS  read-write
+        STATUS      current
+        DESCRIPTION
+        "Get/Set BMC HostName"
+        ::= { system 13 }
+
+--		syncNtpTimeSwitch OBJECT-TYPE
+--      SYNTAX  INTEGER { off(0), on(1) }
+--      ACCESS  read-write
+--      STATUS  mandatory
+--      DESCRIPTION
+--      "Define the switch for time synchronization with NTP server."
+--      ::= { system 17 }
+
+		syncNtpTimeInterval OBJECT-TYPE
+        SYNTAX  INTEGER (32..65535)
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+        "Define the interval(in seconds) for time synchronization with NTP server."
+        ::= { system 18 }
+
+		primaryNtpServer OBJECT-TYPE
+        SYNTAX  DisplayString
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+        "Define the primary NTP server."
+        ::= { system 19 }
+
+		secondaryNtpServer OBJECT-TYPE
+        SYNTAX  DisplayString
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+        "Define the secondary NTP server."
+        ::= { system 20 }
+
+		bmcSharedIpv4Address OBJECT-TYPE
+        SYNTAX  DisplayString
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+        "Define the BMC Sharelan IPV4 IP Address."
+        ::= { system 21 }
+
+		bmcDedicateIpv4Address OBJECT-TYPE
+        SYNTAX  DisplayString
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+        "Define the BMC Dedicatelan IPV4 IP Address."
+        ::= { system 22 }
+
+		bmcSharedIpv6Address OBJECT-TYPE
+        SYNTAX  DisplayString
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+        "Define the BMC Sharelan IPV6 IP Address."
+        ::= { system 23 }
+
+		bmcDedicateIpv6Address OBJECT-TYPE
+        SYNTAX  DisplayString
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+        "Define the BMC Dedicatelan IPV6 IP Address."
+        ::= { system 24 }
+		
+		sysTempStatus OBJECT-TYPE
+        SYNTAX  DisplayString
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+        "Define All Server Temperature Sensors Event Level
+		     	 0  - Normal	
+				 1  - NotCritical	 
+				 2  - Critical   
+				 3  - Urgency  "
+        ::= { system 25 }
+		
+		sysVoltStatus OBJECT-TYPE
+        SYNTAX  DisplayString
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+        "Define All Server Voltage Sensors Event Level
+			     0  - Normal	
+				 1  - NotCritical	 
+				 2  - Critical   
+				 3  - Urgency  "
+        ::= { system 26 }
+		
+		systemHealthStatus OBJECT-TYPE
+        SYNTAX  DisplayString
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+        "Define The Server System Health Event Level
+			     0  - Normal	
+				 1  - NotCritical	 
+				 2  - Critical   
+				 3  - Urgency  "
+        ::= { system 27 }
+		
+--  ************************sensor**********************
+    sensor OBJECT IDENTIFIER            ::=  { bmc 2 }
+
+    sensorCount OBJECT-TYPE
+	    SYNTAX  INTEGER
+	    ACCESS  read-only
+	    STATUS  mandatory
+	    DESCRIPTION "Sensor Count"
+	    ::= { sensor 1 }
+
+         -- Sensor Table
+
+    sensorTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF SensorEntry
+      ACCESS  not-accessible
+      STATUS  mandatory
+      ::= { sensor 2 }
+
+        sensorEntry OBJECT-TYPE
+          SYNTAX  SensorEntry
+          ACCESS  not-accessible
+          STATUS  mandatory
+          INDEX   { sensorIndex }
+          ::= { sensorTable 1 }
+
+        SensorEntry ::= SEQUENCE {
+          sensorIndex                   INTEGER,
+          sensorName                    DisplayString,
+          sensorNumber                  INTEGER,
+          sensorType                    DisplayString,
+          sensorValue                   DisplayString,
+          thresholdUpperNonRecoverable  DisplayString,
+          thresholdUpperCritical        DisplayString,
+          thresholdUpperNonCritical     DisplayString,
+          thresholdLowerNonCritical     DisplayString,
+          thresholdLowerCritical        DisplayString,
+          thresholdLowerNonRecoverable  DisplayString }
+
+               sensorIndex OBJECT-TYPE
+                       SYNTAX  INTEGER
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::=  { sensorEntry 1 }
+
+               sensorName OBJECT-TYPE
+                       SYNTAX  DisplayString 
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::=  { sensorEntry 2 }
+                       
+               sensorNumber OBJECT-TYPE
+                       SYNTAX  INTEGER
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::=  { sensorEntry 3 }
+
+               sensorType OBJECT-TYPE
+                       SYNTAX  DisplayString 
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::=  { sensorEntry 4 }
+
+               sensorValue OBJECT-TYPE
+                       SYNTAX  DisplayString 
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::= { sensorEntry 5 }
+
+	             thresholdUpperNonRecoverable OBJECT-TYPE
+                       SYNTAX  DisplayString  
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::= { sensorEntry 7 }
+
+	             thresholdUpperCritical OBJECT-TYPE
+                       SYNTAX  DisplayString  
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::= { sensorEntry 8 }
+
+	             thresholdUpperNonCritical OBJECT-TYPE
+                       SYNTAX  DisplayString  
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::= { sensorEntry 9 }
+
+	             thresholdLowerNonCritical OBJECT-TYPE
+                       SYNTAX  DisplayString  
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::= { sensorEntry 10 }
+	
+	             thresholdLowerCritical OBJECT-TYPE
+                       SYNTAX  DisplayString  
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::= { sensorEntry 11 }
+
+	             thresholdLowerNonRecoverable OBJECT-TYPE
+                       SYNTAX  DisplayString  
+                       ACCESS  read-only
+                       STATUS  mandatory
+                       ::= { sensorEntry 12 }
+
+
+--  ************************ ComponentInfo **********************
+
+    componentInfo OBJECT IDENTIFIER     ::=  { bmc 4 }
+
+	-- CPU Table
+
+        cpuTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF CpuEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        ::= { componentInfo 1 }
+
+            cpuEntry OBJECT-TYPE
+              SYNTAX  CpuEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { cpuIndex }
+              ::= { cpuTable 1 }
+
+            CpuEntry ::= SEQUENCE {
+              cpuIndex                                      INTEGER,
+              cpuLocation                                   DisplayString,
+              cpuPresent                                    DisplayString,
+              cpuBrandName                                  DisplayString,
+              cpuFrequency                                  DisplayString,
+			  cpuThreadCount                                DisplayString,
+              cpuID                                         DisplayString,
+              cpuCoreCount                                  DisplayString,
+              cpuL1L2L3CacheInfo                            DisplayString,
+
+                }
+
+                cpuIndex OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { cpuEntry 1 }
+
+                cpuLocation OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { cpuEntry 2 }
+
+                cpuPresent OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { cpuEntry 3 }
+
+                cpuBrandName OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { cpuEntry 4 }
+
+                cpuFrequency OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { cpuEntry 5 }
+
+				cpuThreadCount  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { cpuEntry 7 }
+
+				cpuID OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { cpuEntry 8 }
+
+                cpuCoreCount OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { cpuEntry 10 }
+
+                cpuL1L2L3CacheInfo OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { cpuEntry 11 }
+
+
+         -- Memory Table
+
+        memoryTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF MemoryEntry
+            ACCESS  not-accessible
+            STATUS  mandatory
+            ::= { componentInfo 2 }
+
+            memoryEntry OBJECT-TYPE
+              SYNTAX  MemoryEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { memoryIndex }
+              ::= { memoryTable 1 }
+
+            MemoryEntry ::= SEQUENCE {
+              memoryIndex               INTEGER,
+              memoryLocation            DisplayString,
+              memoryPresent             DisplayString,
+              memoryVendor              DisplayString,
+              memoryPN                  DisplayString,
+              memorySN                  DisplayString,
+              memoryDRAMType            DisplayString,
+              memoryModule              DisplayString,
+              memoryType                DisplayString,
+              memoryFrequency           DisplayString,
+			  memorySize                DisplayString,}
+
+                memoryIndex OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 1 }
+
+                memoryLocation OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 2 }
+
+                memoryPresent OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 3 }
+
+                memoryVendor OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 4 }
+
+                memoryPN OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 5 }
+
+                memorySN OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 6 }
+
+                memoryDRAMType OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 7 }
+
+                memoryModule OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 8 }
+
+                memoryType OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 9 }
+
+                memoryFrequency OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 10 }
+
+				memorySize OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { memoryEntry 11 }
+
+
+         -- HDD Table
+
+        hddTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF HddEntry
+          ACCESS  not-accessible
+          STATUS  mandatory
+          ::= { componentInfo 3 }
+
+            hddEntry OBJECT-TYPE
+              SYNTAX  HddEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { hddIndex }
+              ::= { hddTable 1 }
+
+            HddEntry ::= SEQUENCE {
+              hddIndex                  INTEGER,
+              hddPresent                DisplayString,
+              hddModel                  DisplayString,
+              hddMode                   DisplayString,
+              hddSN                     DisplayString,
+              hddFWVersion              DisplayString,
+              hddCapacity               DisplayString,
+              hddNvmeBrandName			    DisplayString,
+			  hddNvmeVendorID			    DisplayString,
+			  hddNvmeMaxLinkSpeed			    DisplayString,
+			  hddNvmeMaxLinkWidth			    DisplayString,
+			  hddNvmeTemp			    DisplayString,
+			  hddNvmeLeftLife			    DisplayString,
+			  hddNvmeSMART			    DisplayString,
+			  hddSpeed                  DisplayString
+			  }
+
+
+                hddIndex OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 1 }
+
+                hddPresent OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 3 }
+
+                hddModel OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 4 }
+
+                hddMode OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 5 }
+
+                hddSN OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 6 }
+
+                hddFWVersion OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 7 }
+
+                hddCapacity OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 8 }
+
+                hddNvmeBrandName OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 9 }
+
+                hddNvmeVendorID OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 10 }
+
+                hddNvmeMaxLinkSpeed OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 11 }
+
+                hddNvmeMaxLinkWidth OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 12 }
+
+                hddNvmeTemp OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 13 }
+
+                hddNvmeLeftLife OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 14 }
+
+                hddNvmeSMART OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 15 }
+				  
+				hddSpeed OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { hddEntry 16 }
+
+         -- PSU Table
+
+        psuTable OBJECT-TYPE
+            SYNTAX  SEQUENCE OF PsuEntry
+            ACCESS  not-accessible
+            STATUS  mandatory
+            ::= { componentInfo 4 }
+
+            psuEntry OBJECT-TYPE
+              SYNTAX  PsuEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { psuIndex }
+              ::= { psuTable 1 }
+
+            PsuEntry ::= SEQUENCE {
+              psuIndex                  INTEGER,
+              psuLocation               DisplayString,
+              psuPresent                DisplayString,
+              psuVendor                 DisplayString,
+              psuModel                  DisplayString,
+              psuRevision               DisplayString,
+              psuDate                   DisplayString,
+              psuSN                     DisplayString,
+              psuRatedPower             DisplayString,
+              psuInputType			    DisplayString}
+
+                psuIndex OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { psuEntry 1 }
+
+                psuLocation OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { psuEntry 2 }
+
+                psuPresent OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { psuEntry 3 }
+
+                psuVendor OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { psuEntry 4 }
+
+                psuModel OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { psuEntry 5 }
+
+                psuRevision OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { psuEntry 6 }
+
+                psuDate OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { psuEntry 7 }
+
+                psuSN OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { psuEntry 8 }
+
+                psuRatedPower OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { psuEntry 9 }
+				  
+				psuInputType OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { psuEntry 10 }
+
+         -- PCIe Table
+
+        pCIeTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF PCIeEntry
+          ACCESS  not-accessible
+          STATUS  mandatory
+          ::= { componentInfo 5 }
+
+            pCIeEntry OBJECT-TYPE
+              SYNTAX  PCIeEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { pCIeIndex }
+              ::= { pCIeTable 1 }
+
+            PCIeEntry ::= SEQUENCE {
+              pCIeIndex                  INTEGER,
+              pCIeLocation               DisplayString,
+              pCIeVendor                 DisplayString,
+              pCIeClass                  DisplayString,
+              pCIeBrandName              DisplayString,
+              pCIeLinkSpeed              DisplayString,
+              pCIeLinkWidth              DisplayString }
+
+                pCIeIndex OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { pCIeEntry 1 }
+
+                pCIeLocation OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { pCIeEntry 2 }
+
+                pCIeVendor OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { pCIeEntry 3 }
+
+                pCIeClass OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { pCIeEntry 4 }
+
+                pCIeBrandName OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { pCIeEntry 5 }
+
+                pCIeLinkSpeed OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { pCIeEntry 6 }
+
+                pCIeLinkWidth OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { pCIeEntry 7 }
+
+
+         -- nic Table
+
+        nicTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF NicEntry
+            ACCESS  not-accessible
+            STATUS  mandatory
+            ::= { componentInfo 6 }
+
+            nicEntry OBJECT-TYPE
+              SYNTAX  NicEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { nicIndex }
+              ::= { nicTable 1 }
+
+            NicEntry ::= SEQUENCE {
+              nicIndex                  INTEGER,
+              nicLocation               DisplayString,
+              nicPcieAddr               DisplayString,
+			  nicPort                   DisplayString,
+			  nicVendor                 DisplayString,
+              nicCategory               DisplayString,
+			  nicClass                  DisplayString,
+              nicBrandName              DisplayString,
+              nicLinkSpeed              DisplayString,
+              nicMACGUID               NetworkAddress,
+			  nicStatus					DisplayString,
+			  nicFWVersion              DisplayString}
+
+                nicIndex OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 1 }
+
+                nicLocation OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 2 }
+
+				nicPcieAddr OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 3 }
+
+                nicPort OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 4 }
+
+				nicVendor OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 5 }
+
+                nicCategory OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 6 }
+
+                nicClass OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 7 }
+
+                nicBrandName OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 8 }
+
+                nicLinkSpeed OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 9 }
+
+                nicMACGUID  OBJECT-TYPE
+                  SYNTAX  NetworkAddress
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 10 }
+				  
+				nicStatus OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 11 }
+				  
+				nicFWVersion OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { nicEntry 12 }
+
+	-- Fan Table
+        fanTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF FanEntry
+            ACCESS  not-accessible
+            STATUS  mandatory
+            ::= { componentInfo 12 }
+
+            fanEntry OBJECT-TYPE
+              SYNTAX  FanEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { fanIndex }
+              ::= { fanTable 1 }
+
+            FanEntry ::= SEQUENCE {
+              fanIndex        INTEGER,
+		      fanLocation     DisplayString,
+		      fanSpeed        DisplayString,
+              fanDuty         DisplayString}
+
+                fanIndex OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { fanEntry 1 }
+
+			    fanLocation OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { fanEntry 2 }
+
+                fanSpeed OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { fanEntry 4 }
+
+			    fanDuty OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { fanEntry 7 }
+
+                fanPresent OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { fanEntry 8 }
+				  
+	-- RAID Card Table
+		
+        raidCardTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF RaidCardEntry
+          ACCESS  not-accessible
+          STATUS  mandatory
+          ::= { componentInfo 7 }
+
+            raidCardEntry OBJECT-TYPE
+              SYNTAX  RaidCardEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { raidCardIndex }
+              ::= { raidCardTable 1 }
+
+            RaidCardEntry ::= SEQUENCE {
+              raidCardIndex                              INTEGER,
+			  raidCardLocation 	                         DisplayString,
+			  raidCardPresent                            DisplayString,
+			  raidCardAdapterName                        DisplayString,
+			  raidCardSerialNum                          DisplayString,
+			  raidCardPkgVersion                         DisplayString,
+			  raidCardBIOSVersion                        DisplayString,
+			  raidCardHIVVersion                         DisplayString,
+			  raidCardExpanderVersion                    DisplayString,
+			  raidCardNVDATAVersion                      DisplayString,
+			  raidCardCPLDVersion                        DisplayString,
+			  raidCardPCIVendorID                        DisplayString,
+			  raidCardPCIDeviceID                        DisplayString,
+			  raidCardPCISubVendorID                     DisplayString,
+			  raidCardPCISubSytemID                      DisplayString,
+			  raidCardROCTemp                            DisplayString,
+			  raidCardExpanderTemp                       DisplayString,
+			  raidCardLogicDiskHealthState		     DisplayString	  
+			  raidCardFirmwareBuildTime                  DisplayString,
+			  raidCardHostInterface                      DisplayString,
+			  raidCardDeviceInterface                    DisplayString,
+			  raidCardNvramSize                          DisplayString,
+			  raidCardMemorySize                         DisplayString,
+			  raidCardFlashSize                          DisplayString,
+			  raidCardAutoRebuild                        DisplayString,
+			  raidCardSasAddress                         DisplayString,
+			  raidCardPortCount                          DisplayString,
+			  raidCardPyhsicalDriveCount                 DisplayString,
+			  raidCardVitualDriveCount                   DisplayString,
+			  raidCardFirmwareVersion                    DisplayString,
+			  raidCardMinStripSize                       DisplayString,
+			  raidCardSpinDownTime                       DisplayString,
+			  raidCardSpinUpDelay                        DisplayString,
+			  raidCardCacheFlushInterval                 DisplayString,
+			  raidCardRebuildRate                        DisplayString,
+			  raidCardResconstructionRate                DisplayString,
+			  raidCardCoercionMode                       DisplayString,
+			  raidCardBatteryWaring                      DisplayString,
+			  raidCardAlarmControl                       DisplayString,
+			  raidCardClusterMode                        DisplayString,
+			  raidCardControlR                           DisplayString,
+			  raidCardMaxStripSize                       DisplayString,
+			  raidCardSpinUpDriveCount                   DisplayString,
+			  raidCardSmartPolling                       DisplayString,
+			  raidCardBackGroundInitRate                 DisplayString,
+			  raidCardConsistencyCheckRate               DisplayString,
+			  raidCardMaintainFDFailHistory              DisplayString,
+			  raidCardSmartCopyBackEnable                DisplayString,
+			  raidCardNCQ                                DisplayString,
+			  raidCardShieldStateSupported               DisplayString		  
+			  }
+
+                raidCardIndex OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 1 }
+
+				raidCardLocation OBJECT-TYPE
+                  SYNTAX  DisplayString 
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 2 }
+
+                raidCardPresent OBJECT-TYPE
+                  SYNTAX  DisplayString 
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 3 }
+
+                raidCardAdapterName OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 4 }
+
+                raidCardSerialNum OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 5 }
+				  
+                raidCardPkgVersion OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 6 }
+				  
+                raidCardBIOSVersion OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 7 }
+				  
+		  raidCardHIVVersion OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 8 }
+				  
+				raidCardExpanderVersion OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 9 }
+				  
+		  raidCardNVDATAVersion OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 10 }
+				  
+		  raidCardCPLDVersion OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 11 }
+				  
+		  raidCardPCIVendorID OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 12 }
+				  
+		  raidCardPCIDeviceID OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 13 }
+				  
+		  raidCardPCISubVendorID OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 14 }
+				  
+		  raidCardPCISubSytemID OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 15 }
+				  
+				
+				  
+		  raidCardROCTemp OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 17 }
+				  
+		  raidCardExpanderTemp OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 18 }
+		  raidCardLogicDiskHealthState  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 19 }		  
+ 
+                  raidCardFirmwareBuildTime OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 20 }
+				  
+		  raidCardHostInterface OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 21 }
+			  
+		  raidCardDeviceInterface  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 22 }
+			  
+		  raidCardNvramSize  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 23 }
+			  
+		  raidCardMemorySize  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 24 }
+			  
+		  raidCardFlashSize  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 25 }
+			  
+		  raidCardAutoRebuild  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 26 }
+			  
+		  raidCardSasAddress  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 27 }
+			  
+		  raidCardPortCount  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 28 }
+			  
+		  raidCardPyhsicalDriveCount  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 29 }
+			  
+		  raidCardVitualDriveCount  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 30 }
+			  
+		  raidCardFirmwareVersion  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 31 }
+			  
+		  raidCardMinStripSize  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 32 }
+			  
+		  raidCardSpinDownTime  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 33 }
+			  
+		  raidCardSpinUpDelay  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 34 }
+			  
+		  raidCardCacheFlushInterval  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 35 }
+			  
+		  raidCardRebuildRate  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 36 }
+			  
+		  raidCardResconstructionRate  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 37 }
+			  
+		  raidCardCoercionMode  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 38 }
+			  
+		  raidCardBatteryWaring  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 39 }
+			  
+		  raidCardAlarmControl  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 40 }
+			  
+		  raidCardClusterMode  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 41 }
+			  
+		  raidCardControlR  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 42 }
+			  
+		  raidCardMaxStripSize  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 43 }
+			  
+		  raidCardSpinUpDriveCount   OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 44 }
+		  
+		  raidCardSmartPolling   OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 45 }
+		  raidCardBackGroundInitRate   OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 46 }
+		  raidCardConsistencyCheckRate   OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 47 }
+		  raidCardMaintainFDFailHistory   OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 48 }
+		  raidCardSmartCopyBackEnable   OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 49 }
+		  raidCardNCQ   OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 50 }
+		  raidCardShieldStateSupported   OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { raidCardEntry 51 }
+				  
+			  
+			  
+	-- hddUnderRaidCard Table
+	hddUnderRaidCardTable OBJECT-TYPE
+	  SYNTAX  SEQUENCE OF HddUnderRaidCardTableEntry
+	  ACCESS  not-accessible
+	  STATUS  mandatory
+	  ::= { componentInfo 8 }
+	  
+		hddUnderRaidCardTableEntry OBJECT-TYPE
+		  SYNTAX  HddUnderRaidCardTableEntry
+		  ACCESS  not-accessible
+		  STATUS  mandatory
+		  INDEX   { hddInRaidIndex }
+		  ::= { hddUnderRaidCardTable 1 }
+
+		HddUnderRaidCardTableEntry ::= SEQUENCE {
+		  hddInRaidIndex		INTEGER,
+		  hddInRaidPresent		DisplayString,
+		  hddInRaidDevID		DisplayString,
+		  hddInRaidType			DisplayString,
+		  hddInRaidState		DisplayString,
+		  hddInRaidVendorID		DisplayString,
+		  hddInRaidProductID		DisplayString,
+		  hddInRaidSlot			DisplayString,
+		  hddInRaidPresent2		INTEGER,
+		  hddInRaidLEDStatus		DisplayString,
+		  hddInRaidInterfaceType	DisplayString,
+		  hddInRaidCache		DisplayString,
+		  hddInRaidSpeed		DisplayString,
+		  hddInRaidSize64		DisplayString,
+		  hddInRaidLinkSpeed		DisplayString,
+		  hddInRaidPowerState		DisplayString,
+		  hddInRaidTemperature		DisplayString
+		  }
+
+			hddInRaidIndex OBJECT-TYPE
+			  SYNTAX  INTEGER
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 1 }
+
+			hddInRaidPresent OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 2 }				 
+	  
+			hddInRaidDevID OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 4 }
+	  
+			hddInRaidType OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 5 }
+
+			hddInRaidState OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 6 }
+
+			hddInRaidVendorID OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 7 }
+
+			hddInRaidProductID OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 8 }
+						  	  				  
+			hddInRaidSlot OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 11 }	
+
+			hddInRaidPresent2 OBJECT-TYPE
+			  SYNTAX  INTEGER 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 12 }
+			  
+			hddInRaidLEDStatus OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 13 }						  
+			  
+			hddInRaidInterfaceType OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 14 }						  
+		  						  
+			hddInRaidCache OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 15 }
+			  						  
+			hddInRaidSpeed OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 16 }						  
+			  
+			hddInRaidSize64 OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 17 }						  
+			  
+			hddInRaidLinkSpeed OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 19 }
+			  
+			hddInRaidPowerState OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 20 }						  
+			  
+			hddInRaidTemperature OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { hddUnderRaidCardTableEntry 21 }
+			  				  					  					  
+						
+	-- logRaidUnderRaidCard Table
+	logicDevUnderRaidCardTable OBJECT-TYPE
+	  SYNTAX  SEQUENCE OF LogicDevUnderRaidCardTableEntry
+	  ACCESS  not-accessible
+	  STATUS  mandatory
+	  ::= { componentInfo 9 }
+	  
+		logicDevUnderRaidCardTableEntry OBJECT-TYPE
+		  SYNTAX  LogicDevUnderRaidCardTableEntry
+		  ACCESS  not-accessible
+		  STATUS  mandatory
+		  INDEX   { logicDevIndex }
+		  ::= { logicDevUnderRaidCardTable 1 }
+
+		LogicDevUnderRaidCardTableEntry ::= SEQUENCE {
+		  logicDevIndex    	 INTEGER,
+		  logicDevID			DisplayString,
+		  logicDevLDName			DisplayString,
+		  logicDevType			DisplayString,
+		  logicDevState			DisplayString,
+		  logicDevStripeSize		DisplayString,
+		  logicDevAccessPolicy	DisplayString,
+		  logicDevReadPolicy		DisplayString,
+		  logicDevWritePolicy	DisplayString,
+		  logicDevCachePolicy	DisplayString,
+		  logicDevBGI			DisplayString,
+		  logicDevSSDCaching	DisplayString,
+		  logicDevProgress		DisplayString,
+		  logicDevSize			DisplayString
+		   }
+
+			logicDevIndex OBJECT-TYPE
+			  SYNTAX  INTEGER
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 1 }
+
+			  
+			logicDevID OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 3 }						  
+		 
+			logicDevLDName OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 4 }
+
+			logicDevType OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 5 }
+
+			logicDevState OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 6 }
+
+			logicDevStripeSize OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 7 }
+
+			logicDevAccessPolicy OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 8 }
+
+			logicDevReadPolicy OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 9 }
+
+			logicDevWritePolicy OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 10 }
+
+			logicDevCachePolicy OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 11 }
+
+			logicDevBGI OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 12 }
+
+			logicDevSSDCaching OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 13 }
+
+			logicDevProgress OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 14 }
+
+			logicDevSize OBJECT-TYPE
+			  SYNTAX  DisplayString 
+			  ACCESS  read-only
+			  STATUS  mandatory
+			  ::=  { logicDevUnderRaidCardTableEntry 16 }
+						
+						  
+  --sasit
+
+        -- SASIT Card Table
+    
+        sASITCardTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF SASITCardEntry
+          ACCESS  not-accessible
+          STATUS  mandatory
+          ::= { componentInfo 10 }
+
+            sASITCardEntry OBJECT-TYPE
+              SYNTAX  SASITCardEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { sASITCardIndex }
+              ::= { sASITCardTable 1 }
+
+            SASITCardEntry ::= SEQUENCE {
+              sASITCardIndex                  INTEGER,
+              sASITCardLocation               DisplayString,
+              sASITCardPresent                DisplayString,
+              sASITCardBoardName              DisplayString,
+              sASITCardSASAddress             DisplayString,
+              sASITCardFWVersion              DisplayString,
+              sASITCardNVDATAVersion          DisplayString,
+              sASITCardPCIVensorID            DisplayString,
+              sASITCardPCIDeviceID            DisplayString,
+              sASITCardPCISubvendorID         DisplayString,
+              sASITCardPCISubsystemID         DisplayString,
+              sASITCardSpeed                  DisplayString,
+              sASITCardIOCTemp                DisplayString }
+
+                sASITCardIndex OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 1 }
+
+                sASITCardLocation OBJECT-TYPE
+                  SYNTAX  DisplayString 
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 2 }
+
+                sASITCardPresent OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 3 }
+
+                sASITCardBoardName OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 4 }
+          
+                sASITCardSASAddress OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 5 }
+          
+                sASITCardFWVersion OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 6 }
+          
+                sASITCardNVDATAVersion OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 7 }
+          
+                sASITCardPCIVensorID OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 8 }
+          
+                sASITCardPCIDeviceID OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 9 }
+          
+                sASITCardPCISubvendorID OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 10 }
+          
+                sASITCardPCISubsystemID OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 11 }
+          
+                sASITCardSpeed OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 12 }
+          
+                sASITCardIOCTemp OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  ::=  { sASITCardEntry 13 }
+          
+    -- hddUnderThisCard Table
+    hddUnderSASITCardTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF HddUnderSASITCardTableEntry
+      ACCESS  not-accessible
+      STATUS  mandatory
+      ::= { componentInfo 11 }
+      
+      hddUnderSASITCardTableEntry OBJECT-TYPE
+        SYNTAX  HddUnderSASITCardTableEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        INDEX   { hddInSASIndex }
+        ::= { hddUnderSASITCardTable 1 }
+
+      HddUnderSASITCardTableEntry ::= SEQUENCE {
+        hddInSASIndex     INTEGER,
+        hddInSASPresent        DisplayString,
+        hddInSASDevID  DisplayString,
+        hddInSASType   DisplayString,
+        hddInSASState    DisplayString,
+        hddInSASVendorID   DisplayString,
+        hddInSASProductID    DisplayString,
+        hddInSASSerialNum  DisplayString,
+        hddInSASRevisionLevel DisplayString,
+        hddInSASSlot   DisplayString,
+        hddInSASLEDStatus    DisplayString,
+        hddInSASInterfaceType    DisplayString,
+        hddInSASsize64   DisplayString,
+        hddInSASSpeed    DisplayString,
+        hddInSASPowerState   DisplayString,
+        hddInSASTemperature    DisplayString,
+        hddInSASSmart    DisplayString
+		}
+
+        hddInSASIndex OBJECT-TYPE
+          SYNTAX  INTEGER
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 1 }
+
+        hddInSASPresent OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 2 }          
+      
+        hddInSASDevID OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 4 }
+      
+        hddInSASType OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 5 }
+
+        hddInSASState OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 6 }
+
+        hddInSASVendorID OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 7 }
+
+        hddInSASProductID OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 8 }
+          
+        hddInSASSerialNum OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 9 }             
+          
+        hddInSASRevisionLevel OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 10 }              
+          
+        hddInSASSlot OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 11 }              
+          
+        hddInSASLEDStatus OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 12 }              
+          
+        hddInSASInterfaceType OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 13 }              
+                        
+        hddInSASsize64 OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 14 }              
+          
+        hddInSASSpeed OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 15 }              
+          
+        hddInSASPowerState OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 16 }              
+          
+        hddInSASTemperature OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 17 }              
+          
+        hddInSASSmart OBJECT-TYPE
+          SYNTAX  DisplayString 
+          ACCESS  read-only
+          STATUS  mandatory
+          ::=  { hddUnderSASITCardTableEntry 18 }
+
+				  
+			  
+			  
+				  
+--  ************************serverHealth**********************     
+     
+    serverHealth OBJECT IDENTIFIER                ::=  { bmc 11 }  
+    
+    cpuHealth OBJECT IDENTIFIER                ::=  { serverHealth 3 }
+			     
+        cpuHealthTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF CpuHealthEntry
+          ACCESS  not-accessible
+          STATUS  mandatory
+          ::= { cpuHealth 2 }
+
+            cpuHealthEntry OBJECT-TYPE
+              SYNTAX  CpuHealthEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { cpuHealthIndex }
+              ::= { cpuHealthTable 1 }
+
+            CpuHealthEntry ::= SEQUENCE {
+              cpuHealthIndex                      INTEGER,
+              cpuHealthState                      DisplayString  } 
+
+		            cpuHealthIndex OBJECT-TYPE   
+			            SYNTAX INTEGER
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            "
+			            "
+			            ::= { cpuHealthEntry 1 } 		            
+
+		            cpuHealthState OBJECT-TYPE   
+			            SYNTAX DisplayString
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            "
+			            "
+			            ::= { cpuHealthEntry 5 } 				            
+
+    memHealth OBJECT IDENTIFIER                ::=  { serverHealth 4 }
+			     
+        memHealthTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF MemHealthEntry
+          ACCESS  not-accessible
+          STATUS  mandatory
+          ::= { memHealth 2 }
+
+            memHealthEntry OBJECT-TYPE
+              SYNTAX  MemHealthEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { memHealthIndex }
+              ::= { memHealthTable 1 }
+
+            MemHealthEntry ::= SEQUENCE {
+              memHealthIndex                      INTEGER,
+              memHealthState                      DisplayString  } 
+
+		            memHealthIndex OBJECT-TYPE   
+			            SYNTAX INTEGER
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            "Memory Index"
+			            ::= { memHealthEntry 1 } 
+			            			               
+		            memHealthState OBJECT-TYPE   
+			            SYNTAX DisplayString
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            "Memory State"
+			            ::= { memHealthEntry 6 }
+
+    hddHealth OBJECT IDENTIFIER                ::=  { serverHealth 5 }
+			     
+        hddHealthTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF HddHealthEntry
+          ACCESS  not-accessible
+          STATUS  mandatory
+          ::= { hddHealth 2 }
+
+            hddHealthEntry OBJECT-TYPE
+              SYNTAX  HddHealthEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { hddHealthIndex }
+              ::= { hddHealthTable 1 }
+
+            HddHealthEntry ::= SEQUENCE {
+              hddHealthIndex                      INTEGER,
+              hddHealthState                      DisplayString  } 
+
+		            hddHealthIndex OBJECT-TYPE   
+			            SYNTAX INTEGER
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            ""
+			            ::= { hddHealthEntry 1 } 		            
+
+		            hddHealthState OBJECT-TYPE   
+			            SYNTAX DisplayString
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            ""
+			            ::= { hddHealthEntry 5 } 
+
+    fanHealth OBJECT IDENTIFIER                ::=  { serverHealth 6 }
+			     
+        fanHealthTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF FanHealthEntry
+          ACCESS  not-accessible
+          STATUS  mandatory
+          ::= { fanHealth 2 }
+
+            fanHealthEntry OBJECT-TYPE
+              SYNTAX  FanHealthEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { fanHealthIndex }
+              ::= { fanHealthTable 1 }
+
+            FanHealthEntry ::= SEQUENCE {
+              fanHealthIndex                      INTEGER,
+              fanHealthState                      DisplayString  } 
+
+		            fanHealthIndex OBJECT-TYPE   
+			            SYNTAX INTEGER
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            ""
+			            ::= { fanHealthEntry 1 } 
+
+		            fanHealthState OBJECT-TYPE   
+			            SYNTAX DisplayString
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            ""
+			            ::= { fanHealthEntry 6 } 	
+			            			            
+    psuHealth OBJECT IDENTIFIER                ::=  { serverHealth 7 }
+
+        psuHealthTable OBJECT-TYPE
+          SYNTAX  SEQUENCE OF PsuHealthEntry
+          ACCESS  not-accessible
+          STATUS  mandatory
+          ::= { psuHealth 2 }
+
+            psuHealthEntry OBJECT-TYPE
+              SYNTAX  PsuHealthEntry
+              ACCESS  not-accessible
+              STATUS  mandatory
+              INDEX   { psuHealthIndex }
+              ::= { psuHealthTable 1 }
+
+            PsuHealthEntry ::= SEQUENCE {
+              psuHealthIndex                      INTEGER,
+              psuHealthPIN                        DisplayString,           
+              psuHealthPOUT                       DisplayString,
+              psuHealthHeatsinkTemp               DisplayString,                                                                      
+              psuHealthAmbientTemp                DisplayString,              
+              psuHealthState                      DisplayString } 
+
+		            psuHealthIndex OBJECT-TYPE   
+			            SYNTAX INTEGER
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            ""
+			            ::= { psuHealthEntry 1 } 
+
+		            psuHealthPIN OBJECT-TYPE   
+			            SYNTAX DisplayString
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            ""
+			            ::= { psuHealthEntry 6 } 
+
+		            psuHealthPOUT OBJECT-TYPE   
+			            SYNTAX DisplayString
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            ""
+			            ::= { psuHealthEntry 9 } 
+
+		            psuHealthHeatsinkTemp OBJECT-TYPE   
+			            SYNTAX DisplayString
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            ""
+			            ::= { psuHealthEntry 10 } 
+
+		            psuHealthAmbientTemp OBJECT-TYPE   
+			            SYNTAX DisplayString
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            ""
+			            ::= { psuHealthEntry 11 } 
+
+		            psuHealthState OBJECT-TYPE   
+			            SYNTAX DisplayString
+			            ACCESS read-only
+			            STATUS current
+			            DESCRIPTION
+			            ""
+			            ::= { psuHealthEntry 13 }
+
+	pcieHealth OBJECT IDENTIFIER                ::=  { serverHealth 8 }  		   
+					 
+		pcieHealthTable OBJECT-TYPE
+		  SYNTAX  SEQUENCE OF PcieHealthEntry
+		  ACCESS  not-accessible
+		  STATUS  mandatory
+		  ::= { pcieHealth 2 }
+
+			pcieHealthEntry OBJECT-TYPE
+			  SYNTAX  PcieHealthEntry
+			  ACCESS  not-accessible
+			  STATUS  mandatory
+			  INDEX   { pcieHealthIndex }
+			  ::= { pcieHealthTable 1 }
+
+			PcieHealthEntry ::= SEQUENCE {
+			  pcieHealthIndex                      INTEGER,
+			  pcieHealthLocation                   DisplayString,
+			  pcieHealthRaidCard                   DisplayString,
+			  pcieHealthNICCard                    DisplayString  } 
+
+					pcieHealthIndex OBJECT-TYPE   
+						SYNTAX INTEGER
+						ACCESS read-only
+						STATUS current
+						--DESCRIPTION
+						::= { pcieHealthEntry 1 } 
+
+					pcieHealthLocation OBJECT-TYPE   
+						SYNTAX DisplayString
+						ACCESS read-only
+						STATUS current
+						--DESCRIPTION
+						::= { pcieHealthEntry 2 } 
+   
+					pcieHealthRaidCard OBJECT-TYPE   
+						SYNTAX DisplayString
+						ACCESS read-only
+						STATUS current
+						--DESCRIPTION
+						::= { pcieHealthEntry 6 } 			            
+
+					pcieHealthNICCard OBJECT-TYPE   
+						SYNTAX DisplayString
+						ACCESS read-only
+						STATUS current
+						--DESCRIPTION
+						::= { pcieHealthEntry 7 }									
+
+--    ****** START trap Location *******************************
+
+  trapGroup OBJECT IDENTIFIER ::= { bmc 500 }
+
+  trapVar OBJECT IDENTIFIER ::= { trapGroup 1 }
+
+    trapSeq OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+        "Trap sequence"
+      ::= { trapVar 1 }
+
+    trapSensorName OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+        "Trap sensor name"
+      ::= { trapVar 2 }
+
+    trapEventDir OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+        "Trap description
+		Assertion
+		Deassertion"
+      ::= { trapVar 3 }
+
+    trapSeverity OBJECT-TYPE
+      SYNTAX INTEGER
+              {
+		Normal(0),
+        NotCritical(1),
+        Critical(2),
+        Urgency(3)
+        }
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+        "Trap severity
+		0  - Normal
+        1  - Not Critical,
+        2  - Critical,
+        3  - Urgency."
+      ::= { trapVar 4 }
+
+    trapEvent OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+        "Trap Event description"
+      ::= { trapVar 5 }
+
+    trapLocation OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+        "Trap location hostname"
+      ::= { trapVar 9 }
+
+    trapTime OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+        "Trap time"
+      ::= { trapVar 10 }
+
+  serverAlertTrapGroup OBJECT IDENTIFIER ::= { trapGroup 10 }
+
+    sgTemperature OBJECT IDENTIFIER ::= {serverAlertTrapGroup 1}
+
+
+	alerttempLowerNonCriticalGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Lower Non Critical Going Low"
+      ::= { sgTemperature 1 }
+
+	alerttempLowerNonCriticalGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Lower Non Critical Going Low Deassert"
+      ::= { sgTemperature 2 }
+
+	alerttempLowerCriticalGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Lower Critical Going Low"
+      ::= { sgTemperature 33 }
+
+	alerttempLowerCriticalGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Lower Critical Going Low Deassert"
+      ::= { sgTemperature 34 }
+
+	alerttempLowerNonRecoverlGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Lower Non-Recoverable Going Low"
+      ::= { sgTemperature 65 }
+
+	alerttempLowerNonRecoverlGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Lower Non-Recoverable Going Low Deassert"
+      ::= { sgTemperature 66 }
+
+	alerttempUpperNonCriticalGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Upper Non-Critical Going High"
+      ::= { sgTemperature 113 }
+
+	alerttempUpperNonCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Upper Non-Critical Going High Deassert"
+      ::= { sgTemperature 114 }
+
+	alerttempUpperCriticalGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Upper Critical Going High"
+      ::= { sgTemperature 145 }
+
+	alerttempUpperCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Upper Critical Going High deassert"
+      ::= { sgTemperature 146 }
+
+    alerttempUpperNonRecoverGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Upper Non-Recoverable Going High"
+      ::= { sgTemperature 177 }
+
+    alerttempUpperNonRecoverGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "temp Upper Non-Recoverable Going High Deassert"
+      ::= { sgTemperature 178 }
+
+    sgVoltage OBJECT IDENTIFIER ::= {serverAlertTrapGroup 2}
+
+	alertvoltageLowerNonCriticalGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Lower Non Critical Going Low"
+      ::= { sgVoltage 1 }
+
+	alertvoltageLowerNonCriticalGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Lower Non Critical Going Low Deassert"
+      ::= { sgVoltage 2 }
+
+
+	alertvoltageLowerNonCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Lower Non-Critical Going High "
+      ::= { sgVoltage 18 }
+
+
+	alertvoltageLowerCriticalGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Lower Critical Going Low"
+      ::= { sgVoltage 33 }
+
+	alertvoltageLowerCriticalGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Lower Critical Going Low Deassert"
+      ::= { sgVoltage 34 }
+
+
+	alertvoltageLowerNonRecoverGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Lower Non-Recoverable Going Low"
+      ::= { sgVoltage 65 }
+
+	alertvoltageLowerNonRecoverGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Lower Non-Recoverable Going Low Deassert"
+      ::= { sgVoltage 66 }
+
+	alertvoltageUpperNonCriticalGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Upper Non-Critical Going High"
+      ::= { sgVoltage 113 }
+
+	alertvoltageUpperNonCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Upper Non-Critical Going High Deassert"
+      ::= { sgVoltage 114 }
+
+	alertvoltageUpperCriticalGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Upper Critical Going High"
+      ::= { sgVoltage 145 }
+
+	alertvoltageUpperCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Upper Critical Going High Deassert"
+      ::= { sgVoltage 146 }
+
+	alertvoltageUpperNonRecoverGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Upper Non-Recoverable Going High"
+      ::= { sgVoltage 177 }
+
+	alertvoltageUpperNonRecoverGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "voltage Upper Non-Recoverable Going High Deassert"
+      ::= { sgVoltage 178 }
+
+    sgCurrent OBJECT IDENTIFIER ::= {serverAlertTrapGroup 3}
+
+	currentLowerNonCriticalGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Lower Non Critical Going Low"
+      ::= { sgCurrent 1 }
+
+
+  currentLowerNonCriticalGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Lower Non Critical Going Low Deassert"
+      ::= { sgCurrent 2 }
+
+	currentLowerCriticalGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Lower Critical Going Low"
+      ::= { sgCurrent 33 }
+
+
+  currentLowerCriticalGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Lower Critical Going Low Deassert"
+      ::= { sgCurrent 34 }
+
+	currentLowerNonRecoverGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Lower Non-Recoverable Going Low"
+      ::= { sgCurrent 65 }
+
+  currentLowerNonRecoverGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Lower Non-Recoverable Going Low Deassert"
+      ::= { sgCurrent 66 }
+
+	currentUpperNonCriticalGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Upper Non-Critical Going High"
+      ::= { sgCurrent 113 }
+
+  currentUpperNonCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Upper Non-Critical Going High Deassert"
+      ::= { sgCurrent 114 }
+
+	currentUpperCriticalGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Upper Critical Going High"
+      ::= { sgCurrent 145 }
+
+  currentUpperCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Upper Critical Going High Deassert"
+      ::= { sgCurrent 146 }
+
+	currentUpperNonRecoverGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Upper Non-Recoverable Going High"
+      ::= { sgCurrent 177 }
+
+  currentUpperNonRecoverGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Current Upper Non-Recoverable Going High Deassert"
+      ::= { sgCurrent 178 }
+
+-- Fan v2/v3 trap alert
+	sgFan OBJECT IDENTIFIER ::= {serverAlertTrapGroup 4}
+
+	alertfanSpeedLowerNonCriticalGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Lower Non Critical Going Low"
+      ::= { sgFan 1 }
+
+    alertfanSpeedLowerNonCriticalGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Lower Non Critical Going Low Deassert"
+      ::= { sgFan 2 }
+
+
+	alertfanSpeedLowerCriticalGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Lower Critical Going Low"
+      ::= { sgFan 33 }
+
+	  alertfanSpeedLowerCriticalGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Lower Critical Going Low Deassert"
+      ::= { sgFan 34 }
+
+
+	alertfanSpeedLowerNonRecoverGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Lower Non-Recoverable Going Low"
+      ::= { sgFan 65 }
+
+  alertfanSpeedLowerNonRecoverGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Lower Non-Recoverable Going Low Deassert"
+      ::= { sgFan 66 }
+
+	alertfanSpeedUpperNonCriticalGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Upper Non-Critical Going High"
+      ::= { sgFan 113 }
+
+   alertfanSpeedUpperNonCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Upper Non-Critical Going High Deassert"
+      ::= { sgFan 114 }
+
+	alertfanSpeedUpperCriticalGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Upper Critical Going High"
+      ::= { sgFan 145 }
+
+
+  alertfanSpeedUpperCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Upper Critical Going High Deassert"
+      ::= { sgFan 146 }
+
+	alertfanSpeedUpperNonRecoverGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Upper Non-Recoverable Going High"
+      ::= { sgFan 177 }
+
+  alertfanSpeedUpperNonRecoverGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan speed Upper Non-Recoverable Going High Deassert"
+      ::= { sgFan 178 }
+
+  alertfanSpeedStatus NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan Speed Too Low"
+      ::= { sgFan 1825 }
+
+  alertfanSpeedStatusDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan Speed Too Low Deassert"
+      ::= { sgFan 1826}
+
+	alertFanDeviceRemoved NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan Device Removed Assertion"
+      ::= { sgFan 1793 }
+
+	alertFanDeviceRemovedDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan Device Removed Deassertion"
+      ::= { sgFan 1794 }
+
+	alertFanDeviceInserted NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan Device Inserted Assertion"
+      ::= { sgFan 1809 }
+
+	alertFanDeviceInsertedDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan Device Inserted Deassertion"
+      ::= { sgFan 1810 }
+
+	alertfanHotPlugStatus NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan Hot Plug"
+      ::= { sgFan 2001 }
+
+	alertfanHotPlugStatusDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Fan Hot Plug Deassert"
+      ::= { sgFan 2002 }
+
+-- CPU v2/v3 trap alert
+	sgCPU OBJECT IDENTIFIER ::= {serverAlertTrapGroup 7}
+
+    alertCPUCATError NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU CAT error"
+      ::= { sgCPU 1 }
+
+    alertCPUCATErrorDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU CAT error deassert"
+      ::= { sgCPU 2 }
+
+    alertCPUThermalTrip NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU thermal trip"
+      ::= { sgCPU 17 }
+
+    alertCPUThermalTripDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU thermal trip deassert"
+      ::= { sgCPU 18 }
+
+	alertCPUFRB1 NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU FRB1 assert"
+      ::= { sgCPU 33 }
+
+    alertCPUFRB1Deassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU FRB1 deassert"
+      ::= { sgCPU 34 }
+
+	alertCPUFRB2 NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU FRB2 assert"
+      ::= { sgCPU 49 }
+
+    alertCPUFRB2Deassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU FRB2 deassert"
+      ::= { sgCPU 50 }
+
+	alertCPUFRB3 NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU FRB3 assert"
+      ::= { sgCPU 65 }
+
+    alertCPUFRB3Deassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU FRB3 deassert"
+      ::= { sgCPU 66 }
+
+    alertCPUCfgError NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU configure error"
+      ::= { sgCPU 81 }
+
+    alertCPUCfgErrorDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU configure error deassert"
+      ::= { sgCPU 82 }
+
+	alertCPUComplexErr NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU uncorrectable complex error assert"
+      ::= { sgCPU 97 }
+
+    alertCPUComplexErrDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU uncorrectable complex error deassert"
+      ::= { sgCPU 98 }
+
+    alertCPUPresence NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU Presence"
+      ::= { sgCPU 113 }
+
+    alertCPUPresenceDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU Presence deassert"
+      ::= { sgCPU 114 }
+
+    alertCPUOffline NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU offline"
+      ::= { sgCPU 129 }
+
+    alertCPUOfflineDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU offline deassert"
+      ::= { sgCPU 130 }
+
+	alertCPUThrottle NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU Automatically Throttled"
+      ::= { sgCPU 161 }
+
+    alertCPUThrottleDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU Automatically Throttled deassert"
+      ::= { sgCPU 162 }
+
+    alertCPUUnMCE NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU Uncorrectable MCE occured"
+      ::= { sgCPU 177 }
+
+    alertCPUUnMCEDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU Uncorrectable MCE deassert"
+      ::= { sgCPU 178 }
+
+	alertCPUMCE NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU MCE occured"
+      ::= { sgCPU 193 }
+
+    alertCPUMCEDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "CPU MCE deassert"
+      ::= { sgCPU 194 }
+
+-- PSU v2/v3 trap alert
+	sgPowerSupply OBJECT IDENTIFIER ::= {serverAlertTrapGroup 8}
+
+	powerLowerNonCriticalGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Power Lower Non Critical Going Low"
+      ::= { sgPowerSupply 1 }
+
+	powerLowerNonCriticalGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Lower Non Critical Going Low Deassert"
+      ::= { sgPowerSupply 2 }
+
+	powerLowerCriticalGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Lower Critical Going Low"
+      ::= { sgPowerSupply 33 }
+
+	powerLowerCriticalGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Lower Critical Going Low Deassert"
+      ::= { sgPowerSupply 34 }
+
+    powerLowerNonRecoverGoingLow NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Lower Non-Recoverable Going Low"
+      ::= { sgPowerSupply 65 }
+
+    powerLowerNonRecoverGoingLowDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Lower Non-Recoverable Going Low Deassert"
+      ::= { sgPowerSupply 66 }
+
+    powerUpperNonCriticalGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Upper Non-Critical Going High"
+      ::= { sgPowerSupply 113 }
+
+    powerUpperNonCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Upper Non-Critical Going High Deassert"
+      ::= { sgPowerSupply 114 }
+
+    powerUpperCriticalGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Upper Critical Going High"
+      ::= { sgPowerSupply 145 }
+
+    powerUpperCriticalGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Upper Critical Going High Deassert"
+      ::= { sgPowerSupply 146 }
+
+    powerUpperNonRecoverGoingHigh NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Upper Non-Recoverable Going High"
+      ::= { sgPowerSupply 177 }
+
+    powerUpperNonRecoverGoingHighDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              " Power Upper Non-Recoverable Going High Deassert"
+      ::= { sgPowerSupply 178 }
+
+	alertPsuPresence NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Power Supply Presence"
+      ::= { sgPowerSupply 28161 }
+
+    alertPsuPresenceDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Power Supply Presence Deassert"
+      ::= { sgPowerSupply 28162 }
+
+	alertPsuInputLost NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Power Supply Input Lost"
+      ::= { sgPowerSupply 28209 }
+
+    alertPsuInputLostDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Power Supply Input Lost Deassert"
+      ::= { sgPowerSupply 28210 }
+
+	alertPsuHotPlug NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Power Supply Unit Hot Plug"
+      ::= { sgPowerSupply 28369 }
+
+    alertPsuHotPlugDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Power Supply Unit Hot Plug Deassert"
+      ::= { sgPowerSupply 28370 }
+
+-- Memory v2/v3 trap alert
+    sgMemory OBJECT IDENTIFIER ::= {serverAlertTrapGroup 12}
+
+	alertCorrectableECC NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory correctable ECC error occurred"
+      ::= { sgMemory 1 }
+
+    alertCorrectableECCDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory correctable ECC error deassert"
+      ::= { sgMemory 2 }
+
+    alertUncorrectableECC NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory uncorrectable ECC error occurred"
+      ::= { sgMemory 17 }
+
+    alertUncorrectableECCDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory uncorrectable ECC error deassert"
+      ::= { sgMemory 18 }
+
+	alertParity NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory Parity occurred"
+      ::= { sgMemory 33 }
+
+    alertParityDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory Parity deassert"
+      ::= { sgMemory 34 }
+
+	alertScrubFailed NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory Scrub Failed occurred"
+      ::= { sgMemory 49 }
+
+    alertScrubFailedDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory Scrub Failed deassert"
+      ::= { sgMemory 50 }
+
+    alertMemoryECCLimitation NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory correctable ECC logging limit reached detected"
+      ::= { sgMemory 81 }
+
+    alertMemoryECCLimitationDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory correctable ECC logging limit reached deassert"
+      ::= { sgMemory 82 }
+
+    alertMemoryPresence NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory presence detected"
+      ::= { sgMemory 97 }
+
+    alertMemoryPresenceDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory presence deassert"
+      ::= { sgMemory 98 }
+
+    alertMemoryCfgError NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory config error detected"
+      ::= { sgMemory 113 }
+
+    alertMemoryCfgErrorDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory config error deassert"
+      ::= { sgMemory 114 }
+
+    alertMemorySpare NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory spare detected"
+      ::= { sgMemory 129 }
+
+    alertMemorySpareDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "memory spare deassert"
+      ::= { sgMemory 130 }
+
+	-- Power State v2/v3 trap alert
+	sgACPIStatus OBJECT IDENTIFIER ::= {serverAlertTrapGroup 34}
+
+    alertACPIStatusS0G0 NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "ACPI status S0/G0 working"
+      ::= { sgACPIStatus 1 }
+
+    alertACPIStatusS4S5 NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "ACPI status, S4/S5 soft-off, particular when S4/S5 state cannot be determined"
+      ::= { sgACPIStatus 97 }
+	 
+	-- watchdog2 State v2/v3 trap alert
+	sgWatchDog2 OBJECT IDENTIFIER ::= {serverAlertTrapGroup 35}
+    
+    alertWatchDog2Expired NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "watchdog2 timer expired, no action"
+      ::= { sgWatchDog2 1 }
+
+    alertWatchDogExpiredDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "watchdog2 timer expired, no action deassert"
+      ::= { sgWatchDog2 2 }
+      
+    alertWatchDogReset NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "watchdog2 timer expired, hard reset"
+      ::= { sgWatchDog2 17 }
+
+    alertWatchDogResetDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "watchdog2 timer expired, hard reset deassert"
+      ::= { sgWatchDog2 18 }
+
+    alertWatchDogPowerDown NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "watchdog2 timer expired, power down"
+      ::= { sgWatchDog2 33 }
+
+    alertWatchDogPowerDownDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "watchdog2 timer expired, power down deassert"
+      ::= { sgWatchDog2 34 }
+
+    alertWatchDogPowerCycle NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "watchdog2 timer expired, power cycle"
+      ::= { sgWatchDog2 49 }
+
+    alertWatchDogPowerCycleDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "watchdog2 timer expired, power cycle deassert"
+      ::= { sgWatchDog2 50 }
+
+	-- Drive Slot v2/v3 trap alert
+	sgHardDisk OBJECT IDENTIFIER ::= {serverAlertTrapGroup 13}
+
+    alertHardDiskPresence NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Harddisk presence detected"
+      ::= { sgHardDisk 1 }
+
+    alertHardDiskPresenceDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Harddisk presence deassert"
+      ::= { sgHardDisk 2 }
+
+     alertHardDiskFault NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Harddisk fault detected"
+      ::= { sgHardDisk 17 }
+
+    alertHardDiskFaultDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Harddisk fault deassert"
+      ::= { sgHardDisk 18 }
+
+    alertHardDiskPredictiveFailure NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Hard disk predictive failure"
+      ::= { sgHardDisk 33 }
+
+    alertHardDiskPredictiveFailureDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Hard disk predictive failure deassert"
+      ::= { sgHardDisk 34 }
+
+    alertRAIDArrayFail NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "RAID array fail detected"
+      ::= { sgHardDisk 97 }
+
+    alertRAIDArrayFailDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "RAID array fail deassert"
+      ::= { sgHardDisk 98 }
+
+  alertRAIDRebuild NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "RAID rebuild detected"
+      ::= { sgHardDisk 113 }
+
+    alertRAIDRebuildDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "RAID rebuild deassert"
+      ::= { sgHardDisk 114 }
+
+  alertRAIDRebuildAborted NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "RAID rebuild aborted detected"
+      ::= { sgHardDisk 129 }
+
+  alertRAIDRebuildAbortedDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "RAID rebuild aborted deassert"
+      ::= { sgHardDisk 130 }
+
+  alertHardDiskHotplug NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Hard disk hot plug"
+      ::= { sgHardDisk 209 }
+
+  alertHardDiskHotplugDeassert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEventDir, trapSeverity, trapEvent, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "Hard disk hot plug deassert"
+      ::= { sgHardDisk 210 }
+
+  sgSELStatus OBJECT IDENTIFIER ::= {serverAlertTrapGroup 16}
+  
+  alertSELClearedAssert NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "SEL log area is cleared"
+      ::= { sgSELStatus 33 }
+
+  alertSELAlmostFullAssert NOTIFICATION-TYPE
+      OBJECTS {  trapTimeStampStr, trapSensorName, trapSeverity, trapEvent, trapProductSN, trapEventState, trapExtraInfo  }
+      STATUS  current
+      DESCRIPTION
+              "SEL almost full assert"
+      ::= { sgSELStatus 81 }
+
+  alertSELAlmostFullDeassert NOTIFICATION-TYPE
+      OBJECTS {  trapTimeStampStr, trapSensorName, trapSeverity, trapEvent, trapProductSN, trapEventState, trapExtraInfo  }
+      STATUS  current
+      DESCRIPTION
+              "SEL almost full deassert"
+      ::= { sgSELStatus 82 }
+
+  sgTimeStamp OBJECT IDENTIFIER ::= {serverAlertTrapGroup 18}
+
+    alertTimestampClockSync NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "timestamp clock sync"
+      ::= { sgTimeStamp 81 }
+
+  sgSystemBoot OBJECT IDENTIFIER ::= {serverAlertTrapGroup 29}
+
+    alertSystemHardReset NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "System Hard reset"
+      ::= { sgSystemBoot 3 }
+
+    alertSystemWarmReset NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "System Warm reset"
+      ::= { sgSystemBoot 5 }
+
+
+    alertSystemRestart NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "System Restart"
+      ::= { sgSystemBoot 1 }
+
+  sgCriticalInterrupt  OBJECT IDENTIFIER ::= {serverAlertTrapGroup 19}
+
+  alertPCIPERR NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "PCI PERR"
+      ::= { sgCriticalInterrupt 65 }
+
+  alertPCIPERRDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "PCI PERR"
+	  ::= { sgCriticalInterrupt 66 }
+
+  alertPCISERR NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "PCI SERR"
+	  ::= { sgCriticalInterrupt 81 }
+
+  alertPCISERRDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "PCI SERR"
+	  ::= { sgCriticalInterrupt 82 }
+
+  alertEISAFailSafeTimeout NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "EISA Fail Safe Timeout"
+	  ::= { sgCriticalInterrupt 97 }
+
+  alertEISAFailSafeTimeoutDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "EISA Fail Safe Timeout"
+	  ::= { sgCriticalInterrupt 98 }
+
+  alertBusCorrectableError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Bus Correctable Error"
+	  ::= { sgCriticalInterrupt 113 }
+
+  alertBusCorrectableErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Bus Correctable Error"
+	  ::= { sgCriticalInterrupt 114 }
+
+  alertBusUncorrectableError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Bus Uncorrectable Error"
+	  ::= { sgCriticalInterrupt 129 }
+
+  alertBusUncorrectableErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Bus Uncorrectable Error"
+	  ::= { sgCriticalInterrupt 130 }
+
+  alertFatalNMI NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Fatal NMI (port 61h, bit 7)"
+	  ::= { sgCriticalInterrupt 145 }
+
+  alertFatalNMIDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Fatal NMI (port 61h, bit 7)"
+	  ::= { sgCriticalInterrupt 146 }
+
+  alertBusFatalError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Bus Fatal Error"
+	  ::= { sgCriticalInterrupt 161 }
+
+  alertBusFatalErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Bus Fatal Error"
+	  ::= { sgCriticalInterrupt 162 }
+
+  alertBusDegraded NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Bus Degraded (bus operating in a degraded performance state)"
+	  ::= { sgCriticalInterrupt 177 }
+
+  alertBusDegradedDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Bus Degraded (bus operating in a degraded performance state)"
+	  ::= { sgCriticalInterrupt 178 }
+
+  alertStorageControllerPCIPERR NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Storage Controller PCI PERR"
+	  ::= { sgCriticalInterrupt 66625 }
+
+  alertStorageControllerPCIPERRDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Storage Controller PCI PERR"
+	  ::= { sgCriticalInterrupt 66626 }
+
+  alertStorageControllerPCISERR NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Storage Controller PCI SERR"
+	  ::= { sgCriticalInterrupt 66641 }
+
+  alertStorageControllerPCISERRDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Storage Controller PCI SERR"
+	  ::= { sgCriticalInterrupt 66642 }
+
+  alertStorageControllerBusCorrectableError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Storage Controller Bus Correctable Error"
+	  ::= { sgCriticalInterrupt 66673 }
+
+  alertStorageControllerBusCorrectableErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Storage Controller Bus Correctable Error"
+	  ::= { sgCriticalInterrupt 66674 }
+
+  alertStorageControllerBusUncorrectableError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Storage Controller Bus Uncorrectable Error"
+	  ::= { sgCriticalInterrupt 66689 }
+
+  alertStorageControllerBusUncorrectableErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Storage Controller Bus Uncorrectable Error"
+	  ::= { sgCriticalInterrupt 66690 }
+
+  alertStorageControllerBusFatalError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Storage Controller Bus Fatal Error"
+	  ::= { sgCriticalInterrupt 66721 }
+
+  alertStorageControllerBusFatalErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Storage Controller Bus Fatal Error"
+	  ::= { sgCriticalInterrupt 66722 }
+
+  alertNVMePCIPERR NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "NVMe PCI PERR"
+	  ::= { sgCriticalInterrupt 67649 }
+
+  alertNVMePCIPERRDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "NVMe PCI PERR"
+	  ::= { sgCriticalInterrupt 67650 }
+
+  alertNVMePCISERR NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "NVMe PCI SERR"
+	  ::= { sgCriticalInterrupt 67665 }
+
+  alertNVMePCISERRDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "NVMe PCI SERR"
+	  ::= { sgCriticalInterrupt 67666 }
+
+  alertNVMeBusCorrectableError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "NVMe Bus Correctable Error"
+	  ::= { sgCriticalInterrupt 67697 }
+
+  alertNVMeBusCorrectableErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "NVMe Bus Correctable Error"
+	  ::= { sgCriticalInterrupt 67698 }
+
+  alertNVMeBusUncorrectableError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "NVMe Bus Uncorrectable Error"
+	  ::= { sgCriticalInterrupt 67713 }
+
+  alertNVMeBusUncorrectableErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "NVMe Bus Uncorrectable Error"
+	  ::= { sgCriticalInterrupt 67714 }
+
+  alertNVMeBusFatalError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "NVMe Bus Fatal Error"
+	  ::= { sgCriticalInterrupt 67745 }
+
+  alertNVMeBusFatalErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "NVMe Bus Fatal Error"
+	  ::= { sgCriticalInterrupt 67746 }
+
+  alertNICPCIPERR NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Network Controller PCI PERR"
+	  ::= { sgCriticalInterrupt 131137 }
+
+  alertNICPCIPERRDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Network Controller PCI PERR"
+	  ::= { sgCriticalInterrupt 131138 }
+
+  alertNICPCISERR NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Network Controller PCI SERR"
+	  ::= { sgCriticalInterrupt 131153 }
+
+  alertNICPCISERRDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Network Controller PCI SERR"
+	  ::= { sgCriticalInterrupt 131154 }
+
+  alertNICBusCorrectableError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Network Controller Bus Correctable Error"
+	  ::= { sgCriticalInterrupt 131185 }
+
+  alertNICBusCorrectableErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Network Controller Bus Correctable Error"
+	  ::= { sgCriticalInterrupt 131186 }
+
+  alertNICBusUncorrectableError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Network Controller Bus Uncorrectable Error"
+	  ::= { sgCriticalInterrupt 131201 }
+
+  alertNICBusUncorrectableErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Network Controller Bus Uncorrectable Error"
+	  ::= { sgCriticalInterrupt 131202 }
+
+  alertNICBusFatalError NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Network Controller Bus Fatal Error"
+	  ::= { sgCriticalInterrupt 131233 }
+
+  alertNICBusFatalErrorDeassert NOTIFICATION-TYPE
+	  OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+	  STATUS  current
+	  DESCRIPTION
+			  "Network Controller Bus Fatal Error"
+	  ::= { sgCriticalInterrupt 131234 }
+
+  sgTrapTest OBJECT IDENTIFIER ::= {serverAlertTrapGroup 18}
+
+  alertTrapTestInstance NOTIFICATION-TYPE
+      OBJECTS { trapSeq, trapSensorName, trapEvent, trapSeverity, trapEventCode, trapServerIdentity, trapLocation, trapTime }
+      STATUS  current
+      DESCRIPTION
+              "trap test"
+      ::= { sgTrapTest 241 }
+
+--    *************** END V2/V3 trap **********************
+
+
+--    *************** Start V1 trap **********************
+wired-for-management  OBJECT IDENTIFIER ::= {enterprises 3183}
+pet     OBJECT IDENTIFIER ::= {wired-for-management 1}
+--**************************************************************************
+--*    Notifications (using SNMPv1 TRAP-TYPE constructs for maximum
+--*     compatibility with deployed SNMP managers).
+--**************************************************************************
+
+pet-events    OBJECT IDENTIFIER ::= {pet 1}
+
+--**************************************************************************
+-- Temperature Sensor Events (16 of them)
+--**************************************************************************
+
+-- Event Sensor Type, Event Type, Event Offset (010100h == 65792)
+tempTrapV1LowerNonCriticalGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed lower non-critical threshold, going low. - Asserted"
+    ::= 65792
+
+-- Event Sensor Type, Event Type, Event Offset (010101h == 65793)
+tempTrapV1LowerNonCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed lower non-critical threshold, going high. - Asserted"
+    ::= 65793
+
+-- Event Sensor Type, Event Type, Event Offset (010102h == 65794)
+tempTrapV1LowerCriticalGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed lower critical threshold, going low. - Asserted"
+    ::= 65794
+
+-- Event Sensor Type, Event Type, Event Offset (010103h == 65795)
+tempTrapV1LowerCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed lower critical threshold, going high. - Asserted"
+    ::= 65795
+
+-- Event Sensor Type, Event Type, Event Offset (010104h == 65796)
+tempTrapV1LowerNonRecoverableGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed lower non-recoverable threshold, going low. - Asserted"
+    ::= 65796
+
+-- Event Sensor Type, Event Type, Event Offset (010106h == 65798)
+tempTrapV1UpperNonCriticalGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed upper non-critical threshold, going low. - Asserted"
+    ::= 65798
+
+-- Event Sensor Type, Event Type, Event Offset (010107h == 65799)
+tempTrapV1UpperNonCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed upper non-critical threshold, going high. - Asserted"
+    ::= 65799
+
+-- Event Sensor Type, Event Type, Event Offset (010108h == 65800)
+tempTrapV1UpperCriticalGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed upper critical threshold, going low. - Asserted"
+    ::= 65800
+
+-- Event Sensor Type, Event Type, Event Offset (010109h == 65801)
+tempTrapV1UpperCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed upper critical threshold, going high. - Asserted"
+    ::= 65801
+
+-- Event Sensor Type, Event Type, Event Offset (01010Bh == 65803)
+tempTrapV1UpperNonRecoverableGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed upper non-recoverable threshold, going high. - Asserted"
+    ::= 65803
+
+-- Event Sensor Type, Event Type, Event Offset (010180h == 65920)
+tempTrapV1LowerNonCriticalGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed lower non-critical threshold, going low. - Deasserted"
+    ::= 65920
+
+-- Event Sensor Type, Event Type, Event Offset (010181h == 65921)
+tempTrapV1LowerNonCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed lower non-critical threshold, going high. - Deasserted"
+    ::= 65921
+
+-- Event Sensor Type, Event Type, Event Offset (010182h == 65922)
+tempTrapV1LowerCriticalGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed lower critical threshold, going low. - Deasserted"
+    ::= 65922
+
+-- Event Sensor Type, Event Type, Event Offset (010183h == 65923)
+tempTrapV1LowerCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed lower critical threshold, going high. - Deasserted"
+    ::= 65923
+
+-- Event Sensor Type, Event Type, Event Offset (010184h == 65924)
+tempTrapV1LowerNonRecoverableGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed lower non-recoverable threshold, going low. - Deasserted"
+    ::= 65924
+
+-- Event Sensor Type, Event Type, Event Offset (010186h == 65926)
+tempTrapV1UpperNonCriticalGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed upper non-critical threshold, going low. - Deasserted"
+    ::= 65926
+
+-- Event Sensor Type, Event Type, Event Offset (010187h == 65927)
+tempTrapV1UpperNonCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed upper non-critical threshold, going high. - Deasserted"
+    ::= 65927
+
+-- Event Sensor Type, Event Type, Event Offset (010188h == 65928)
+tempTrapV1UpperCriticalGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed upper critical threshold, going low. - Deasserted"
+    ::= 65928
+
+-- Event Sensor Type, Event Type, Event Offset (010189h == 65929)
+tempTrapV1UpperCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed upper critical threshold, going high. - Deasserted"
+    ::= 65929
+
+-- Event Sensor Type, Event Type, Event Offset (01018Bh == 65931)
+tempTrapV1UpperNonRecoverableGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Temperature sensor crossed upper non-recoverable threshold, going high. - Deasserted"
+    ::= 65931
+
+
+--**************************************************************************
+-- Voltage Sensor Events (16 of them)
+--**************************************************************************
+
+-- Event Sensor Type, Event Type, Event Offset (020100h == 131328)
+voltageTrapV1LowerNonCriticalGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed lower non-critical threshold, going low - Asserted."
+
+    ::= 131328
+
+-- Event Sensor Type, Event Type, Event Offset (020101h == 131329)
+voltageTrapV1LowerNonCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed lower non-critical threshold, going high - Asserted."
+
+    ::= 131329
+
+-- Event Sensor Type, Event Type, Event Offset (020102h == 131330)
+voltageTrapV1LowerCriticalGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed lower critical threshold, going low - Asserted."
+    ::= 131330
+
+-- Event Sensor Type, Event Type, Event Offset (020103h == 131331)
+voltageTrapV1LowerCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed lower critical threshold, going high - Asserted."
+    ::= 131331
+
+-- Event Sensor Type, Event Type, Event Offset (020104h == 131332)
+voltageTrapV1LowerNonRecoverableGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed lower non-recoverable threshold, going low - Asserted."
+    ::= 131332
+
+-- Event Sensor Type, Event Type, Event Offset (020106h == 131334)
+voltageTrapV1UpperNonCriticalGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper non-critical threshold, going low - Asserted."
+    ::= 131334
+
+-- Event Sensor Type, Event Type, Event Offset (020107h == 131335)
+voltageTrapV1UpperNonCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper non-critical threshold, going high - Asserted."
+    ::= 131335
+
+-- Event Sensor Type, Event Type, Event Offset (020108h == 131336)
+voltageTrapV1UpperCriticalGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper critical threshold, going low - Asserted."
+    ::= 131336
+
+-- Event Sensor Type, Event Type, Event Offset (020109h == 131337)
+voltageTrapV1UpperCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper critical threshold, going high - Asserted."
+    ::= 131337
+
+-- Event Sensor Type, Event Type, Event Offset (02010Bh == 131339)
+voltageTrapV1UpperNonRecoverableGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper non-recoverable threshold, going high - Asserted."
+    ::= 131339
+
+-- Event Sensor Type, Event Type, Event Offset (020180h == 131456)
+voltageTrapV1LowerNonCriticalGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed lower non-critical threshold, going low - Deasserted."
+
+    ::= 131456
+
+-- Event Sensor Type, Event Type, Event Offset (020181h == 131457)
+voltageTrapV1LowerNonCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed lower non-critical threshold, going high - Deasserted."
+
+    ::= 131457
+
+-- Event Sensor Type, Event Type, Event Offset (020182h == 131458)
+voltageTrapV1LowerCriticalGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed lower critical threshold, going low - Deasserted."
+    ::= 131458
+
+-- Event Sensor Type, Event Type, Event Offset (020183h == 131459)
+voltageTrapV1LowerCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed lower critical threshold, going high - Deasserted."
+    ::= 131459
+
+-- Event Sensor Type, Event Type, Event Offset (020184h == 131460)
+voltageTrapV1UpperNonRecoverableGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper non-recoverable threshold, going low - Deasserted."
+    ::= 131460
+
+-- Event Sensor Type, Event Type, Event Offset (020186h == 131462)
+voltageTrapV1UpperNonCriticalGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper non-critical threshold, going low - Deasserted."
+    ::= 131462
+
+-- Event Sensor Type, Event Type, Event Offset (020187h == 131463)
+voltageTrapV1UpperNonCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper non-critical threshold, going high - Deasserted."
+    ::= 131463
+
+-- Event Sensor Type, Event Type, Event Offset (020188h == 131464)
+voltageTrapV1UpperCriticalGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper critical threshold, going low - Deasserted."
+    ::= 131464
+
+-- Event Sensor Type, Event Type, Event Offset (020189h == 131465)
+voltageTrapV1UpperCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper critical threshold, going high - Deasserted."
+    ::= 131465
+
+-- Event Sensor Type, Event Type, Event Offset (02018Bh == 131467)
+voltageTrapV1UpperNonRecoverableGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Voltage sensor crossed upper non-recoverable threshold, going high - Deasserted."
+    ::= 131467
+
+--**************************************************************************
+-- Current Sensor Events ( 6 of them)
+--**************************************************************************
+-- Event Sensor Type, Event Type, Event Offset (030107h == 196871)
+currentTrapV1UpperNonCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Current sensor crossed upper non-critical threshold, going high - Asserted."
+    ::= 196871
+
+-- Event Sensor Type, Event Type, Event Offset (030109h == 196873)
+currentTrapV1UpperCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Current sensor crossed upper critical threshold, going high - Asserted."
+    ::= 196873
+
+-- Event Sensor Type, Event Type, Event Offset (03010Bh == 196875)
+currentTrapV1UpperNonRecoverableGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Current sensor crossed upper non-recoverable threshold, going high - Asserted."
+    ::= 196875
+
+-- Event Sensor Type, Event Type, Event Offset (030187h == 196999)
+currentTrapV1UpperNonCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Current sensor crossed upper non-critical threshold, going high - Deasserted."
+    ::= 196999
+
+-- Event Sensor Type, Event Type, Event Offset (030189h == 197001)
+currentTrapV1UpperCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Current sensor crossed upper critical threshold, going high - Deasserted."
+    ::= 197001
+
+-- Event Sensor Type, Event Type, Event Offset (03018Bh == 197003)
+currentTrapV1UpperNonRecoverableGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Current sensor crossed upper non-recoverable threshold, going high - Deasserted."
+    ::= 197003
+
+--**************************************************************************
+-- Fan V1 Failure Events (8 of them)
+--**************************************************************************
+
+-- Event Sensor Type, Event Type, Event Offset (040802h == 264192)
+fanDeviceAbsence TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan device removed/absent event - Asserted."
+    ::= 264192
+
+-- Event Sensor Type, Event Type, Event Offset (040801h == 264193)
+fanDevicePresence TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan device inserted/present event - Asserted."
+    ::= 264193
+
+-- Event Sensor Type, Event Type, Event Offset (04080Dh == 264205)
+fanDeviceHotPlug TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan device hot plug event - Asserted."
+    ::= 264205
+
+-- Event Sensor Type, Event Type, Event Offset (040100h == 262400)
+fanFailureLowerNonCriticalGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan sensor crossed lower non-critical threshold, going low - Asserted."
+    ::= 262400
+
+-- Event Sensor Type, Event Type, Event Offset (040101h == 262401)
+fanFailureLowerNonCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan sensor crossed lower non-critical threshold, going high - Asserted."
+    ::= 262401
+
+-- Event Sensor Type, Event Type, Event Offset (040102h == 262402)
+fanFailureLowerCriticalGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan sensor crossed lower critical threshold, going low - Asserted."
+    ::= 262402
+
+-- Event Sensor Type, Event Type, Event Offset (040103h == 262403)
+fanFailureLowerCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan sensor crossed lower critical threshold, going high - Asserted."
+    ::= 262403
+
+-- Event Sensor Type, Event Type, Event Offset (040104h == 262404)
+fanFailureLowerNonRecoverableGoingLow TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan sensor crossed lower non-recoverable threshold, going low - Asserted."
+    ::= 262404
+
+-- Event Sensor Type, Event Type, Event Offset (040107h == 262407)
+fanFailureUpperNonCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+	 "Fan sensor crossed upper Non-Critical threshold, going high - Asserted"
+  ::= 262407
+
+-- Event Sensor Type, Event Type, Event Offset (040109h == 262409)
+fanFailureUpperCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+	 "Fan sensor crossed upper Critical threshold, going high - Asserted"
+  ::= 262409
+
+-- Event Sensor Type, Event Type, Event Offset (04010Bh == 262411)
+fanFailureUpperNonRecoverableGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+	 "Fan sensor crossed upper Non-Recoverable threshold, going high - Asserted"
+  ::= 262411
+
+-- Event Sensor Type, Event Type, Event Offset (040180h == 262528)
+fanFailureLowerNonCriticalGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan sensor crossed lower non-critical threshold, going low - Deasserted."
+    ::= 262528
+
+-- Event Sensor Type, Event Type, Event Offset (040181h == 262529)
+fanFailureLowerNonCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan sensor crossed lower non-critical threshold, going high - Deasserted."
+    ::= 262529
+
+-- Event Sensor Type, Event Type, Event Offset (040182h == 262530)
+fanFailureLowerCriticalGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan sensor crossed lower critical threshold, going low - Deasserted."
+    ::= 262530
+
+-- Event Sensor Type, Event Type, Event Offset (040183h == 262531)
+fanFailureLowerCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan sensor crossed lower critical threshold, going high - Deasserted."
+    ::= 262531
+
+-- Event Sensor Type, Event Type, Event Offset (040184h == 262532)
+fanFailureLowerNonRecoverableGoingLowClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Fan sensor crossed lower non-recoverable threshold, going low - Deasserted."
+    ::= 262532
+
+-- Event Sensor Type, Event Type, Event Offset (040187h == 262535)
+  fanFailureUpperNonCriticalGoingHighClear TRAP-TYPE
+      ENTERPRISE  pet-events
+      DESCRIPTION
+         "Fan sensor crossed upper Non-Critical threshold, going high - Deasserted"
+      ::= 262535
+
+-- Event Sensor Type, Event Type, Event Offset (040189h == 262537)
+  fanFailureUpperCriticalGoingHighClear TRAP-TYPE
+      ENTERPRISE  pet-events
+      DESCRIPTION
+         "Fan sensor crossed upper Critical threshold, going high - Deasserted"
+      ::= 262537
+
+-- Event Sensor Type, Event Type, Event Offset (04018Bh == 262539)
+  fanFailureUpperNonRecoverableGoingHighClear TRAP-TYPE
+      ENTERPRISE  pet-events
+      DESCRIPTION
+         "Fan sensor crossed upper Non-Recoverable threshold, going high - Deasserted"
+      ::= 262539
+
+--**************************************************************************
+-- Power Sensor Events ( 6 of them)
+--**************************************************************************
+-- Event Sensor Type, Event Type, Event Offset (080107h == 524551)
+powerTrapV1UpperNonCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power sensor crossed upper non-critical threshold, going high - Asserted."
+    ::= 524551
+
+-- Event Sensor Type, Event Type, Event Offset (080109h == 524553)
+powerTrapV1UpperCriticalGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power sensor crossed upper critical threshold, going high - Asserted."
+    ::= 524553
+
+-- Event Sensor Type, Event Type, Event Offset (08010Bh == 524555)
+powerTrapV1UpperNonRecoverableGoingHigh TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power sensor crossed upper non-recoverable threshold, going high - Asserted."
+    ::= 524555
+
+-- Event Sensor Type, Event Type, Event Offset (080187h == 524679)
+powerTrapV1UpperNonCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power sensor crossed upper non-critical threshold, going high - Deasserted."
+    ::= 524679
+
+-- Event Sensor Type, Event Type, Event Offset (080189h == 524681)
+powerTrapV1UpperCriticalGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power sensor crossed upper critical threshold, going high - Deasserted."
+    ::= 524681
+
+-- Event Sensor Type, Event Type, Event Offset (08018Bh == 524683)
+powerTrapV1UpperNonRecoverableGoingHighClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power sensor crossed upper non-recoverable threshold, going high - Deasserted."
+    ::= 524683
+
+--**************************************************************************
+-- Power Supply V1 Fault Events
+--**************************************************************************
+-- Event Sensor Type, Event Type, Event Offset (086F00h == 552704)
+powerSupplyPresence TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Power supply presence event - Asserted."
+    ::= 552704
+
+-- Event Sensor Type, Event Type, Event Offset (086F03h == 552707)
+powerSupplyACLost TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power supply A/C lost event - Asserted."
+    ::= 552707
+	
+-- Event Sensor Type, Event Type, Event Offset (086F0Dh == 552717)
+powerSupplyHotPlug TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power supply hot plug event - Asserted."
+    ::= 552717
+
+-- Event Sensor Type, Event Type, Event Offset (086F80h == 552832)
+powerSupplyPresenceClear TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Power supply presence event - Deasserted."
+    ::= 552832
+
+-- Event Sensor Type, Event Type, Event Offset (086F83h == 552835)
+powerSupplyACLostClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power supply A/C lost event - Deasserted."
+    ::= 552835
+
+--**************************************************************************
+-- Processor V1 Failure Events (24 of them)
+--**************************************************************************
+-- Event Sensor Type, Event Type, Event Offset (076F00h == 487168)
+cpuIERRError TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU IERR error event - Asserted."
+    ::= 487168
+
+-- Event Sensor Type, Event Type, Event Offset (076F01h == 487169)
+cpuThermalTripError TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Thermal Trip error event - Asserted."
+    ::= 487169
+
+-- Event Sensor Type, Event Type, Event Offset (076F02h == 487170)
+cpuFRB1Error TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU FRB1 error event - Asserted."
+    ::= 487170
+
+-- Event Sensor Type, Event Type, Event Offset (076F03h == 487171)
+cpuFRB2Error TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU FRB2 error event - Asserted."
+    ::= 487171
+
+-- Event Sensor Type, Event Type, Event Offset (076F04h == 487172)
+cpuFRB3Error TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU FRB3 error event - Asserted."
+    ::= 487172
+
+-- Event Sensor Type, Event Type, Event Offset (076F05h == 487173)
+cpuCfgError TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU Configuration error event - Asserted."
+    ::= 487173
+
+-- Event Sensor Type, Event Type, Event Offset (076F06h == 487174)
+cpuComplexError TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU uncorrectable complex error event - Asserted."
+    ::= 487174
+
+-- Event Sensor Type, Event Type, Event Offset (076F07h == 487175)
+cpuPresence TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU presence event - Asserted."
+    ::= 487175
+
+-- Event Sensor Type, Event Type, Event Offset (076F08h == 487176)
+cpuDisabled TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU disabled event - Asserted."
+    ::= 487176
+
+-- Event Sensor Type, Event Type, Event Offset (076F0Ah == 487178)
+cpuThrottled TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU throttled event - Asserted."
+    ::= 487178
+
+-- Event Sensor Type, Event Type, Event Offset (076F0Bh == 487179)
+cpuUncorrectMCE TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU Machine Check Exception (Uncorrectable) - Asserted."
+    ::= 487179
+
+-- Event Sensor Type, Event Type, Event Offset (076F0Ch == 487180)
+cpuCorrectMCE TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU Correctable Machine Check Error - Asserted."
+    ::= 487180
+
+-- Event Sensor Type, Event Type, Event Offset (076F80h == 487296)
+cpuIERRErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU IERR error event - Deasserted."
+    ::= 487296
+
+-- Event Sensor Type, Event Type, Event Offset (076F81h == 487297)
+cpuThermalTripErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Thermal Trip error event - Deasserted."
+    ::= 487297
+
+-- Event Sensor Type, Event Type, Event Offset (076F82h == 487198)
+cpuFRB1ErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU FRB1 error event - Deasserted."
+    ::= 487198
+
+-- Event Sensor Type, Event Type, Event Offset (076F83h == 487199)
+cpuFRB2ErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU FRB2 error event - Deasserted."
+    ::= 487199
+
+-- Event Sensor Type, Event Type, Event Offset (076F84h == 487300)
+cpuFRB3ErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU FRB3 error event - Deasserted."
+    ::= 487300
+
+-- Event Sensor Type, Event Type, Event Offset (076F85h == 487301)
+cpuCfgErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU Configuration error event - Deasserted."
+    ::= 487301
+
+-- Event Sensor Type, Event Type, Event Offset (076F86h == 487302)
+cpuComplexErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU uncorrectable complex error event - Deasserted."
+    ::= 487302
+
+-- Event Sensor Type, Event Type, Event Offset (076F87h == 487303)
+cpuPresenceClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU Presence - Deasserted."
+    ::= 487303
+
+-- Event Sensor Type, Event Type, Event Offset (076F88h == 487304)
+cpuDisabledClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU Disabled - Deasserted."
+    ::= 487304
+
+-- Event Sensor Type, Event Type, Event Offset (076F8Ah == 487306)
+cpuThrottledClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU  Automatically Throttled - Deasserted."
+    ::= 487306
+
+-- Event Sensor Type, Event Type, Event Offset (076F8Bh == 487307)
+cpuUncorrectMCEClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU Machine Check Exception (Uncorrectable) - Deasserted."
+    ::= 487307
+
+-- Event Sensor Type, Event Type, Event Offset (076F8Ch == 487308)
+cpuCorrectMCEClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "CPU Correctable Machine Check Error - Deasserted."
+    ::= 487308
+
+
+--**************************************************************************
+-- Memory V1 Failure Events (12 of them)
+--**************************************************************************
+-- Event Sensor Type, Event Type, Event Offset (0C6F00h == 814848)
+memCorrectableECCError TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Correctable ECC error event - Asserted."
+
+    ::= 814848
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F01h == 814849)
+memUncorrectableECCError TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Uncorrectable ECC error event - Asserted."
+    ::= 814849
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F02h == 814850)
+memParityError TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Parity error event - Asserted."
+    ::= 814850
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F03h == 814851)
+memScrubFailedError TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Scrub Failed error event - Asserted."
+    ::= 814851
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F05h == 814853)
+memErrorLoggingLimitError TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Error Logging Limit Reached error event - Asserted."
+    ::= 814853
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F06h == 814854)
+memPresence TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Presence event - Asserted."
+    ::= 814854
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F80h == 814976)
+memCorrectableECCErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Correctable ECC error event - Deasserted."
+    ::= 814976
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F81h == 814977)
+memUncorrectableECCErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Uncorrectable ECC error event - Deasserted."
+    ::= 814977
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F82h == 814978)
+memParityErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Parity error event - Deasserted."
+    ::= 814978
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F83h == 814979)
+memScrubFailedErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Scrub Failed error event - Deasserted."
+    ::= 814979
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F85h == 814981)
+memErrorLoggingLimitErrorClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Error Logging Limit Reached error event - Deasserted."
+    ::= 814981
+
+-- Event Sensor Type, Event Type, Event Offset (0C6F86h == 814982)
+memPresenceClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Memory Presence event - Deasserted."
+    ::= 814982
+
+-- Event Sensor Type, Event Type, Event Offset (126F0Fh == 1208079)
+trapTestInstance TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "trap test"
+    ::= 1208079
+
+	--**************************************************************************
+-- PWR Events (2 of them)
+--**************************************************************************
+-- Event Sensor Type, Event Type, Event Offset (226f00h == 2256640)
+powerStateWorking TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "S0/G0 Working - Asserted."
+    ::= 2256640
+
+-- Event Sensor Type, Event Type, Event Offset (226f06h == 2256646)
+powerStateSoftOff TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "S4/S5 Soft-off - Asserted."
+    ::= 2256646
+
+	--**************************************************************************
+-- Drive Slot (Bay) Offsets (8)
+--**************************************************************************
+
+-- Event Sensor Type, Event Type, Event Offset (0D6F00h == 880384)
+drivePresence TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Presence event - Asserted."
+    ::= 880384
+
+-- Event Sensor Type, Event Type, Event Offset (0D6F01h == 880385)
+driveFault TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Fault event - Asserted."
+    ::= 880385
+
+-- Event Sensor Type, Event Type, Event Offset (0D6F02h == 880386)
+drivePredictiveFailure TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Predictive Failure event - Asserted."
+    ::= 880386
+	
+-- Event Sensor Type, Event Type, Event Offset (0D6F03h == 880387)
+driveHotSpare TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Hot Spare event - Asserted."
+    ::= 880387
+
+-- Event Sensor Type, Event Type, Event Offset (0D6F07h == 880391)
+driveRebuild TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Rebuild event - Asserted."
+    ::= 880391
+	
+-- Event Sensor Type, Event Type, Event Offset (0D6F0dh == 880387)
+driveHotPlug TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Hot Plug event - Asserted."
+    ::= 880397
+
+-- Event Sensor Type, Event Type, Event Offset (0D6F80h == 880512)
+drivePresenceClear TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Presence event - Deasserted."
+    ::= 880512
+
+-- Event Sensor Type, Event Type, Event Offset (0D6F81h == 880513)
+driveFaultClear TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Fault event - Deasserted."
+    ::= 880513
+
+-- Event Sensor Type, Event Type, Event Offset (0D6F82h == 880514)
+drivePredictiveFailureClear TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Predictive Failure event - Deasserted."
+    ::= 880514
+	
+-- Event Sensor Type, Event Type, Event Offset (0D6F83h == 880519)
+driveHotSpareClear TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Hot Spare event - Deasserted."
+    ::= 880515
+
+-- Event Sensor Type, Event Type, Event Offset (0D6F87h == 880519)
+driveRebuildClear TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Rebuild event - Deasserted."
+    ::= 880519
+	
+-- Event Sensor Type, Event Type, Event Offset (0D6F8Dh == 880519)
+driveHotPlugClear TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Drive Hot Plug event - Deasserted."
+    ::= 880525
+
+-- Event Sensor Type, Event Type, Event Offset (136F04h == 1273604)
+alertPCIPERR TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "PCI PERR - Asserted."
+    ::= 1273604
+
+-- Event Sensor Type, Event Type, Event Offset (136F84h == 1273732)
+alertPCIPERRDeasserted TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "PCI PERR - Deasserted."
+    ::= 1273732
+
+-- Event Sensor Type, Event Type, Event Offset (136F05h == 1273605)
+alertPCISERR TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "PCI SERR - Asserted."
+    ::= 1273605
+
+-- Event Sensor Type, Event Type, Event Offset (136F84h == 1273733)
+alertPCISERRDeasserted TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "PCI SERR - Deasserted."
+    ::= 1273733
+
+-- Event Sensor Type, Event Type, Event Offset (136F07h == 1273607)
+alertBusCorrectableError TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Bus Correctable Error - Asserted."
+    ::= 1273607
+
+-- Event Sensor Type, Event Type, Event Offset (136F87h == 1273735)
+alertBusCorrectableErrorDeassert TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Bus Correctable Error - Deasserted."
+    ::= 1273735
+
+-- Event Sensor Type, Event Type, Event Offset (136F08h == 1273608)
+alertBusUncorrectableError TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Bus UCorrectable Error - Asserted."
+    ::= 1273608
+
+-- Event Sensor Type, Event Type, Event Offset (136F88h == 1273736)
+alertBusUncorrectableErrorDeassert TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Bus UCorrectable Error - Deasserted."
+    ::= 1273736
+
+-- Event Sensor Type, Event Type, Event Offset (136F0Ah == 1273610)
+alertBusFatalError TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Bus Fatal Error - Asserted."
+    ::= 1273610
+
+-- Event Sensor Type, Event Type, Event Offset (136F8Ah == 1273738)
+alertBusFatalErrorDeassert TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Bus Fatal Error - Deasserted."
+    ::= 1273738
+	
+--**************************************************************************
+-- Watchdog 2 Events (5 of them)
+--**************************************************************************
+-- Event Sensor Type, Event Type, Event Offset (236F00h == 2322176)
+timerExpired TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Timer expired event."
+    ::= 2322176
+
+-- Event Sensor Type, Event Type, Event Offset (236F01h == 2322177)
+hardReset TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Hard reset event."
+    ::= 2322177
+
+-- Event Sensor Type, Event Type, Event Offset (236F02h == 2322178)
+powerDown TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power down event."
+    ::= 2322178
+
+-- Event Sensor Type, Event Type, Event Offset (236F03h == 2322179)
+powerReset TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Power Reset event"
+    ::= 2322179
+
+-- Event Sensor Type, Event Type, Event Offset (236F08h == 2322184)
+timerInterrupt TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Timer Interrupt event."
+    ::= 2322184
+    
+
+--**************************************************************************
+-- System Event
+--**************************************************************************
+
+-- Event Sensor Type, Event Type, Event Offset (126F01h == 1208065)
+oemSystemBootEvent TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "OEM System Boot event."
+    ::= 1208065
+	
+-- Event Sensor Type, Event Type, Event Offset (126F05h == 1208069)
+alertTrapV1TimestampClockSync TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Timestamp Clock Synch - Asserted."
+    ::= 1208069
+
+-- Event Sensor Type, Event Type, Event Offset (106F02h == 1076994)
+selLogAreaReset TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Log area reset / cleared"
+    ::=1076994
+
+-- Event Sensor Type, Event Type, Event Offset (126F81h == 1208193)
+oemSystemBootEventClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "OEM System Boot event - Deasserted."
+    ::= 1208193
+
+-- Event Sensor Type, Event Type, Event Offset (106F82h == 1077122)
+selLogAreaResetClear TRAP-TYPE
+  ENTERPRISE  pet-events
+  DESCRIPTION
+    "Log area reset / cleared - Deasserted"
+    ::=1077122
+
+-- Event Sensor Type, Event Type, Event Offset (146F00h == 1339136 )
+alertTrapV1PowerButtonPressed TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Power button pressed -Asserted."
+    ::= 1339136 
+
+-- Event Sensor Type, Event Type, Event Offset (146F80‬h == 1339264 )
+alertTrapV1PowerButtonReleased TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "Power Button pressed -Deasserted."
+    ::= 1339264 
+
+-- Event Sensor Type, Event Type, Event Offset (1D6F07‬h == 1928967 )
+alertTrapV1SysRestartUnknownAsserted TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "system restart unknown -Asserted."
+    ::= 1928967 
+
+-- Event Sensor Type, Event Type, Event Offset (1D6F87h == 1929095 )
+alertTrapV1SysRestartUnknownDeasserted TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "system restart unknown -Deasserted."
+    ::= 1929095 
+
+-- Event Sensor Type, Event Type, Event Offset (1D7007h == 1929223 )
+alertTrapV1SysRestartChassisCtrlAsserted TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "system restart Chassis Control command -Asserted."
+    ::= 1929223 
+
+-- Event Sensor Type, Event Type, Event Offset (1D7087h == 1929351 )
+alertTrapV1SysRestartChassisCtrlDeasserted TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "system restart Chassis Control command -Deasserted."
+    ::= 1929351
+	
+-- Event Sensor Type, Event Type, Event Offset (1D7107h == 1929479 )
+alertTrapV1SysRestartButtonAsserted TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "System Restart reset via pushbutton -Asserted."
+    ::= 1929479 
+
+-- Event Sensor Type, Event Type, Event Offset (1D7187‬h == 1929607 )
+alertTrapV1SysRestartButtonDeasserted TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "System Restart reset via pushbutton -Deasserted."
+    ::= 1929607 
+
+-- Event Sensor Type, Event Type, Event Offset (1D7907‬h == 1931527 )
+alertTrapV1SysRestartSoftAsserted TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "System Restart via soft reset -Asserted."
+    ::= 1931527 
+
+-- Event Sensor Type, Event Type, Event Offset (1D7987h‬ == 1931655 )
+alertTrapV1SysRestartSoftDeasserted TRAP-TYPE
+    ENTERPRISE  pet-events
+    DESCRIPTION
+        "System Restart via soft reset -Deasserted."
+    ::= 1931655
+	
+END
+

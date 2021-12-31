@@ -1,0 +1,557 @@
+{
+  "system": {
+    "fwVersion": "54357.1.1.1.1.1.1",
+    "sysBmcTime": "54357.1.1.1.1.1.7",
+    "sysBmcHostName": "54357.1.1.1.1.1.13",
+    "--\t\tsyncNtpTimeSwitch": "54357.1.1.1.1.1.17",
+    "syncNtpTimeInterval": "54357.1.1.1.1.1.18",
+    "primaryNtpServer": "54357.1.1.1.1.1.19",
+    "secondaryNtpServer": "54357.1.1.1.1.1.20",
+    "bmcSharedIpv4Address": "54357.1.1.1.1.1.21",
+    "bmcDedicateIpv4Address": "54357.1.1.1.1.1.22",
+    "bmcSharedIpv6Address": "54357.1.1.1.1.1.23",
+    "bmcDedicateIpv6Address": "54357.1.1.1.1.1.24",
+    "sysTempStatus": "54357.1.1.1.1.1.25",
+    "sysVoltStatus": "54357.1.1.1.1.1.26",
+    "systemHealthStatus": "54357.1.1.1.1.1.27"
+  },
+  "sensor": {
+    "sensorCount": "54357.1.1.1.1.2.1",
+    "sensorTable": {
+      "sensorEntry": {
+        "sensorIndex": "54357.1.1.1.1.2.2.1.1",
+        "sensorName": "54357.1.1.1.1.2.2.1.2",
+        "sensorNumber": "54357.1.1.1.1.2.2.1.3",
+        "sensorType": "54357.1.1.1.1.2.2.1.4",
+        "sensorValue": "54357.1.1.1.1.2.2.1.5",
+        "thresholdUpperNonRecoverable": "54357.1.1.1.1.2.2.1.7",
+        "thresholdUpperCritical": "54357.1.1.1.1.2.2.1.8",
+        "thresholdUpperNonCritical": "54357.1.1.1.1.2.2.1.9",
+        "thresholdLowerNonCritical": "54357.1.1.1.1.2.2.1.10",
+        "thresholdLowerCritical": "54357.1.1.1.1.2.2.1.11",
+        "thresholdLowerNonRecoverable": "54357.1.1.1.1.2.2.1.12"
+      }
+    }
+  },
+  "componentInfo": {
+    "cpuTable": {
+      "cpuEntry": {
+        "cpuIndex": "54357.1.1.1.1.4.1.1.1",
+        "cpuLocation": "54357.1.1.1.1.4.1.1.2",
+        "cpuPresent": "54357.1.1.1.1.4.1.1.3",
+        "cpuBrandName": "54357.1.1.1.1.4.1.1.4",
+        "cpuFrequency": "54357.1.1.1.1.4.1.1.5",
+        "cpuThreadCount": "54357.1.1.1.1.4.1.1.7",
+        "cpuID": "54357.1.1.1.1.4.1.1.8",
+        "cpuCoreCount": "54357.1.1.1.1.4.1.1.10",
+        "cpuL1L2L3CacheInfo": "54357.1.1.1.1.4.1.1.11"
+      }
+    },
+    "memoryTable": {
+      "memoryEntry": {
+        "memoryIndex": "54357.1.1.1.1.4.2.1.1",
+        "memoryLocation": "54357.1.1.1.1.4.2.1.2",
+        "memoryPresent": "54357.1.1.1.1.4.2.1.3",
+        "memoryVendor": "54357.1.1.1.1.4.2.1.4",
+        "memoryPN": "54357.1.1.1.1.4.2.1.5",
+        "memorySN": "54357.1.1.1.1.4.2.1.6",
+        "memoryDRAMType": "54357.1.1.1.1.4.2.1.7",
+        "memoryModule": "54357.1.1.1.1.4.2.1.8",
+        "memoryType": "54357.1.1.1.1.4.2.1.9",
+        "memoryFrequency": "54357.1.1.1.1.4.2.1.10",
+        "memorySize": "54357.1.1.1.1.4.2.1.11"
+      }
+    },
+    "hddTable": {
+      "hddEntry": {
+        "hddIndex": "54357.1.1.1.1.4.3.1.1",
+        "hddPresent": "54357.1.1.1.1.4.3.1.3",
+        "hddModel": "54357.1.1.1.1.4.3.1.4",
+        "hddMode": "54357.1.1.1.1.4.3.1.5",
+        "hddSN": "54357.1.1.1.1.4.3.1.6",
+        "hddFWVersion": "54357.1.1.1.1.4.3.1.7",
+        "hddCapacity": "54357.1.1.1.1.4.3.1.8",
+        "hddNvmeBrandName": "54357.1.1.1.1.4.3.1.9",
+        "hddNvmeVendorID": "54357.1.1.1.1.4.3.1.10",
+        "hddNvmeMaxLinkSpeed": "54357.1.1.1.1.4.3.1.11",
+        "hddNvmeMaxLinkWidth": "54357.1.1.1.1.4.3.1.12",
+        "hddNvmeTemp": "54357.1.1.1.1.4.3.1.13",
+        "hddNvmeLeftLife": "54357.1.1.1.1.4.3.1.14",
+        "hddNvmeSMART": "54357.1.1.1.1.4.3.1.15",
+        "hddSpeed": "54357.1.1.1.1.4.3.1.16"
+      }
+    },
+    "psuTable": {
+      "psuEntry": {
+        "psuIndex": "54357.1.1.1.1.4.4.1.1",
+        "psuLocation": "54357.1.1.1.1.4.4.1.2",
+        "psuPresent": "54357.1.1.1.1.4.4.1.3",
+        "psuVendor": "54357.1.1.1.1.4.4.1.4",
+        "psuModel": "54357.1.1.1.1.4.4.1.5",
+        "psuRevision": "54357.1.1.1.1.4.4.1.6",
+        "psuDate": "54357.1.1.1.1.4.4.1.7",
+        "psuSN": "54357.1.1.1.1.4.4.1.8",
+        "psuRatedPower": "54357.1.1.1.1.4.4.1.9",
+        "psuInputType": "54357.1.1.1.1.4.4.1.10"
+      }
+    },
+    "pCIeTable": {
+      "pCIeEntry": {
+        "pCIeIndex": "54357.1.1.1.1.4.5.1.1",
+        "pCIeLocation": "54357.1.1.1.1.4.5.1.2",
+        "pCIeVendor": "54357.1.1.1.1.4.5.1.3",
+        "pCIeClass": "54357.1.1.1.1.4.5.1.4",
+        "pCIeBrandName": "54357.1.1.1.1.4.5.1.5",
+        "pCIeLinkSpeed": "54357.1.1.1.1.4.5.1.6",
+        "pCIeLinkWidth": "54357.1.1.1.1.4.5.1.7"
+      }
+    },
+    "nicTable": {
+      "nicEntry": {
+        "nicIndex": "54357.1.1.1.1.4.6.1.1",
+        "nicLocation": "54357.1.1.1.1.4.6.1.2",
+        "nicPcieAddr": "54357.1.1.1.1.4.6.1.3",
+        "nicPort": "54357.1.1.1.1.4.6.1.4",
+        "nicVendor": "54357.1.1.1.1.4.6.1.5",
+        "nicCategory": "54357.1.1.1.1.4.6.1.6",
+        "nicClass": "54357.1.1.1.1.4.6.1.7",
+        "nicBrandName": "54357.1.1.1.1.4.6.1.8",
+        "nicLinkSpeed": "54357.1.1.1.1.4.6.1.9",
+        "nicMACGUID": "54357.1.1.1.1.4.6.1.10",
+        "nicStatus": "54357.1.1.1.1.4.6.1.11",
+        "nicFWVersion": "54357.1.1.1.1.4.6.1.12"
+      }
+    },
+    "fanTable": {
+      "fanEntry": {
+        "fanIndex": "54357.1.1.1.1.4.12.1.1",
+        "fanLocation": "54357.1.1.1.1.4.12.1.2",
+        "fanSpeed": "54357.1.1.1.1.4.12.1.4",
+        "fanDuty": "54357.1.1.1.1.4.12.1.7",
+        "fanPresent": "54357.1.1.1.1.4.12.1.8"
+      }
+    },
+    "raidCardTable": {
+      "raidCardEntry": {
+        "raidCardIndex": "54357.1.1.1.1.4.7.1.1",
+        "raidCardLocation": "54357.1.1.1.1.4.7.1.2",
+        "raidCardPresent": "54357.1.1.1.1.4.7.1.3",
+        "raidCardAdapterName": "54357.1.1.1.1.4.7.1.4",
+        "raidCardSerialNum": "54357.1.1.1.1.4.7.1.5",
+        "raidCardPkgVersion": "54357.1.1.1.1.4.7.1.6",
+        "raidCardBIOSVersion": "54357.1.1.1.1.4.7.1.7",
+        "raidCardHIVVersion": "54357.1.1.1.1.4.7.1.8",
+        "raidCardExpanderVersion": "54357.1.1.1.1.4.7.1.9",
+        "raidCardNVDATAVersion": "54357.1.1.1.1.4.7.1.10",
+        "raidCardCPLDVersion": "54357.1.1.1.1.4.7.1.11",
+        "raidCardPCIVendorID": "54357.1.1.1.1.4.7.1.12",
+        "raidCardPCIDeviceID": "54357.1.1.1.1.4.7.1.13",
+        "raidCardPCISubVendorID": "54357.1.1.1.1.4.7.1.14",
+        "raidCardPCISubSytemID": "54357.1.1.1.1.4.7.1.15",
+        "raidCardROCTemp": "54357.1.1.1.1.4.7.1.17",
+        "raidCardExpanderTemp": "54357.1.1.1.1.4.7.1.18",
+        "raidCardLogicDiskHealthState": "54357.1.1.1.1.4.7.1.19",
+        "raidCardFirmwareBuildTime": "54357.1.1.1.1.4.7.1.20",
+        "raidCardHostInterface": "54357.1.1.1.1.4.7.1.21",
+        "raidCardDeviceInterface": "54357.1.1.1.1.4.7.1.22",
+        "raidCardNvramSize": "54357.1.1.1.1.4.7.1.23",
+        "raidCardMemorySize": "54357.1.1.1.1.4.7.1.24",
+        "raidCardFlashSize": "54357.1.1.1.1.4.7.1.25",
+        "raidCardAutoRebuild": "54357.1.1.1.1.4.7.1.26",
+        "raidCardSasAddress": "54357.1.1.1.1.4.7.1.27",
+        "raidCardPortCount": "54357.1.1.1.1.4.7.1.28",
+        "raidCardPyhsicalDriveCount": "54357.1.1.1.1.4.7.1.29",
+        "raidCardVitualDriveCount": "54357.1.1.1.1.4.7.1.30",
+        "raidCardFirmwareVersion": "54357.1.1.1.1.4.7.1.31",
+        "raidCardMinStripSize": "54357.1.1.1.1.4.7.1.32",
+        "raidCardSpinDownTime": "54357.1.1.1.1.4.7.1.33",
+        "raidCardSpinUpDelay": "54357.1.1.1.1.4.7.1.34",
+        "raidCardCacheFlushInterval": "54357.1.1.1.1.4.7.1.35",
+        "raidCardRebuildRate": "54357.1.1.1.1.4.7.1.36",
+        "raidCardResconstructionRate": "54357.1.1.1.1.4.7.1.37",
+        "raidCardCoercionMode": "54357.1.1.1.1.4.7.1.38",
+        "raidCardBatteryWaring": "54357.1.1.1.1.4.7.1.39",
+        "raidCardAlarmControl": "54357.1.1.1.1.4.7.1.40",
+        "raidCardClusterMode": "54357.1.1.1.1.4.7.1.41",
+        "raidCardControlR": "54357.1.1.1.1.4.7.1.42",
+        "raidCardMaxStripSize": "54357.1.1.1.1.4.7.1.43",
+        "raidCardSpinUpDriveCount": "54357.1.1.1.1.4.7.1.44",
+        "raidCardSmartPolling": "54357.1.1.1.1.4.7.1.45",
+        "raidCardBackGroundInitRate": "54357.1.1.1.1.4.7.1.46",
+        "raidCardConsistencyCheckRate": "54357.1.1.1.1.4.7.1.47",
+        "raidCardMaintainFDFailHistory": "54357.1.1.1.1.4.7.1.48",
+        "raidCardSmartCopyBackEnable": "54357.1.1.1.1.4.7.1.49",
+        "raidCardNCQ": "54357.1.1.1.1.4.7.1.50",
+        "raidCardShieldStateSupported": "54357.1.1.1.1.4.7.1.51"
+      }
+    },
+    "hddUnderRaidCardTable": {
+      "hddUnderRaidCardTableEntry": {
+        "hddInRaidIndex": "54357.1.1.1.1.4.8.1.1",
+        "hddInRaidPresent": "54357.1.1.1.1.4.8.1.2",
+        "hddInRaidDevID": "54357.1.1.1.1.4.8.1.4",
+        "hddInRaidType": "54357.1.1.1.1.4.8.1.5",
+        "hddInRaidState": "54357.1.1.1.1.4.8.1.6",
+        "hddInRaidVendorID": "54357.1.1.1.1.4.8.1.7",
+        "hddInRaidProductID": "54357.1.1.1.1.4.8.1.8",
+        "hddInRaidSlot": "54357.1.1.1.1.4.8.1.11",
+        "hddInRaidPresent2": "54357.1.1.1.1.4.8.1.12",
+        "hddInRaidLEDStatus": "54357.1.1.1.1.4.8.1.13",
+        "hddInRaidInterfaceType": "54357.1.1.1.1.4.8.1.14",
+        "hddInRaidCache": "54357.1.1.1.1.4.8.1.15",
+        "hddInRaidSpeed": "54357.1.1.1.1.4.8.1.16",
+        "hddInRaidSize64": "54357.1.1.1.1.4.8.1.17",
+        "hddInRaidLinkSpeed": "54357.1.1.1.1.4.8.1.19",
+        "hddInRaidPowerState": "54357.1.1.1.1.4.8.1.20",
+        "hddInRaidTemperature": "54357.1.1.1.1.4.8.1.21"
+      }
+    },
+    "logicDevUnderRaidCardTable": {
+      "logicDevUnderRaidCardTableEntry": {
+        "logicDevIndex": "54357.1.1.1.1.4.9.1.1",
+        "logicDevID": "54357.1.1.1.1.4.9.1.3",
+        "logicDevLDName": "54357.1.1.1.1.4.9.1.4",
+        "logicDevType": "54357.1.1.1.1.4.9.1.5",
+        "logicDevState": "54357.1.1.1.1.4.9.1.6",
+        "logicDevStripeSize": "54357.1.1.1.1.4.9.1.7",
+        "logicDevAccessPolicy": "54357.1.1.1.1.4.9.1.8",
+        "logicDevReadPolicy": "54357.1.1.1.1.4.9.1.9",
+        "logicDevWritePolicy": "54357.1.1.1.1.4.9.1.10",
+        "logicDevCachePolicy": "54357.1.1.1.1.4.9.1.11",
+        "logicDevBGI": "54357.1.1.1.1.4.9.1.12",
+        "logicDevSSDCaching": "54357.1.1.1.1.4.9.1.13",
+        "logicDevProgress": "54357.1.1.1.1.4.9.1.14",
+        "logicDevSize": "54357.1.1.1.1.4.9.1.16"
+      }
+    },
+    "sASITCardTable": {
+      "sASITCardEntry": {
+        "sASITCardIndex": "54357.1.1.1.1.4.10.1.1",
+        "sASITCardLocation": "54357.1.1.1.1.4.10.1.2",
+        "sASITCardPresent": "54357.1.1.1.1.4.10.1.3",
+        "sASITCardBoardName": "54357.1.1.1.1.4.10.1.4",
+        "sASITCardSASAddress": "54357.1.1.1.1.4.10.1.5",
+        "sASITCardFWVersion": "54357.1.1.1.1.4.10.1.6",
+        "sASITCardNVDATAVersion": "54357.1.1.1.1.4.10.1.7",
+        "sASITCardPCIVensorID": "54357.1.1.1.1.4.10.1.8",
+        "sASITCardPCIDeviceID": "54357.1.1.1.1.4.10.1.9",
+        "sASITCardPCISubvendorID": "54357.1.1.1.1.4.10.1.10",
+        "sASITCardPCISubsystemID": "54357.1.1.1.1.4.10.1.11",
+        "sASITCardSpeed": "54357.1.1.1.1.4.10.1.12",
+        "sASITCardIOCTemp": "54357.1.1.1.1.4.10.1.13"
+      }
+    },
+    "hddUnderSASITCardTable": {
+      "hddUnderSASITCardTableEntry": {
+        "hddInSASIndex": "54357.1.1.1.1.4.11.1.1",
+        "hddInSASPresent": "54357.1.1.1.1.4.11.1.2",
+        "hddInSASDevID": "54357.1.1.1.1.4.11.1.4",
+        "hddInSASType": "54357.1.1.1.1.4.11.1.5",
+        "hddInSASState": "54357.1.1.1.1.4.11.1.6",
+        "hddInSASVendorID": "54357.1.1.1.1.4.11.1.7",
+        "hddInSASProductID": "54357.1.1.1.1.4.11.1.8",
+        "hddInSASSerialNum": "54357.1.1.1.1.4.11.1.9",
+        "hddInSASRevisionLevel": "54357.1.1.1.1.4.11.1.10",
+        "hddInSASSlot": "54357.1.1.1.1.4.11.1.11",
+        "hddInSASLEDStatus": "54357.1.1.1.1.4.11.1.12",
+        "hddInSASInterfaceType": "54357.1.1.1.1.4.11.1.13",
+        "hddInSASsize64": "54357.1.1.1.1.4.11.1.14",
+        "hddInSASSpeed": "54357.1.1.1.1.4.11.1.15",
+        "hddInSASPowerState": "54357.1.1.1.1.4.11.1.16",
+        "hddInSASTemperature": "54357.1.1.1.1.4.11.1.17",
+        "hddInSASSmart": "54357.1.1.1.1.4.11.1.18"
+      }
+    }
+  },
+  "serverHealth": {
+    "cpuHealth": {
+      "cpuHealthTable": {
+        "cpuHealthEntry": {
+          "cpuHealthIndex": "54357.1.1.1.1.11.3.2.1.1",
+          "cpuHealthState": "54357.1.1.1.1.11.3.2.1.5"
+        }
+      }
+    },
+    "memHealth": {
+      "memHealthTable": {
+        "memHealthEntry": {
+          "memHealthIndex": "54357.1.1.1.1.11.4.2.1.1",
+          "memHealthState": "54357.1.1.1.1.11.4.2.1.6"
+        }
+      }
+    },
+    "hddHealth": {
+      "hddHealthTable": {
+        "hddHealthEntry": {
+          "hddHealthIndex": "54357.1.1.1.1.11.5.2.1.1",
+          "hddHealthState": "54357.1.1.1.1.11.5.2.1.5"
+        }
+      }
+    },
+    "fanHealth": {
+      "fanHealthTable": {
+        "fanHealthEntry": {
+          "fanHealthIndex": "54357.1.1.1.1.11.6.2.1.1",
+          "fanHealthState": "54357.1.1.1.1.11.6.2.1.6"
+        }
+      }
+    },
+    "psuHealth": {
+      "psuHealthTable": {
+        "psuHealthEntry": {
+          "psuHealthIndex": "54357.1.1.1.1.11.7.2.1.1",
+          "psuHealthPIN": "54357.1.1.1.1.11.7.2.1.6",
+          "psuHealthPOUT": "54357.1.1.1.1.11.7.2.1.9",
+          "psuHealthHeatsinkTemp": "54357.1.1.1.1.11.7.2.1.10",
+          "psuHealthAmbientTemp": "54357.1.1.1.1.11.7.2.1.11",
+          "psuHealthState": "54357.1.1.1.1.11.7.2.1.13"
+        }
+      }
+    },
+    "pcieHealth": {
+      "pcieHealthTable": {
+        "pcieHealthEntry": {
+          "pcieHealthIndex": "54357.1.1.1.1.11.8.2.1.1",
+          "pcieHealthLocation": "54357.1.1.1.1.11.8.2.1.2",
+          "pcieHealthRaidCard": "54357.1.1.1.1.11.8.2.1.6",
+          "pcieHealthNICCard": "54357.1.1.1.1.11.8.2.1.7"
+        }
+      }
+    }
+  },
+  "trapGroup": {
+    "trapVar": {
+      "trapSeq": "54357.1.1.1.1.500.1.1",
+      "trapSensorName": "54357.1.1.1.1.500.1.2",
+      "trapEventDir": "54357.1.1.1.1.500.1.3",
+      "trapSeverity": "54357.1.1.1.1.500.1.4",
+      "trapEvent": "54357.1.1.1.1.500.1.5",
+      "trapLocation": "54357.1.1.1.1.500.1.9",
+      "trapTime": "54357.1.1.1.1.500.1.10"
+    },
+    "serverAlertTrapGroup": {
+      "sgTemperature": {
+        "alerttempLowerNonCriticalGoingLow": "54357.1.1.1.1.500.10.1.1",
+        "alerttempLowerNonCriticalGoingLowDeassert": "54357.1.1.1.1.500.10.1.2",
+        "alerttempLowerCriticalGoingLow": "54357.1.1.1.1.500.10.1.33",
+        "alerttempLowerCriticalGoingLowDeassert": "54357.1.1.1.1.500.10.1.34",
+        "alerttempLowerNonRecoverlGoingLow": "54357.1.1.1.1.500.10.1.65",
+        "alerttempLowerNonRecoverlGoingLowDeassert": "54357.1.1.1.1.500.10.1.66",
+        "alerttempUpperNonCriticalGoingHigh": "54357.1.1.1.1.500.10.1.113",
+        "alerttempUpperNonCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.1.114",
+        "alerttempUpperCriticalGoingHigh": "54357.1.1.1.1.500.10.1.145",
+        "alerttempUpperCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.1.146",
+        "alerttempUpperNonRecoverGoingHigh": "54357.1.1.1.1.500.10.1.177",
+        "alerttempUpperNonRecoverGoingHighDeassert": "54357.1.1.1.1.500.10.1.178"
+      },
+      "sgVoltage": {
+        "alertvoltageLowerNonCriticalGoingLow": "54357.1.1.1.1.500.10.2.1",
+        "alertvoltageLowerNonCriticalGoingLowDeassert": "54357.1.1.1.1.500.10.2.2",
+        "alertvoltageLowerNonCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.2.18",
+        "alertvoltageLowerCriticalGoingLow": "54357.1.1.1.1.500.10.2.33",
+        "alertvoltageLowerCriticalGoingLowDeassert": "54357.1.1.1.1.500.10.2.34",
+        "alertvoltageLowerNonRecoverGoingLow": "54357.1.1.1.1.500.10.2.65",
+        "alertvoltageLowerNonRecoverGoingLowDeassert": "54357.1.1.1.1.500.10.2.66",
+        "alertvoltageUpperNonCriticalGoingHigh": "54357.1.1.1.1.500.10.2.113",
+        "alertvoltageUpperNonCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.2.114",
+        "alertvoltageUpperCriticalGoingHigh": "54357.1.1.1.1.500.10.2.145",
+        "alertvoltageUpperCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.2.146",
+        "alertvoltageUpperNonRecoverGoingHigh": "54357.1.1.1.1.500.10.2.177",
+        "alertvoltageUpperNonRecoverGoingHighDeassert": "54357.1.1.1.1.500.10.2.178"
+      },
+      "sgCurrent": {
+        "currentLowerNonCriticalGoingLow": "54357.1.1.1.1.500.10.3.1",
+        "currentLowerNonCriticalGoingLowDeassert": "54357.1.1.1.1.500.10.3.2",
+        "currentLowerCriticalGoingLow": "54357.1.1.1.1.500.10.3.33",
+        "currentLowerCriticalGoingLowDeassert": "54357.1.1.1.1.500.10.3.34",
+        "currentLowerNonRecoverGoingLow": "54357.1.1.1.1.500.10.3.65",
+        "currentLowerNonRecoverGoingLowDeassert": "54357.1.1.1.1.500.10.3.66",
+        "currentUpperNonCriticalGoingHigh": "54357.1.1.1.1.500.10.3.113",
+        "currentUpperNonCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.3.114",
+        "currentUpperCriticalGoingHigh": "54357.1.1.1.1.500.10.3.145",
+        "currentUpperCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.3.146",
+        "currentUpperNonRecoverGoingHigh": "54357.1.1.1.1.500.10.3.177",
+        "currentUpperNonRecoverGoingHighDeassert": "54357.1.1.1.1.500.10.3.178"
+      },
+      "sgFan": {
+        "alertfanSpeedLowerNonCriticalGoingLow": "54357.1.1.1.1.500.10.4.1",
+        "alertfanSpeedLowerNonCriticalGoingLowDeassert": "54357.1.1.1.1.500.10.4.2",
+        "alertfanSpeedLowerCriticalGoingLow": "54357.1.1.1.1.500.10.4.33",
+        "alertfanSpeedLowerCriticalGoingLowDeassert": "54357.1.1.1.1.500.10.4.34",
+        "alertfanSpeedLowerNonRecoverGoingLow": "54357.1.1.1.1.500.10.4.65",
+        "alertfanSpeedLowerNonRecoverGoingLowDeassert": "54357.1.1.1.1.500.10.4.66",
+        "alertfanSpeedUpperNonCriticalGoingHigh": "54357.1.1.1.1.500.10.4.113",
+        "alertfanSpeedUpperNonCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.4.114",
+        "alertfanSpeedUpperCriticalGoingHigh": "54357.1.1.1.1.500.10.4.145",
+        "alertfanSpeedUpperCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.4.146",
+        "alertfanSpeedUpperNonRecoverGoingHigh": "54357.1.1.1.1.500.10.4.177",
+        "alertfanSpeedUpperNonRecoverGoingHighDeassert": "54357.1.1.1.1.500.10.4.178",
+        "alertfanSpeedStatus": "54357.1.1.1.1.500.10.4.1825",
+        "alertFanDeviceRemoved": "54357.1.1.1.1.500.10.4.1793",
+        "alertFanDeviceRemovedDeassert": "54357.1.1.1.1.500.10.4.1794",
+        "alertFanDeviceInserted": "54357.1.1.1.1.500.10.4.1809",
+        "alertFanDeviceInsertedDeassert": "54357.1.1.1.1.500.10.4.1810",
+        "alertfanHotPlugStatus": "54357.1.1.1.1.500.10.4.2001",
+        "alertfanHotPlugStatusDeassert": "54357.1.1.1.1.500.10.4.2002"
+      },
+      "sgCPU": {
+        "alertCPUCATError": "54357.1.1.1.1.500.10.7.1",
+        "alertCPUCATErrorDeassert": "54357.1.1.1.1.500.10.7.2",
+        "alertCPUThermalTrip": "54357.1.1.1.1.500.10.7.17",
+        "alertCPUThermalTripDeassert": "54357.1.1.1.1.500.10.7.18",
+        "alertCPUFRB1": "54357.1.1.1.1.500.10.7.33",
+        "alertCPUFRB1Deassert": "54357.1.1.1.1.500.10.7.34",
+        "alertCPUFRB2": "54357.1.1.1.1.500.10.7.49",
+        "alertCPUFRB2Deassert": "54357.1.1.1.1.500.10.7.50",
+        "alertCPUFRB3": "54357.1.1.1.1.500.10.7.65",
+        "alertCPUFRB3Deassert": "54357.1.1.1.1.500.10.7.66",
+        "alertCPUCfgError": "54357.1.1.1.1.500.10.7.81",
+        "alertCPUCfgErrorDeassert": "54357.1.1.1.1.500.10.7.82",
+        "alertCPUComplexErr": "54357.1.1.1.1.500.10.7.97",
+        "alertCPUComplexErrDeassert": "54357.1.1.1.1.500.10.7.98",
+        "alertCPUPresence": "54357.1.1.1.1.500.10.7.113",
+        "alertCPUPresenceDeassert": "54357.1.1.1.1.500.10.7.114",
+        "alertCPUOffline": "54357.1.1.1.1.500.10.7.129",
+        "alertCPUOfflineDeassert": "54357.1.1.1.1.500.10.7.130",
+        "alertCPUThrottle": "54357.1.1.1.1.500.10.7.161",
+        "alertCPUThrottleDeassert": "54357.1.1.1.1.500.10.7.162",
+        "alertCPUUnMCE": "54357.1.1.1.1.500.10.7.177",
+        "alertCPUUnMCEDeassert": "54357.1.1.1.1.500.10.7.178",
+        "alertCPUMCE": "54357.1.1.1.1.500.10.7.193",
+        "alertCPUMCEDeassert": "54357.1.1.1.1.500.10.7.194"
+      },
+      "sgPowerSupply": {
+        "powerLowerNonCriticalGoingLow": "54357.1.1.1.1.500.10.8.1",
+        "powerLowerNonCriticalGoingLowDeassert": "54357.1.1.1.1.500.10.8.2",
+        "powerLowerCriticalGoingLow": "54357.1.1.1.1.500.10.8.33",
+        "powerLowerCriticalGoingLowDeassert": "54357.1.1.1.1.500.10.8.34",
+        "powerLowerNonRecoverGoingLow": "54357.1.1.1.1.500.10.8.65",
+        "powerLowerNonRecoverGoingLowDeassert": "54357.1.1.1.1.500.10.8.66",
+        "powerUpperNonCriticalGoingHigh": "54357.1.1.1.1.500.10.8.113",
+        "powerUpperNonCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.8.114",
+        "powerUpperCriticalGoingHigh": "54357.1.1.1.1.500.10.8.145",
+        "powerUpperCriticalGoingHighDeassert": "54357.1.1.1.1.500.10.8.146",
+        "powerUpperNonRecoverGoingHigh": "54357.1.1.1.1.500.10.8.177",
+        "powerUpperNonRecoverGoingHighDeassert": "54357.1.1.1.1.500.10.8.178",
+        "alertPsuPresence": "54357.1.1.1.1.500.10.8.28161",
+        "alertPsuPresenceDeassert": "54357.1.1.1.1.500.10.8.28162",
+        "alertPsuInputLost": "54357.1.1.1.1.500.10.8.28209",
+        "alertPsuInputLostDeassert": "54357.1.1.1.1.500.10.8.28210",
+        "alertPsuHotPlug": "54357.1.1.1.1.500.10.8.28369",
+        "alertPsuHotPlugDeassert": "54357.1.1.1.1.500.10.8.28370"
+      },
+      "sgMemory": {
+        "alertCorrectableECC": "54357.1.1.1.1.500.10.12.1",
+        "alertCorrectableECCDeassert": "54357.1.1.1.1.500.10.12.2",
+        "alertUncorrectableECC": "54357.1.1.1.1.500.10.12.17",
+        "alertUncorrectableECCDeassert": "54357.1.1.1.1.500.10.12.18",
+        "alertParity": "54357.1.1.1.1.500.10.12.33",
+        "alertParityDeassert": "54357.1.1.1.1.500.10.12.34",
+        "alertScrubFailed": "54357.1.1.1.1.500.10.12.49",
+        "alertScrubFailedDeassert": "54357.1.1.1.1.500.10.12.50",
+        "alertMemoryECCLimitation": "54357.1.1.1.1.500.10.12.81",
+        "alertMemoryECCLimitationDeassert": "54357.1.1.1.1.500.10.12.82",
+        "alertMemoryPresence": "54357.1.1.1.1.500.10.12.97",
+        "alertMemoryPresenceDeassert": "54357.1.1.1.1.500.10.12.98",
+        "alertMemoryCfgError": "54357.1.1.1.1.500.10.12.113",
+        "alertMemoryCfgErrorDeassert": "54357.1.1.1.1.500.10.12.114",
+        "alertMemorySpare": "54357.1.1.1.1.500.10.12.129",
+        "alertMemorySpareDeassert": "54357.1.1.1.1.500.10.12.130"
+      },
+      "sgACPIStatus": {
+        "alertACPIStatusS0G0": "54357.1.1.1.1.500.10.34.1",
+        "alertACPIStatusS4S5": "54357.1.1.1.1.500.10.34.97"
+      },
+      "sgWatchDog2": {
+        "alertWatchDog2Expired": "54357.1.1.1.1.500.10.35.1",
+        "alertWatchDogExpiredDeassert": "54357.1.1.1.1.500.10.35.2",
+        "alertWatchDogReset": "54357.1.1.1.1.500.10.35.17",
+        "alertWatchDogResetDeassert": "54357.1.1.1.1.500.10.35.18",
+        "alertWatchDogPowerDown": "54357.1.1.1.1.500.10.35.33",
+        "alertWatchDogPowerDownDeassert": "54357.1.1.1.1.500.10.35.34",
+        "alertWatchDogPowerCycle": "54357.1.1.1.1.500.10.35.49",
+        "alertWatchDogPowerCycleDeassert": "54357.1.1.1.1.500.10.35.50"
+      },
+      "sgHardDisk": {
+        "alertHardDiskPresence": "54357.1.1.1.1.500.10.13.1",
+        "alertHardDiskPresenceDeassert": "54357.1.1.1.1.500.10.13.2",
+        "alertHardDiskFault": "54357.1.1.1.1.500.10.13.17",
+        "alertHardDiskFaultDeassert": "54357.1.1.1.1.500.10.13.18",
+        "alertHardDiskPredictiveFailure": "54357.1.1.1.1.500.10.13.33",
+        "alertHardDiskPredictiveFailureDeassert": "54357.1.1.1.1.500.10.13.34",
+        "alertRAIDArrayFail": "54357.1.1.1.1.500.10.13.97",
+        "alertRAIDArrayFailDeassert": "54357.1.1.1.1.500.10.13.98",
+        "alertRAIDRebuild": "54357.1.1.1.1.500.10.13.113",
+        "alertRAIDRebuildDeassert": "54357.1.1.1.1.500.10.13.114",
+        "alertRAIDRebuildAborted": "54357.1.1.1.1.500.10.13.129",
+        "alertRAIDRebuildAbortedDeassert": "54357.1.1.1.1.500.10.13.130",
+        "alertHardDiskHotplug": "54357.1.1.1.1.500.10.13.209",
+        "alertHardDiskHotplugDeassert": "54357.1.1.1.1.500.10.13.210"
+      },
+      "sgSELStatus": {
+        "alertSELClearedAssert": "54357.1.1.1.1.500.10.16.33",
+        "alertSELAlmostFullAssert": "54357.1.1.1.1.500.10.16.81",
+        "alertSELAlmostFullDeassert": "54357.1.1.1.1.500.10.16.82"
+      },
+      "sgTimeStamp": {
+        "alertTimestampClockSync": "54357.1.1.1.1.500.10.18.81"
+      },
+      "sgSystemBoot": {
+        "alertSystemHardReset": "54357.1.1.1.1.500.10.29.3",
+        "alertSystemWarmReset": "54357.1.1.1.1.500.10.29.5",
+        "alertSystemRestart": "54357.1.1.1.1.500.10.29.1"
+      },
+      "sgCriticalInterrupt": {
+        "alertPCIPERR": "54357.1.1.1.1.500.10.19.65",
+        "alertPCIPERRDeassert": "54357.1.1.1.1.500.10.19.66",
+        "alertPCISERR": "54357.1.1.1.1.500.10.19.81",
+        "alertPCISERRDeassert": "54357.1.1.1.1.500.10.19.82",
+        "alertEISAFailSafeTimeout": "54357.1.1.1.1.500.10.19.97",
+        "alertEISAFailSafeTimeoutDeassert": "54357.1.1.1.1.500.10.19.98",
+        "alertBusCorrectableError": "54357.1.1.1.1.500.10.19.113",
+        "alertBusCorrectableErrorDeassert": "54357.1.1.1.1.500.10.19.114",
+        "alertBusUncorrectableError": "54357.1.1.1.1.500.10.19.129",
+        "alertBusUncorrectableErrorDeassert": "54357.1.1.1.1.500.10.19.130",
+        "alertFatalNMI": "54357.1.1.1.1.500.10.19.145",
+        "alertFatalNMIDeassert": "54357.1.1.1.1.500.10.19.146",
+        "alertBusFatalError": "54357.1.1.1.1.500.10.19.161",
+        "alertBusFatalErrorDeassert": "54357.1.1.1.1.500.10.19.162",
+        "alertBusDegraded": "54357.1.1.1.1.500.10.19.177",
+        "alertBusDegradedDeassert": "54357.1.1.1.1.500.10.19.178",
+        "alertStorageControllerPCIPERR": "54357.1.1.1.1.500.10.19.66625",
+        "alertStorageControllerPCIPERRDeassert": "54357.1.1.1.1.500.10.19.66626",
+        "alertStorageControllerPCISERR": "54357.1.1.1.1.500.10.19.66641",
+        "alertStorageControllerPCISERRDeassert": "54357.1.1.1.1.500.10.19.66642",
+        "alertStorageControllerBusCorrectableError": "54357.1.1.1.1.500.10.19.66673",
+        "alertStorageControllerBusCorrectableErrorDeassert": "54357.1.1.1.1.500.10.19.66674",
+        "alertStorageControllerBusUncorrectableError": "54357.1.1.1.1.500.10.19.66689",
+        "alertStorageControllerBusUncorrectableErrorDeassert": "54357.1.1.1.1.500.10.19.66690",
+        "alertStorageControllerBusFatalError": "54357.1.1.1.1.500.10.19.66721",
+        "alertStorageControllerBusFatalErrorDeassert": "54357.1.1.1.1.500.10.19.66722",
+        "alertNVMePCIPERR": "54357.1.1.1.1.500.10.19.67649",
+        "alertNVMePCIPERRDeassert": "54357.1.1.1.1.500.10.19.67650",
+        "alertNVMePCISERR": "54357.1.1.1.1.500.10.19.67665",
+        "alertNVMePCISERRDeassert": "54357.1.1.1.1.500.10.19.67666",
+        "alertNVMeBusCorrectableError": "54357.1.1.1.1.500.10.19.67697",
+        "alertNVMeBusCorrectableErrorDeassert": "54357.1.1.1.1.500.10.19.67698",
+        "alertNVMeBusUncorrectableError": "54357.1.1.1.1.500.10.19.67713",
+        "alertNVMeBusUncorrectableErrorDeassert": "54357.1.1.1.1.500.10.19.67714",
+        "alertNVMeBusFatalError": "54357.1.1.1.1.500.10.19.67745",
+        "alertNVMeBusFatalErrorDeassert": "54357.1.1.1.1.500.10.19.67746",
+        "alertNICPCIPERR": "54357.1.1.1.1.500.10.19.131137",
+        "alertNICPCIPERRDeassert": "54357.1.1.1.1.500.10.19.131138",
+        "alertNICPCISERR": "54357.1.1.1.1.500.10.19.131153",
+        "alertNICPCISERRDeassert": "54357.1.1.1.1.500.10.19.131154",
+        "alertNICBusCorrectableError": "54357.1.1.1.1.500.10.19.131185",
+        "alertNICBusCorrectableErrorDeassert": "54357.1.1.1.1.500.10.19.131186",
+        "alertNICBusUncorrectableError": "54357.1.1.1.1.500.10.19.131201",
+        "alertNICBusUncorrectableErrorDeassert": "54357.1.1.1.1.500.10.19.131202",
+        "alertNICBusFatalError": "54357.1.1.1.1.500.10.19.131233",
+        "alertNICBusFatalErrorDeassert": "54357.1.1.1.1.500.10.19.131234"
+      },
+      "sgTrapTest": {
+        "alertTrapTestInstance": "54357.1.1.1.1.500.10.18.241"
+      }
+    }
+  }
+}

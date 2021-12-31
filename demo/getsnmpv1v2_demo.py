@@ -1,9 +1,3 @@
-from SIT.common import SendCommand
-import os
-import subprocess
-import env
-import signal
-
 from pysnmp.hlapi import *
 from pysnmp.entity.rfc3413.oneliner import cmdgen
 
@@ -22,9 +16,9 @@ from pysnmp.hlapi import *
 iterator = getCmd(
     SnmpEngine(),
     CommunityData('public', communityName="rwcommstr", mpModel=0),  # V2 The group character of
-    UdpTransportTarget(('10.8.21.49', 161)),  # The goal is IP And port
+    UdpTransportTarget(('10.8.21.67', 161)),  # The goal is IP And port
     ContextData(),
-    ObjectType(ObjectIdentity('1.3.6.1.4.1.54357.1.1.1.1.1.7.0'))  # Query individual OID
+    ObjectType(ObjectIdentity('1.3.6.1.4.1.54357.1.1.1.1.1.1.0'))  # Query individual OID
     # ObjectType(ObjectIdentity('SNMPv2-MIB', 'sysDescr', 0))# adopt OID Name query
 )
 errorIndication, errorStatus, errorIndex, varBinds = next(iterator)
@@ -34,7 +28,7 @@ elif errorStatus:
     print('%s at %s' % (errorStatus.prettyPrint(),
                         errorIndex and varBinds[int(errorIndex) - 1][0] or '?'))
 else:
-    print(varBinds)
+    # print(varBinds)
     for varBind in varBinds:
         print(varBind)
         # print(' = '.join([x.prettyPrint() for x in varBind]))
