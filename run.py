@@ -27,11 +27,11 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
         self.thread = Update_data()
         # 按键绑定信号
         self.Start_Button.clicked.connect(self.click_start)
-        self.Refresh_Button.clicked.connect(self.Tree.add_new_tree)
+        self.Refresh_Button.clicked.connect(self.Tree.showdata)
 
         # IP输入绑定信号
         self.IPmodel.returnPressed.connect(self.click_start)
-        self.thread.sinOut.connect(self.Tree.add_new_tree)
+        # self.thread.sinOut.connect(self.Tree.add_new_tree)
 
     def click_start(self):
         # 获取SN

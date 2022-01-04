@@ -14,36 +14,38 @@ class MyTree(QTreeWidget):
         self.setColumnCount(4)
         # 设置头的标题
         self.setHeaderLabels(['Name', 'OID', 'Value', 'attribute'])
+        self.rootList = []
 
-    def add_new_tree(self, dict):
-        jsonpath = get_desktop() + '\\OID.json'
-        f = open(jsonpath, encoding='utf-8')
-        res = f.read()  # 读文件
-        dict = json.loads(res)
-        root = QTreeWidgetItem(self)
-        root.setText(0, 'bmc')
-        test_group = list(dict.keys())
-        for group_name in test_group:
-            value = group_name
-            group_name = QTreeWidgetItem(root)
-            group_name.setText(0, value)
+    def generateTreeWidget(self, data, root):
+        if isinstance(data, dict):
+            for key in data.keys():
+                child = QTreeWidgetItem()
+                child.setText(0, key)
+                if isinstance(root, QTreeWidget) == False:  # 非根节点，添加子节点
+                    root.addChild(child)
+                self.rootList.append(child)
+                value = data[key]
+                self.generateTreeWidget(value, child)
+        else:
+            root.setText(1, str(data))
+            root.setText(2, str(self.ret[str(data)]))
 
-        # child1 = QTreeWidgetItem(root)
-        # child1.setText(0, 'child1')
-        # child1.setText(1, '1')
-        #
-        # child2 = QTreeWidgetItem(root)
-        # child2.setText(0, 'child2')
-        # child2.setText(1, '2')
-        #
-        # child3 = QTreeWidgetItem(root)
-        # child3.setText(0, 'child3')
-        # child3.setText(1, '3')
-        #
-        # child4 = QTreeWidgetItem(child3)
-        # child4.setText(0, 'child4')
-        # child4.setText(1, '4')
-        #
-        # child5 = QTreeWidgetItem(child3)
-        # child5.setText(0, 'child5')
-        # child5.setText(1, '5')
+    def showdata(self):
+        oidpath = get_desktop() + '\\OID.json'
+        with open(oidpath) as json_file:
+            data = json.load(json_file)
+        root = self
+
+        retpath = get_desktop() + '\\res.json'
+        with open(retpath) as json_file:
+            self.ret = json.load(json_file)
+
+        self.generateTreeWidget(data, root)
+        self.insertTopLevelItems(0, self.rootList)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    win = MyTree()
+    win.show()
+    sys.exit(app.exec_())

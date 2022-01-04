@@ -126,7 +126,6 @@ class QJsonModel(QAbstractItemModel):
     def loadJson(self, json):
         error = QJsonParseError()
         self.mDocument = QJsonDocument.fromJson(json, error)
-
         if self.mDocument is not None:
             self.beginResetModel()
             if self.mDocument.isArray():

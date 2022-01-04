@@ -57,7 +57,7 @@ def SendbyV12c(ip, cmd, ver):
             if "No Such" in res:
                 break
             else:
-                ret[cmd + "." + str(i)] = res
+                ret["." + str(i)] = res
     return ret
 
 
@@ -81,7 +81,7 @@ def SendbyV3(ip, cmd):
             if "No Such" in res:
                 break
             else:
-                ret[cmd + "." + str(i)] = res
+                ret["." + str(i)] = res
     return ret
 
 
@@ -138,7 +138,7 @@ def TraverseSend(ip, ver):
 
 tic = time.time()
 print(tic)
-ip = "10.8.21.67"
+ip = "10.8.21.61"
 res_dict = TraverseSend(ip, 1)
 jsonpath = get_desktop() + '\\res.json'
 if os.path.exists(jsonpath):
