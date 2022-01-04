@@ -135,18 +135,3 @@ def TraverseSend(ip, ver):
                 print("things goes wrong")
         print("finish " + str(test_group))
     return res_dict
-
-tic = time.time()
-print(tic)
-ip = "10.8.21.61"
-res_dict = TraverseSend(ip, 1)
-jsonpath = get_desktop() + '\\res.json'
-if os.path.exists(jsonpath):
-    print("res.json exist , now delate")
-    os.remove(jsonpath)
-with open(jsonpath, 'w') as f:
-    json.dump(res_dict, f, indent=2)
-toc = time.time()
-print(toc)
-shijian = toc-tic
-print(shijian)

@@ -2,7 +2,7 @@ from func.string_handler import Getdigit, GetOidNum, remove_blank, get_desktop
 from func.mibjson import MibJson
 
 
-def Makejson(MibJson = MibJson()):
+def Makejson(MibJson=MibJson()):
     mibdata = open(get_desktop() + '\\BMC-MIB.mib', encoding='utf-8')
     pre = ""
     l = []
@@ -40,7 +40,7 @@ def Makejson(MibJson = MibJson()):
                         MibJson.CreateTrdBranch(test_group, GetOidNum(lines)[0], test_item, trd_value)
                         last_test_item = GetOidNum(lines)[0]
 
-        elif "NOTIFICATION-TYPE" in lines and pre_num == 5 :
+        elif "NOTIFICATION-TYPE" in lines and pre_num == 5:
             test_item = lines.strip().split(" ")[0]
 
         elif "ACCESS" in lines:
@@ -79,20 +79,22 @@ def Makejson(MibJson = MibJson()):
                     if GetOidNum(lines)[0] in MibJson.Matrix[test_group][last_test_item][doublelast_test_item]:
                         fiv_value = for_value + "." + GetOidNum(lines)[1]
                         try:
-                            MibJson.CreateFivBranch(test_group, last_test_item, doublelast_test_item, GetOidNum(lines)[0], test_item, fiv_value)
+                            MibJson.CreateFivBranch(test_group, last_test_item, doublelast_test_item,
+                                                    GetOidNum(lines)[0], test_item, fiv_value)
                         except:
                             MibJson.Matrix[test_group][last_test_item][doublelast_test_item].pop(GetOidNum(lines)[0])
-                            MibJson.CreateForBranch(test_group, last_test_item, doublelast_test_item, GetOidNum(lines)[0], "")
-                            MibJson.CreateFivBranch(test_group, last_test_item, doublelast_test_item,GetOidNum(lines)[0], test_item, "")
-                            MibJson.CreateFivBranch(test_group, last_test_item, doublelast_test_item,GetOidNum(lines)[0], test_item, fiv_value)
+                            MibJson.CreateForBranch(test_group, last_test_item, doublelast_test_item,
+                                                    GetOidNum(lines)[0], "")
+                            MibJson.CreateFivBranch(test_group, last_test_item, doublelast_test_item,
+                                                    GetOidNum(lines)[0], test_item, "")
+                            MibJson.CreateFivBranch(test_group, last_test_item, doublelast_test_item,
+                                                    GetOidNum(lines)[0], test_item, fiv_value)
                 else:
                     pass
             else:
                 pass
 
         if not lines:
-          break
+            break
     MibJson.CreateJson()
     return MibJson.Matrix
-
-Makejson()

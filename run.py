@@ -25,10 +25,13 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
         super(MyMainForm, self).__init__(parent)
         self.setupUi(self)
         self.thread = Update_data()
+
+        gl._init()  # 日志模块
+        gl.set_value('log_func', self.write_log)
+
         # 按键绑定信号
         self.Start_Button.clicked.connect(self.click_start)
         self.Refresh_Button.clicked.connect(self.Tree.showdata)
-
         # IP输入绑定信号
         self.IPmodel.returnPressed.connect(self.click_start)
         # self.thread.sinOut.connect(self.Tree.add_new_tree)
@@ -37,7 +40,6 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
         # 获取SN
         BMCip = self.IPmodel.text()
         # 初始化Log
-        gl._init()
         gl.set_value('ip', BMCip)# 实例化对象设为全局变量
         # SN输入框无法编辑
         self.IPmodel.setReadOnly(True)
@@ -47,10 +49,10 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
         # 测试线程开始
         self.thread.start()
 
-    def write_log(self):
+    def write_log(self, string):
         now = time.localtime()
         nowt = time.strftime("%m-%d %H:%M:%S ", now)
-        input = str(nowt)
+        input = str(nowt) + ' : ' + str(string)
         self.Logmodel.append(input)
 
 

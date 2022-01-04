@@ -4,6 +4,7 @@ import json
 import sys
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QApplication
 from func.string_handler import get_desktop
+import func.globalvar as gl
 
 
 class MyTree(QTreeWidget):
@@ -31,11 +32,13 @@ class MyTree(QTreeWidget):
             root.setText(2, str(self.ret[str(data)]))
 
     def showdata(self):
+        log = gl.get_value('log_func')
+        log("start")
+
         oidpath = get_desktop() + '\\OID.json'
         with open(oidpath) as json_file:
             data = json.load(json_file)
         root = self
-
         retpath = get_desktop() + '\\res.json'
         with open(retpath) as json_file:
             self.ret = json.load(json_file)
