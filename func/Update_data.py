@@ -6,7 +6,7 @@ import time
 from func.makejson import Makejson
 import func.globalvar as gl
 from func.string_handler import get_desktop
-from common import TraverseSend
+from func.common import TraverseSend
 
 
 class Update_data(QThread):

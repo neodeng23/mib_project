@@ -45,10 +45,3 @@ class MyTree(QTreeWidget):
 
         self.generateTreeWidget(data, root)
         self.insertTopLevelItems(0, self.rootList)
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    win = MyTree()
-    win.show()
-    sys.exit(app.exec_())
